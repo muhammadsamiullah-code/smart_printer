@@ -5,6 +5,7 @@ import 'package:smart_scanner/widgets/custom_button.dart';
 
 import '../providers/question_provider.dart';
 import '../widgets/custom_appbar.dart';
+import '../widgets/tr_text.dart';
 import 'quiz_screen.dart';
 
 class TopicSelectionScreen extends StatefulWidget {
@@ -39,7 +40,7 @@ class _TopicSelectionScreenState extends State<TopicSelectionScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: 'Quizzes'),
+      appBar: CustomAppBar(title: 'quizzes'),
 
       body: Padding(
         padding: const EdgeInsets.all(12),
@@ -47,8 +48,8 @@ class _TopicSelectionScreenState extends State<TopicSelectionScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Select Topics',
+            TrText(
+              'select_topics',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
@@ -117,8 +118,8 @@ class _TopicSelectionScreenState extends State<TopicSelectionScreen> {
 
             const SizedBox(height: 20),
 
-            const Text(
-              "Total Questions",
+            const TrText(
+              "total_questions",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 10),
@@ -183,12 +184,12 @@ class _TopicSelectionScreenState extends State<TopicSelectionScreen> {
             ),
             Spacer(),
             CustomButton(
-              text: 'Create Quiz',
+              text: 'create_quiz',
               onPressed: () {
                 if (provider.selectedTopics.isEmpty) {
                   // No topic selected
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Please select a topic")),
+                    const SnackBar(content: TrText("please_select_topic")),
                   );
                   return;
                 }
@@ -197,7 +198,7 @@ class _TopicSelectionScreenState extends State<TopicSelectionScreen> {
                   // No questions added
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text("Please add question numbers"),
+                      content: TrText("please_add_question_numbers"),
                     ),
                   );
                   return;

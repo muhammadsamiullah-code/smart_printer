@@ -71,9 +71,17 @@
   "share_app": "اشتراک‌گذاری برنامه",
   "more_apps": "برنامه‌های بیشتر",
   "change_language": "تغییر زبان",
-  "home_title":"چاپگر و اسکنر هوشمند",
-  "note":"یادداشت‌ها", 
-  "please_select_label_template":"لطفاً قالب لیبل را انتخاب کنید", 
-  "please_seleect_photo_layout":"لطفاً چیدمان عکس را انتخاب کنید", 
-  "please_select_frame":"لطفاً قاب را انتخاب کنید"
+  "home_title": "چاپگر و اسکنر هوشمند",
+  "note": "یادداشت‌ها",
+  "please_select_label_template": "لطفاً قالب لیبل را انتخاب کنید",
+  "please_seleect_photo_layout": "لطفاً چیدمان عکس را انتخاب کنید",
+  "please_select_frame": "لطفاً قاب را انتخاب کنید",
+  "select_topics": "انتخاب موضوعات",
+  "total_questions": "تعداد کل سوالات",
+  "please_select_topic": "لطفاً یک موضوع انتخاب کنید",
+  "please_add_question_numbers": "لطفاً شماره سوالات را اضافه کنید",
+  "create_quiz": "ایجاد کوییز",
+  "quiz": "کوییز",
+  "preview_contacts": "پیش‌نمایش مخاطبین",
+  "select_all_contacts": "انتخاب همه مخاطبین"
 }

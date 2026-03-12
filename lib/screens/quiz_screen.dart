@@ -168,7 +168,7 @@ class _QuizScreenState extends State<QuizScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar(
-        title: "Quiz",
+        title: "quiz",
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(50),
           child: Container(
@@ -440,7 +440,7 @@ class _QuizScreenState extends State<QuizScreen>
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(12),
         child: CustomButton(
-          text: 'Preview & Print',
+          text: 'print',
           onPressed: () {
             previewAndPrint(
               context: context,

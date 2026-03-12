@@ -75,5 +75,13 @@
   "note":"Nota", 
   "please_select_label_template":"Sila Pilih Templat Label", 
   "please_seleect_photo_layout":"Sila Pilih Susun Atur Foto", 
-  "please_select_frame":"Sila Pilih Bingkai"
+  "please_select_frame":"Sila Pilih Bingkai",
+  "select_topics": "Pilih Topik",
+"total_questions": "Jumlah Soalan",
+"please_select_topic": "Sila pilih topik",
+"please_add_question_numbers": "Sila tambah nombor soalan",
+"create_quiz": "Bina Kuiz",
+"quiz": "Kuiz",
+"preview_contacts": "Pratonton Kenalan",
+"select_all_contacts": "Pilih Semua Kenalan"
 }

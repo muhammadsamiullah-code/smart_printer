@@ -71,9 +71,17 @@
   "share_app": "অ্যাপ শেয়ার করুন",
   "more_apps": "আরও অ্যাপস",
   "change_language": "ভাষা পরিবর্তন করুন",
-  "home_title":"স্মার্ট প্রিন্টার ও স্ক্যানার",
-  "note":"নোট", 
-  "please_select_label_template":"অনুগ্রহ করে লেবেল টেমপ্লেট নির্বাচন করুন", 
-  "please_seleect_photo_layout":"অনুগ্রহ করে ফটো লেআউট নির্বাচন করুন", 
-  "please_select_frame":"অনুগ্রহ করে ফ্রেম নির্বাচন করুন"
+  "home_title": "স্মার্ট প্রিন্টার ও স্ক্যানার",
+  "note": "নোট",
+  "please_select_label_template": "অনুগ্রহ করে লেবেল টেমপ্লেট নির্বাচন করুন",
+  "please_seleect_photo_layout": "অনুগ্রহ করে ফটো লেআউট নির্বাচন করুন",
+  "please_select_frame": "অনুগ্রহ করে ফ্রেম নির্বাচন করুন",
+  "select_topics": "বিষয় নির্বাচন করুন",
+  "total_questions": "মোট প্রশ্ন",
+  "please_select_topic": "দয়া করে একটি বিষয় নির্বাচন করুন",
+  "please_add_question_numbers": "দয়া করে প্রশ্নের নম্বর যোগ করুন",
+  "create_quiz": "কুইজ তৈরি করুন",
+  "quiz": "কুইজ",
+  "preview_contacts": "কন্টাক্ট প্রিভিউ",
+  "select_all_contacts": "সব কন্টাক্ট নির্বাচন করুন"
 }

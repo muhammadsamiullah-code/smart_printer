@@ -75,5 +75,13 @@
   "note":"ملاحظات", 
   "please_select_label_template":"يرجى اختيار قالب الملصق", 
   "please_seleect_photo_layout":"يرجى اختيار تخطيط الصور", 
-  "please_select_frame":"يرجى اختيار الإطار"
+  "please_select_frame":"يرجى اختيار الإطار",
+  "select_topics": "اختر المواضيع",
+"total_questions": "إجمالي الأسئلة",
+"please_select_topic": "يرجى اختيار موضوع",
+"please_add_question_numbers": "يرجى إضافة أرقام الأسئلة",
+"create_quiz": "إنشاء اختبار",
+"quiz": "اختبار",
+"preview_contacts": "معاينة جهات الاتصال",
+"select_all_contacts": "تحديد جميع جهات الاتصال"
 }

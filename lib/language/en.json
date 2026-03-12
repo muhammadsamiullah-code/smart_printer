@@ -37,7 +37,7 @@
   "one_drive": "One Drive",
   "google_drive": "Google Drive",
   "dropbox": "Dropbox",
-  "contact": "Contact",
+  "contact": "Contacts",
   "scanning_printers": "Scanning for printers...",
   "no_printers_found": "No printers found",
   "connecting_printer": "Connecting to printer",
@@ -75,5 +75,13 @@
   "note":"Notes",
   "please_select_label_template":"Please Select Label Template",
   "please_seleect_photo_layout":"Please Select Photo Layout",
-  "please_select_frame":"Please Select Frame"
+  "please_select_frame":"Please Select Frame", 
+  "select_topics":"Select Topics",
+  "total_questions":"Total Questions",
+  "please_select_topic":"Please select a topic",
+  "please_add_question_numbers":"Please add question numbers",
+  "create_quiz":"Create Quiz",
+  "quiz":"Quiz",
+  "preview_contacts":"Preview Contacts",
+  "select_all_contacts":"Select All Contacts"
 }

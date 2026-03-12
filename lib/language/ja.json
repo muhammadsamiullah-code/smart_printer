@@ -71,9 +71,17 @@
   "share_app": "アプリを共有",
   "more_apps": "その他のアプリ",
   "change_language": "言語を変更",
-  "home_title":"スマートプリンターとスキャナー",
-  "note":"ノート", 
-  "please_select_label_template":"ラベルテンプレートを選択してください", 
-  "please_seleect_photo_layout":"写真のレイアウトを選択してください", 
-  "please_select_frame":"フレームを選択してください"
+  "home_title": "スマートプリンターとスキャナー",
+  "note": "ノート",
+  "please_select_label_template": "ラベルテンプレートを選択してください",
+  "please_seleect_photo_layout": "写真のレイアウトを選択してください",
+  "please_select_frame": "フレームを選択してください",
+  "select_topics": "トピックを選択",
+  "total_questions": "問題総数",
+  "please_select_topic": "トピックを選択してください",
+  "please_add_question_numbers": "問題番号を追加してください",
+  "create_quiz": "クイズを作成",
+  "quiz": "クイズ",
+  "preview_contacts": "連絡先のプレビュー",
+  "select_all_contacts": "すべての連絡先を選択"
 }

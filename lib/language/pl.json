@@ -71,9 +71,17 @@
   "share_app": "Udostępnij aplikację",
   "more_apps": "Więcej aplikacji",
   "change_language": "Zmień język",
-  "home_title":"Inteligentna Drukarka i Skaner",
-  "note":"Notatki", 
-  "please_select_label_template":"Proszę wybrać szablon etykiety", 
-  "please_seleect_photo_layout":"Proszę wybrać układ zdjęć", 
-  "please_select_frame":"Proszę wybrać ramkę"
+  "home_title": "Inteligentna Drukarka i Skaner",
+  "note": "Notatki",
+  "please_select_label_template": "Proszę wybrać szablon etykiety",
+  "please_seleect_photo_layout": "Proszę wybrać układ zdjęć",
+  "please_select_frame": "Proszę wybrać ramkę",
+  "select_topics": "Wybierz tematy",
+  "total_questions": "Liczba pytań",
+  "please_select_topic": "Wybierz temat",
+  "please_add_question_numbers": "Dodaj numery pytań",
+  "create_quiz": "Utwórz quiz",
+  "quiz": "Quiz",
+  "preview_contacts": "Podgląd kontaktów",
+  "select_all_contacts": "Zaznacz wszystkie kontakty"
 }

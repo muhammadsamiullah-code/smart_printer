@@ -71,9 +71,17 @@
   "share_app": "Compartilhar aplicativo",
   "more_apps": "Mais aplicativos",
   "change_language": "Alterar idioma",
-  "home_title":"Impressora e Scanner Inteligentes",
-  "note":"Notas", 
-  "please_select_label_template":"Selecione o modelo de etiqueta", 
-  "please_seleect_photo_layout":"Selecione o layout da foto", 
-  "please_select_frame":"Selecione a moldura"
+  "home_title": "Impressora e Scanner Inteligentes",
+  "note": "Notas",
+  "please_select_label_template": "Selecione o modelo de etiqueta",
+  "please_seleect_photo_layout": "Selecione o layout da foto",
+  "please_select_frame": "Selecione a moldura",
+  "select_topics": "Selecionar Tópicos",
+  "total_questions": "Total de Perguntas",
+  "please_select_topic": "Por favor, selecione um tópico",
+  "please_add_question_numbers": "Por favor, adicione os números das perguntas",
+  "create_quiz": "Criar Quiz",
+  "quiz": "Quiz",
+  "preview_contacts": "Visualizar Contatos",
+  "select_all_contacts": "Selecionar Todos os Contatos"
 }

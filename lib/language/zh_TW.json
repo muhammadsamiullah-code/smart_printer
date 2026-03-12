@@ -75,5 +75,13 @@
   "note":"備註", 
   "please_select_label_template":"請選擇標籤模板", 
   "please_seleect_photo_layout":"請選擇相片佈局", 
-  "please_select_frame":"請選擇邊框"
+  "please_select_frame":"請選擇邊框",
+  "select_topics": "選擇主題",
+"total_questions": "題目總數",
+"please_select_topic": "請選擇一個主題",
+"please_add_question_numbers": "請添加題目數量",
+"create_quiz": "創建測驗",
+"quiz": "測驗",
+"preview_contacts": "預覽聯絡人",
+"select_all_contacts": "全選聯絡人"
 }

@@ -71,9 +71,17 @@
   "share_app": "Deel toepassing",
   "more_apps": "Meer toepassings",
   "change_language": "Verander taal",
-  "home_title":"Slim Drukker en Skandeerder",
-  "note":"Notas", 
-  "please_select_label_template":"Kies asseblief etiket-sjabloon", 
-  "please_seleect_photo_layout":"Kies asseblief foto-uitleg", 
-  "please_select_frame":"Kies asseblief raam"
+  "home_title": "Slim Drukker en Skandeerder",
+  "note": "Notas",
+  "please_select_label_template": "Kies asseblief etiket-sjabloon",
+  "please_seleect_photo_layout": "Kies asseblief foto-uitleg",
+  "please_select_frame": "Kies asseblief raam",
+  "select_topics": "Kies Onderwerpe",
+  "total_questions": "Totale Vrae",
+  "please_select_topic": "Kies asseblief 'n onderwerp",
+  "please_add_question_numbers": "Voeg asseblief vraagnommers by",
+  "create_quiz": "Skep Vasvra",
+  "quiz": "Vasvra",
+  "preview_contacts": "Voorskou Kontakte",
+  "select_all_contacts": "Kies Alle Kontakte"
 }

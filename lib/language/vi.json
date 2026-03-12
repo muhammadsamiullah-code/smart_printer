@@ -71,9 +71,17 @@
   "share_app": "Chia sẻ ứng dụng",
   "more_apps": "Thêm ứng dụng",
   "change_language": "Thay đổi ngôn ngữ",
-  "home_title":"Máy In & Máy Quét Thông Minh",
-  "note":"Ghi chú", 
-  "please_select_label_template":"Vui lòng chọn mẫu nhãn", 
-  "please_seleect_photo_layout":"Vui lòng chọn bố cục ảnh", 
-  "please_select_frame":"Vui lòng chọn khung hình"
+  "home_title": "Máy In & Máy Quét Thông Minh",
+  "note": "Ghi chú",
+  "please_select_label_template": "Vui lòng chọn mẫu nhãn",
+  "please_seleect_photo_layout": "Vui lòng chọn bố cục ảnh",
+  "please_select_frame": "Vui lòng chọn khung hình",
+  "select_topics": "Chọn chủ đề",
+  "total_questions": "Tổng số câu hỏi",
+  "please_select_topic": "Vui lòng chọn một chủ đề",
+  "please_add_question_numbers": "Vui lòng thêm số lượng câu hỏi",
+  "create_quiz": "Tạo câu hỏi",
+  "quiz": "Câu hỏi",
+  "preview_contacts": "Xem trước danh bạ",
+  "select_all_contacts": "Chọn tất cả danh bạ"
 }

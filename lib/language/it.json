@@ -71,9 +71,17 @@
   "share_app": "Condividi app",
   "more_apps": "Altre app",
   "change_language": "Cambia lingua",
-  "home_title":"Stampante e Scanner Intelligenti",
-  "note":"Note", 
-  "please_select_label_template":"Seleziona il modello dell'etichetta", 
-  "please_seleect_photo_layout":"Seleziona il layout della foto", 
-  "please_select_frame":"Seleziona la cornice"
+  "home_title": "Stampante e Scanner Intelligenti",
+  "note": "Note",
+  "please_select_label_template": "Seleziona il modello dell'etichetta",
+  "please_seleect_photo_layout": "Seleziona il layout della foto",
+  "please_select_frame": "Seleziona la cornice",
+  "select_topics": "Seleziona Argomenti",
+  "total_questions": "Domande Totali",
+  "please_select_topic": "Seleziona un argomento",
+  "please_add_question_numbers": "Aggiungi i numeri delle domande",
+  "create_quiz": "Crea Quiz",
+  "quiz": "Quiz",
+  "preview_contacts": "Anteprima Contatti",
+  "select_all_contacts": "Seleziona Tutti i Contatti"
 }

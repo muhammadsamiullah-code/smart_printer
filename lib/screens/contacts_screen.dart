@@ -8,6 +8,8 @@ import 'dart:typed_data';
 import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../widgets/tr_text.dart';
+
 class ContactsScreen extends StatefulWidget {
   const ContactsScreen({super.key});
 
@@ -119,7 +121,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: 'Contacts'),
+      appBar: CustomAppBar(title: 'contact'),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -141,7 +143,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Select All Contacts"),
+                const TrText("select_all_contacts"),
                 Checkbox(
                   value: selectAll,
                   onChanged: (v) {
@@ -214,7 +216,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
             ),
 
             /// NEXT BUTTON
-            CustomButton(text: 'Preview', onPressed: navigateToPreview),
+            CustomButton(text: 'preview', onPressed: navigateToPreview),
             const SizedBox(height: 20),
           ],
         ),
@@ -239,64 +241,142 @@ class _PreviewContactsScreenState extends State<PreviewContactsScreen> {
   /// Build PDF with all selected contacts
 Future<Uint8List> buildContactsPdf() async {
   final pdf = pw.Document();
-  const double pagePadding = 24;
-  const double contactHeight = 80; // Approx height per contact in PDF
-  final contactsPerPage = (PdfPageFormat.a4.availableHeight - 2 * pagePadding) ~/ contactHeight;
+  final contacts = widget.selectedContacts;
 
-  int totalContacts = widget.selectedContacts.length;
-  int pageCount = (totalContacts / contactsPerPage).ceil();
-
-  for (int pageIndex = 0; pageIndex < pageCount; pageIndex++) {
-    final startIndex = pageIndex * contactsPerPage;
-    final endIndex = (startIndex + contactsPerPage).clamp(0, totalContacts);
-    final contactsOnPage = widget.selectedContacts.sublist(startIndex, endIndex);
-
-    pdf.addPage(
-      pw.Page(
-        pageFormat: PdfPageFormat.a4,
-        build: (pw.Context context) {
-          return pw.Padding(
-            padding: const pw.EdgeInsets.all(pagePadding),
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: contactsOnPage.map((contact) {
-                return pw.Padding(
-                  padding: const pw.EdgeInsets.symmetric(vertical: 6),
-                  child: pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
+  pdf.addPage(
+    pw.MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      margin: const pw.EdgeInsets.all(20),
+      build: (context) {
+        return [
+          pw.Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            children: contacts.map((contact) {
+              return pw.Container(
+                width: (PdfPageFormat.a4.availableWidth - 40) / 3,
+                padding: const pw.EdgeInsets.all(8),
+                decoration: pw.BoxDecoration(
+                  border: pw.Border.all(color: PdfColors.grey300),
+                  borderRadius: pw.BorderRadius.circular(6),
+                ),
+                child: pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text(
+                      contact.displayName ?? "No Name",
+                      style: pw.TextStyle(
+                        fontSize: 12,
+                        fontWeight: pw.FontWeight.bold,
+                      ),
+                    ),
+                    pw.SizedBox(height: 3),
+                    if (contact.phones.isNotEmpty)
                       pw.Text(
-                        contact.displayName ?? "No Name",
+                        contact.phones.first.number,
+                        style: const pw.TextStyle(fontSize: 10),
+                      )
+                    else
+                      pw.Text(
+                        "No Number",
                         style: pw.TextStyle(
-                          fontSize: 18,
-                          fontWeight: pw.FontWeight.bold,
+                          fontSize: 10,
+                          color: PdfColors.grey,
                         ),
                       ),
-                      pw.SizedBox(height: 4),
-                      // Only first phone number
-                      if (contact.phones.isNotEmpty)
-                        pw.Text(
-                          contact.phones.first.number,
-                          style: pw.TextStyle(fontSize: 14),
-                        )
-                      else
-                        pw.Text(
-                          "No Number",
-                          style: pw.TextStyle(fontSize: 14, color: PdfColors.grey),
-                        ),
-                    ],
-                  ),
-                );
-              }).toList(),
-            ),
-          );
-        },
-      ),
-    );
-  }
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+        ];
+      },
+    ),
+  );
 
   return pdf.save();
 }
+
+// Future<Uint8List> buildContactsPdf() async {
+//   final pdf = pw.Document();
+
+//   const int columns = 3;
+//   final contacts = widget.selectedContacts;
+
+//   pdf.addPage(
+//     pw.MultiPage(
+//       pageFormat: PdfPageFormat.a4,
+//       margin: const pw.EdgeInsets.all(20),
+//       build: (context) {
+//         List<pw.TableRow> rows = [];
+
+//         for (int i = 0; i < contacts.length; i += columns) {
+//           List<pw.Widget> rowChildren = [];
+
+//           for (int j = 0; j < columns; j++) {
+//             if (i + j < contacts.length) {
+//               final contact = contacts[i + j];
+
+//               rowChildren.add(
+//                 pw.Container(
+//                   padding: const pw.EdgeInsets.all(10),
+//                   margin: const pw.EdgeInsets.all(5),
+//                   decoration: pw.BoxDecoration(
+//                     border: pw.Border.all(color: PdfColors.grey300),
+//                     borderRadius: pw.BorderRadius.circular(6),
+//                   ),
+//                   child: pw.Column(
+//                     crossAxisAlignment: pw.CrossAxisAlignment.start,
+//                     children: [
+//                       pw.Text(
+//                         contact.displayName ?? "No Name",
+//                         style: pw.TextStyle(
+//                           fontSize: 14,
+//                           fontWeight: pw.FontWeight.bold,
+//                         ),
+//                       ),
+//                       pw.SizedBox(height: 4),
+//                       if (contact.phones.isNotEmpty)
+//                         pw.Text(
+//                           contact.phones.first.number,
+//                           style: const pw.TextStyle(fontSize: 12),
+//                         )
+//                       else
+//                         pw.Text(
+//                           "No Number",
+//                           style: pw.TextStyle(
+//                             fontSize: 12,
+//                             color: PdfColors.grey,
+//                           ),
+//                         ),
+//                     ],
+//                   ),
+//                 ),
+//               );
+//             } else {
+//               rowChildren.add(pw.Container());
+//             }
+//           }
+
+//           rows.add(pw.TableRow(children: rowChildren));
+//         }
+
+//         return [
+//           pw.Table(
+//             columnWidths: {
+//               0: const pw.FlexColumnWidth(),
+//               1: const pw.FlexColumnWidth(),
+//               2: const pw.FlexColumnWidth(),
+//             },
+//             children: rows,
+//           )
+//         ];
+//       },
+//     ),
+//   );
+
+//   return pdf.save();
+// }
 
   /// Print selected contacts
   Future<void> printContacts() async {
@@ -312,7 +392,7 @@ Future<Uint8List> buildContactsPdf() async {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text("Printer not available")));
+        ).showSnackBar(const SnackBar(content: TrText("printer_not_available")));
       }
     } finally {
       if (mounted) setState(() => _isPrinting = false);
@@ -324,7 +404,7 @@ Future<Uint8List> buildContactsPdf() async {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar(
-        title: "Preview Contacts",
+        title: "preview_contacts",
         actions: [
           IconButton(
             onPressed: _isPrinting ? null : printContacts,

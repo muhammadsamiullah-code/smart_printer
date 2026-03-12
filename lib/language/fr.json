@@ -71,9 +71,17 @@
   "share_app": "Partager l'application",
   "more_apps": "Plus d'applications",
   "change_language": "Changer de langue",
-  "home_title":"Imprimante et Scanner Intelligents",
-  "note":"Notes", 
-  "please_select_label_template":"Veuillez sélectionner un modèle d'étiquette", 
-  "please_seleect_photo_layout":"Veuillez sélectionner une disposition de photo", 
-  "please_select_frame":"Veuillez sélectionner un cadre"
+  "home_title": "Imprimante et Scanner Intelligents",
+  "note": "Notes",
+  "please_select_label_template": "Veuillez sélectionner un modèle d'étiquette",
+  "please_seleect_photo_layout": "Veuillez sélectionner une disposition de photo",
+  "please_select_frame": "Veuillez sélectionner un cadre",
+  "select_topics": "Sélectionner des sujets",
+  "total_questions": "Total des questions",
+  "please_select_topic": "Veuillez sélectionner un sujet",
+  "please_add_question_numbers": "Veuillez ajouter les numéros de questions",
+  "create_quiz": "Créer un quiz",
+  "quiz": "Quiz",
+  "preview_contacts": "Aperçu des contacts",
+  "select_all_contacts": "Sélectionner tous les contacts"
 }

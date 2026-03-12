@@ -71,9 +71,17 @@
   "share_app": "Bagikan Aplikasi",
   "more_apps": "Aplikasi Lainnya",
   "change_language": "Ganti Bahasa",
-  "home_title":"Printer & Pemindai Pintar",
-  "note":"Catatan", 
-  "please_select_label_template":"Silakan Pilih Templat Label", 
-  "please_seleect_photo_layout":"Silakan Pilih Tata Letak Foto",
-  "please_select_frame":"Silakan Pilih Bingkai"
+  "home_title": "Printer & Pemindai Pintar",
+  "note": "Catatan",
+  "please_select_label_template": "Silakan Pilih Templat Label",
+  "please_seleect_photo_layout": "Silakan Pilih Tata Letak Foto",
+  "please_select_frame": "Silakan Pilih Bingkai",
+  "select_topics": "Pilih Topik",
+  "total_questions": "Total Pertanyaan",
+  "please_select_topic": "Silakan pilih topik",
+  "please_add_question_numbers": "Silakan tambahkan nomor pertanyaan",
+  "create_quiz": "Buat Kuis",
+  "quiz": "Kuis",
+  "preview_contacts": "Pratinjau Kontak",
+  "select_all_contacts": "Pilih Semua Kontak"
 }

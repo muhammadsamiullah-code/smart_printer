@@ -71,9 +71,17 @@
   "share_app": "App teilen",
   "more_apps": "Mehr Apps",
   "change_language": "Sprache ändern",
-  "home_title":"Intelligenter Drucker & Scanner",
-  "note":"Notizen", 
-  "please_select_label_template":"Bitte Etikettenvorlage auswählen", 
-  "please_seleect_photo_layout":"Bitte Fotolayout auswählen", 
-  "please_select_frame":"Bitte Rahmen auswählen"
+  "home_title": "Intelligenter Drucker & Scanner",
+  "note": "Notizen",
+  "please_select_label_template": "Bitte Etikettenvorlage auswählen",
+  "please_seleect_photo_layout": "Bitte Fotolayout auswählen",
+  "please_select_frame": "Bitte Rahmen auswählen",
+  "select_topics": "Themen auswählen",
+  "total_questions": "Fragen insgesamt",
+  "please_select_topic": "Bitte wählen Sie ein Thema aus",
+  "please_add_question_numbers": "Bitte Fragennummern hinzufügen",
+  "create_quiz": "Quiz erstellen",
+  "quiz": "Quiz",
+  "preview_contacts": "Kontakte Vorschau",
+  "select_all_contacts": "Alle Kontakte auswählen"
 }

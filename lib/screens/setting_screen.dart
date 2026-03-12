@@ -100,20 +100,20 @@ class _SettingScreenState extends State<SettingScreen> {
                   );
                 },
               ),
-               const SizedBox(height: 14),
-              _buildTile(
-                svgPath: 'assets/settingIcons/language.svg',
-                titleKey: "tools",
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) =>
-                          const ToolsScreen(),
-                    ),
-                  );
-                },
-              ),
+              //  const SizedBox(height: 14),
+              // _buildTile(
+              //   svgPath: 'assets/settingIcons/language.svg',
+              //   titleKey: "tools",
+              //   onTap: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (_) =>
+              //             const ToolsScreen(),
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         ),

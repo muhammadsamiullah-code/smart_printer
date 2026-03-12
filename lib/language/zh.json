@@ -71,9 +71,17 @@
   "share_app": "分享应用",
   "more_apps": "更多应用",
   "change_language": "更改语言",
-  "home_title":"智能打印机和扫描仪",
-  "note":"备注", 
-  "please_select_label_template":"请选择标签模板", 
-  "please_seleect_photo_layout":"请选择照片布局", 
-  "please_select_frame":"请选择边框"
+  "home_title": "智能打印机和扫描仪",
+  "note": "备注",
+  "please_select_label_template": "请选择标签模板",
+  "please_seleect_photo_layout": "请选择照片布局",
+  "please_select_frame": "请选择边框",
+  "select_topics": "选择主题",
+  "total_questions": "题目总数",
+  "please_select_topic": "请选择一个主题",
+  "please_add_question_numbers": "请添加题目数量",
+  "create_quiz": "创建测验",
+  "quiz": "测验",
+  "preview_contacts": "预览联系人",
+  "select_all_contacts": "全选联系人"
 }

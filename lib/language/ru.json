@@ -71,9 +71,17 @@
   "share_app": "Поделиться приложением",
   "more_apps": "Другие приложения",
   "change_language": "Сменить язык",
-  "home_title":"Умный принтер и сканер",
-  "note":"Заметки", 
-  "please_select_label_template":"Пожалуйста, выберите шаблон этикетки", 
-  "please_seleect_photo_layout":"Пожалуйста, выберите макет фотографии", 
-  "please_select_frame":"Пожалуйста, выберите рамку"
+  "home_title": "Умный принтер и сканер",
+  "note": "Заметки",
+  "please_select_label_template": "Пожалуйста, выберите шаблон этикетки",
+  "please_seleect_photo_layout": "Пожалуйста, выберите макет фотографии",
+  "please_select_frame": "Пожалуйста, выберите рамку",
+  "select_topics": "Выбрать темы",
+  "total_questions": "Всего вопросов",
+  "please_select_topic": "Пожалуйста, выберите тему",
+  "please_add_question_numbers": "Пожалуйста, добавьте номера вопросов",
+  "create_quiz": "Создать тест",
+  "quiz": "Тест",
+  "preview_contacts": "Предпросмотр контактов",
+  "select_all_contacts": "Выбрать все контакты"
 }

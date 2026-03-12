@@ -71,9 +71,17 @@
   "share_app": "ऐप शेयर करें",
   "more_apps": "अधिक ऐप्स",
   "change_language": "भाषा बदलें",
-  "home_title":"स्मार्ट प्रिंटर और स्कैनर",
-  "note":"नोट्स", 
-  "please_select_label_template":"कृपया लेबल टेम्पलेट चुनें", 
-  "please_seleect_photo_layout":"कृपया फोटो लेआउट चुनें", 
-  "please_select_frame":"कृपया फ्रेम चुनें"
+  "home_title": "स्मार्ट प्रिंटर और स्कैनर",
+  "note": "नोट्स",
+  "please_select_label_template": "कृपया लेबल टेम्पलेट चुनें",
+  "please_seleect_photo_layout": "कृपया फोटो लेआउट चुनें",
+  "please_select_frame": "कृपया फ्रेम चुनें",
+  "select_topics": "विषय चुनें",
+  "total_questions": "कुल प्रश्न",
+  "please_select_topic": "कृपया एक विषय चुनें",
+  "please_add_question_numbers": "कृपया प्रश्न संख्या जोड़ें",
+  "create_quiz": "क्विज़ बनाएं",
+  "quiz": "क्विज़",
+  "preview_contacts": "संपर्क पूर्वावलोकन",
+  "select_all_contacts": "सभी संपर्क चुनें"
 }

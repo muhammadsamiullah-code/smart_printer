@@ -71,9 +71,17 @@
   "share_app": "แชร์แอป",
   "more_apps": "แอปเพิ่มเติม",
   "change_language": "เปลี่ยนภาษา",
-  "home_title":"เครื่องพิมพ์และสแกนเนอร์อัจฉริยะ",
-  "note":"บันทึก", 
-  "please_select_label_template":"กรุณาเลือกรูปแบบป้ายชื่อ", 
-  "please_seleect_photo_layout":"กรุณาเลือกเลย์เอาต์รูปภาพ", 
-  "please_select_frame":"กรุณาเลือกเฟรม"
+  "home_title": "เครื่องพิมพ์และสแกนเนอร์อัจฉริยะ",
+  "note": "บันทึก",
+  "please_select_label_template": "กรุณาเลือกรูปแบบป้ายชื่อ",
+  "please_seleect_photo_layout": "กรุณาเลือกเลย์เอาต์รูปภาพ",
+  "please_select_frame": "กรุณาเลือกเฟรม",
+  "select_topics": "เลือกหัวข้อ",
+  "total_questions": "จำนวนคำถามทั้งหมด",
+  "please_select_topic": "กรุณาเลือกหัวข้อ",
+  "please_add_question_numbers": "กรุณาเพิ่มเลขข้อคำถาม",
+  "create_quiz": "สร้างควิซ",
+  "quiz": "ควิซ",
+  "preview_contacts": "ดูตัวอย่างรายชื่อติดต่อ",
+  "select_all_contacts": "เลือกรายชื่อติดต่อทั้งหมด"
 }

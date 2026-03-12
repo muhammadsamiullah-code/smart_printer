@@ -71,9 +71,17 @@
   "share_app": "Uygulamayı Paylaş",
   "more_apps": "Daha Fazla Uygulama",
   "change_language": "Dili Değiştir",
-  "home_title":"Akıllı Yazıcı ve Tarayıcı",
-  "note":"Notlar", 
-  "please_select_label_template":"Lütfen Etiket Şablonu Seçin", 
-  "please_seleect_photo_layout":"Lütfen Fotoğraf Düzeni Seçin", 
-  "please_select_frame":"Lütfen Çerçeve Seçin"
+  "home_title": "Akıllı Yazıcı ve Tarayıcı",
+  "note": "Notlar",
+  "please_select_label_template": "Lütfen Etiket Şablonu Seçin",
+  "please_seleect_photo_layout": "Lütfen Fotoğraf Düzeni Seçin",
+  "please_select_frame": "Lütfen Çerçeve Seçin",
+  "select_topics": "Konuları Seç",
+  "total_questions": "Toplam Soru",
+  "please_select_topic": "Lütfen bir konu seçin",
+  "please_add_question_numbers": "Lütfen soru numaralarını ekleyin",
+  "create_quiz": "Bilgi Yarışması Oluştur",
+  "quiz": "Bilgi Yarışması",
+  "preview_contacts": "Kişileri Önizle",
+  "select_all_contacts": "Tüm Kişileri Seç"
 }
