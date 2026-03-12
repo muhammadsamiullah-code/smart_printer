@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_scanner/models/labels_shape.dart';
 import 'package:smart_scanner/providers/labels_provider.dart';
 import 'package:smart_scanner/screens/template_selection_screen.dart';
-import 'package:smart_scanner/widgets/tr_text.dart';
+
+import '../widgets/custom_appbar.dart';
 
 class ShapeSelectionScreen extends StatefulWidget {
   const ShapeSelectionScreen({super.key});
@@ -34,32 +34,7 @@ class _ShapeSelectionScreenState extends State<ShapeSelectionScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xffEDEDED),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light,
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new,
-              size: 24, color: Colors.black),
-        ),
-        title: const TrText(
-          "select_label_shape",
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: true,
-      ),
+      appBar: CustomAppBar(title: 'select_label_shape', ),
       body: Column(
         children: [
           Expanded(

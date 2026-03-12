@@ -16,7 +16,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:network_info_plus/network_info_plus.dart';
-import 'package:smart_scanner/web_page_scanner_screen.dart';
+import 'package:smart_scanner/screens/web_page_scanner_screen.dart';
+import 'package:smart_scanner/widgets/custom_appbar.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 
 enum PageType { pdf, image }
@@ -268,9 +269,7 @@ class _PdfPreviewScreenState extends State<PdfPreviewScreen> {
     if (!wifiOn) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: TrText('wifi_location_required'),
-          ),
+          const SnackBar(content: TrText('wifi_location_required')),
         );
       }
       return;
@@ -280,11 +279,9 @@ class _PdfPreviewScreenState extends State<PdfPreviewScreen> {
     final sameWifi = await isSameWifi();
     if (!sameWifi) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-           content: TrText("same_wifi_required")
-          ),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: TrText("same_wifi_required")));
       }
       return;
     }
@@ -302,9 +299,9 @@ class _PdfPreviewScreenState extends State<PdfPreviewScreen> {
       );
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: TrText("printer_not_available")));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: TrText("printer_not_available")),
+        );
       }
     } finally {
       if (mounted) {
@@ -367,12 +364,6 @@ class _PdfPreviewScreenState extends State<PdfPreviewScreen> {
     _thumbCache.clear(); // if using cache map
     super.dispose();
   }
-  // @override
-  // void dispose() {
-  //   _scrollController.dispose();
-  //    _document?.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -403,38 +394,10 @@ class _PdfPreviewScreenState extends State<PdfPreviewScreen> {
       children: [
         Scaffold(
           backgroundColor: const Color(0xffEDEDED),
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.transparent,
-            surfaceTintColor: Colors.transparent,
-            systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent, // same as appbar
-              statusBarIconBrightness: Brightness.dark, // dark icons
-              statusBarBrightness: Brightness.light,
-            ),
-            foregroundColor: Colors.transparent,
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(
-                Icons.arrow_back_ios_new,
-                size: 24,
-                color: Colors.black,
-              ),
-            ),
-            // backgroundColor: Colors.transparent,
-            title: Text(
-              selectionMode
-                  ? "${selectedIndexes.length} ${context.watch<TranslatorProvider>().tr("selected_pages")}"
-                  : "${context.watch<TranslatorProvider>().tr("page_counter")} $currentIndex / ${pages.length}",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
-              ),
-            ),
-            centerTitle: true,
+          appBar: CustomAppBar(
+            title: selectionMode
+                ? "${selectedIndexes.length} ${context.watch<TranslatorProvider>().tr("selected_pages")}"
+                : "${context.watch<TranslatorProvider>().tr("page_counter")} $currentIndex / ${pages.length}",
             actions: [
               if (!selectionMode)
                 IconButton(
@@ -449,13 +412,11 @@ class _PdfPreviewScreenState extends State<PdfPreviewScreen> {
                     });
                   },
                 ),
-
               if (selectionMode)
                 IconButton(
                   icon: const Icon(Icons.delete, size: 24, color: Colors.black),
                   onPressed: deleteSelectedPages,
                 ),
-
               if (selectionMode)
                 IconButton(
                   icon: const Icon(Icons.close, size: 24, color: Colors.black),
@@ -520,7 +481,7 @@ class _PdfPreviewScreenState extends State<PdfPreviewScreen> {
                       child: Center(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(6),
-                        
+
                           child: Stack(
                             children: [
                               Padding(
@@ -532,13 +493,15 @@ class _PdfPreviewScreenState extends State<PdfPreviewScreen> {
                                           builder: (context, snapshot) {
                                             if (!snapshot.hasData) {
                                               return const Center(
-                                                child: CircularProgressIndicator(
-                                                  strokeWidth: 3,
-                                                  color: AppColors.primaryColor,
-                                                ),
+                                                child:
+                                                    CircularProgressIndicator(
+                                                      strokeWidth: 3,
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                    ),
                                               );
                                             }
-                        
+
                                             return Image.memory(
                                               snapshot.data!,
                                               fit: BoxFit.contain,
@@ -551,7 +514,7 @@ class _PdfPreviewScreenState extends State<PdfPreviewScreen> {
                                         ),
                                 ),
                               ),
-                        
+
                               /// ✅ Selection Icon
                               if (selectionMode)
                                 Positioned(

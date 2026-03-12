@@ -11,11 +11,11 @@ extension LabelShapeExtension on LabelShape {
       case LabelShape.rectangle:
         return "assets/templates/rectangle/4.svg";
       case LabelShape.round:
-        return "assets/templates/round/4.svg";
+        return "assets/templates/round/6.svg";
       case LabelShape.oval:
         return "assets/templates/oval/4.svg";
       case LabelShape.square:
-        return "assets/templates/square/4.svg";
+        return "assets/templates/square/6.svg";
     }
   }
 

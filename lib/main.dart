@@ -8,8 +8,14 @@ import 'package:get_storage/get_storage.dart';
 import 'providers/bottom_nav_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+
+import 'providers/question_provider.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final quizProvider = QuizProvider();
+
+  await quizProvider.loadQuestions();
   await GetStorage.init(); // 👈 important
   final box = GetStorage();
   String savedLang = box.read('languageCode') ?? 'en';
@@ -18,6 +24,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => BottomNavProvider()),
         ChangeNotifierProvider(create: (context) => LabelProvider()),
+        ChangeNotifierProvider.value(value: quizProvider,),
         ChangeNotifierProvider(create: (_) => LanguageProvider(savedLang)),
         ChangeNotifierProvider(create: (_) => TranslatorProvider(savedLang)),
       ],
@@ -49,7 +56,7 @@ class MyApp extends StatelessWidget {
         // Locale('bg'),
         // Locale('my'),
         // Locale('ca'),
-        Locale('zh'),  // Chinese Simplified
+        Locale('zh'), // Chinese Simplified
         Locale('zh', 'TW'), // Chinese Traditional
         // Locale('zh', 'CN'), // Chinese Simplified
         // Locale('zh', 'TW'), // Chinese Traditional
@@ -112,13 +119,12 @@ class MyApp extends StatelessWidget {
         // Locale('zu'),
       ],
       localizationsDelegates: const [
-         FlutterQuillLocalizations.delegate,
+        FlutterQuillLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       theme: ThemeData(
-     
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const SplashScreen(),

@@ -8,10 +8,12 @@ import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:smart_scanner/const/color.dart';
-import 'package:smart_scanner/format_selection_screen.dart';
+import 'package:smart_scanner/screens/format_selection_screen.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:smart_scanner/widgets/snack_bar_helper.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
+
+import '../widgets/custom_appbar.dart';
 // ---------------- FRAME SELECTION SCREEN ----------------
 
 class FrameSelectionScreen extends StatefulWidget {
@@ -43,32 +45,7 @@ class _FrameSelectionScreenState extends State<FrameSelectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffEDEDED),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent, // same as appbar
-          statusBarIconBrightness: Brightness.dark, // dark icons
-          statusBarBrightness: Brightness.light,
-        ),
-        foregroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_new, size: 24, color: Colors.black),
-        ),
-        title: const TrText(
-          'select_frame',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: true,
-      ),
+      appBar: CustomAppBar(title: 'select_frame', ),
       body: Column(
         children: [
           const SizedBox(height: 20),
@@ -296,31 +273,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffEDEDED),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent, // same as appbar
-          statusBarIconBrightness: Brightness.dark, // dark icons
-          statusBarBrightness: Brightness.light,
-        ),
-        foregroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_new, size: 24, color: Colors.black),
-        ),
-        title: const TrText(
-          'preview',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: true,
+      appBar: CustomAppBar(title: 'preview', 
         actions: [
           IconButton(
             icon: const Icon(Icons.print, size: 24, color: Colors.black),

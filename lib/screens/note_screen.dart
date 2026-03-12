@@ -7,8 +7,10 @@ import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:smart_scanner/format_selection_screen.dart';
+import 'package:smart_scanner/screens/format_selection_screen.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
+
+import '../widgets/custom_appbar.dart';
 
 class NotesScreen extends StatefulWidget {
   const NotesScreen({super.key});
@@ -136,31 +138,7 @@ class _NotesScreenState extends State<NotesScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent, // same as appbar
-          statusBarIconBrightness: Brightness.dark, // dark icons
-          statusBarBrightness: Brightness.light,
-        ),
-        foregroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_new, size: 24, color: Colors.black),
-        ),
-        title: const TrText(
-          'note',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: true,
+      appBar: CustomAppBar(title: 'note', 
         actions: [
           IconButton(
             icon: const Icon(Icons.print, size: 28, color: Colors.black),

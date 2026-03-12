@@ -4,21 +4,23 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_scanner/camera_preview_screen.dart';
-import 'package:smart_scanner/format_selection_screen.dart';
-import 'package:smart_scanner/frame_selection_screen.dart';
+import 'package:smart_scanner/screens/camera_preview_screen.dart';
+import 'package:smart_scanner/screens/format_selection_screen.dart';
+import 'package:smart_scanner/screens/frame_selection_screen.dart';
 import 'package:smart_scanner/pdf_preview_screen.dart';
 import 'package:smart_scanner/providers/bottom_nav_provider.dart';
 import 'package:smart_scanner/screens/gmail_scanner_screen.dart';
 import 'package:smart_scanner/screens/note_screen.dart';
-import 'package:smart_scanner/web_page_scanner_screen.dart';
+import 'package:smart_scanner/screens/web_page_scanner_screen.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 import '../models/menu_item_model.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:multicast_dns/multicast_dns.dart';
 
+import 'contacts_screen.dart';
 import 'shape_selection_screen.dart';
+import 'topic_selection_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -278,9 +280,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
 
       MenuItemModel(
-        svgPath: 'assets/homeIcons/printable.svg',
+        svgPath: 'assets/homeIcons/frame.svg',
         title: "frames",
-        color: const Color.fromRGBO(255, 246, 231, 1),
+        color: const Color.fromRGBO(248, 232, 235, 1),
         onTap: () {
           Navigator.push(
             context,
@@ -289,9 +291,9 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       MenuItemModel(
-        svgPath: 'assets/homeIcons/textOcr.svg',
+        svgPath: 'assets/homeIcons/camera.svg',
         title: "camera",
-        color: const Color.fromRGBO(237, 241, 248, 1),
+        color: const Color.fromRGBO(213, 234, 255, 1),
         onTap: openCameraScan,
       ),
 
@@ -307,30 +309,49 @@ class _HomeScreenState extends State<HomeScreen> {
       //   color: const Color.fromRGBO(237, 241, 248, 1),
       //   onTap: () {},
       // ),
-
       MenuItemModel(
         svgPath: 'assets/homeIcons/notes.svg',
         title: "notes",
         color: const Color.fromRGBO(248, 232, 235, 1),
         onTap: () {
-            Navigator.push(
+          Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const NotesScreen()),
           );
         },
       ),
+      MenuItemModel(
+        svgPath: 'assets/homeIcons/quizzes.svg',
+        title: "quizzes",
+        color: const Color.fromRGBO(224, 252, 247, 1),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const TopicSelectionScreen()),
+          );
+        },
+      ),
+      MenuItemModel(
+        svgPath: 'assets/homeIcons/contacts.svg',
+        title: "contact",
+        color: const Color.fromRGBO(255, 240, 248, 1),
+        onTap: () {
+          Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ContactsScreen(),
+      ),
+    );
+        },
+      ),
+
       // MenuItemModel(
       //   svgPath: 'assets/homeIcons/calendar.svg',
       //   title: "calendar",
       //   color: const Color.fromRGBO(249, 227, 255, 1),
       //   onTap: () {},
       // ),
-      // MenuItemModel(
-      //   svgPath: 'assets/homeIcons/quizzes.svg',
-      //   title: "quizzes",
-      //   color: const Color.fromRGBO(224, 252, 247, 1),
-      //   onTap: () {},
-      // ),
+
       // MenuItemModel(
       //   svgPath: 'assets/homeIcons/clipboard.svg',
       //   title: "clipboard",
@@ -353,12 +374,6 @@ class _HomeScreenState extends State<HomeScreen> {
       //   svgPath: 'assets/homeIcons/dropBox.svg',
       //   title: "dropbox",
       //   color: const Color.fromRGBO(213, 234, 255, 1),
-      //   onTap: () {},
-      // ),
-      // MenuItemModel(
-      //   svgPath: 'assets/homeIcons/contacts.svg',
-      //   title: "contact",
-      //   color: const Color.fromRGBO(255, 240, 248, 1),
       //   onTap: () {},
       // ),
     ];

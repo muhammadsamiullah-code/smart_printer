@@ -60,6 +60,9 @@ dependencies:
     sdk: flutter
   intl: ^0.20.2
   flutter_quill: ^11.5.0
+  flutter_contacts: ^2.0.0
+  syncfusion_flutter_pdf: ^32.2.9
+  flutter_image_compress: ^2.4.0
 dependency_overrides:
   image: ^4.1.7
 dev_dependencies:
@@ -122,6 +125,7 @@ flutter:
     - lib/language/vi.json
     - lib/language/zh_TW.json
     - lib/language/zh.json
+    - lib/questions.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

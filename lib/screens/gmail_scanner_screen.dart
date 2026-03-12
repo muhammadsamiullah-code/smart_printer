@@ -6,6 +6,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../widgets/custom_appbar.dart';
+
 class GmailScannerScreen extends StatefulWidget {
   const GmailScannerScreen({super.key});
 
@@ -31,28 +33,10 @@ class _GmailScannerScreenState extends State<GmailScannerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
          backgroundColor: const Color(0xffEDEDED),
-      appBar: AppBar(
-          backgroundColor: Colors.white,
-        surfaceTintColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent, // same as appbar
-          statusBarIconBrightness: Brightness.dark, // dark icons
-          statusBarBrightness: Brightness.light,
-        ),
-        foregroundColor: Colors.transparent,
-        title: const TrText('gmail',  style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),),
-           centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_new, size: 24, color: Colors.black),
-        ),
-        actions: [
+      appBar: CustomAppBar(
+        
+         title: 'gmail',
+         actions: [
           IconButton(
              icon: const Icon(Icons.check, size: 28, color: Colors.black),
             onPressed: () async {
@@ -68,6 +52,8 @@ class _GmailScannerScreenState extends State<GmailScannerScreen> {
           )
         ],
       ),
+        
+      
       body: Screenshot(
         controller: _screenshotController,
         child: WebViewWidget(controller: _controller),

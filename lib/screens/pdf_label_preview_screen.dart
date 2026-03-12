@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:network_info_plus/network_info_plus.dart';
@@ -13,9 +12,9 @@ import 'package:smart_scanner/models/labels_shape.dart';
 import 'package:smart_scanner/models/labels_template.dart';
 import 'package:smart_scanner/providers/labels_provider.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
-import '../format_selection_screen.dart';
+import '../widgets/custom_appbar.dart';
+import 'format_selection_screen.dart';
 import '../pdf_preview_screen.dart';
-
 
 class PdfLabelPreviewScreen extends StatefulWidget {
   const PdfLabelPreviewScreen({super.key});
@@ -99,47 +98,6 @@ class _PdfLabelPreviewScreenState extends State<PdfLabelPreviewScreen> {
         },
       ),
     );
-    // pdf.addPage(
-    //   pw.Page(
-    //     pageFormat: PdfPageFormat.a4,
-    //     margin: const pw.EdgeInsets.all(8 * PdfPageFormat.mm),
-    //     build: (context) {
-
-    //       return pw.Column(
-    //         mainAxisAlignment: pw.MainAxisAlignment.center,
-    //         children: List.generate(rows, (row) {
-
-    //           return pw.Row(
-    //             mainAxisAlignment: pw.MainAxisAlignment.center,
-    //             children: List.generate(columns, (col) {
-
-    //               int index = row * columns + col;
-
-    //               if (index >= template.perSheet) {
-    //                 return pw.SizedBox(
-    //                   width: labelW * PdfPageFormat.mm,
-    //                   height: labelH * PdfPageFormat.mm,
-    //                 );
-    //               }
-
-    //               return pw.Container(
-    //                 padding: pw.EdgeInsets.all(8),
-    //                 width: labelW * PdfPageFormat.mm,
-    //                 height: labelH * PdfPageFormat.mm,
-    //                 margin: const pw.EdgeInsets.all(2),
-    //                 child: _buildPdfLabel(template, image),
-    //               );
-
-    //             }),
-    //           );
-
-    //         }),
-    //       );
-
-    //     },
-    //   ),
-    // );
-
     return pdf.save();
   }
 
@@ -268,37 +226,16 @@ class _PdfLabelPreviewScreenState extends State<PdfLabelPreviewScreen> {
     final imageFile = provider.selectedImage!;
     final size = parseSize(template.displaySize);
     double ratio = size[0] / size[1];
-
+    if (template.shape == LabelShape.oval && template.perSheet == 4) {
+      ratio = ratio * 1.3; // adjust height
+    }
     final grid = calculateGrid(template.perSheet);
     int rows = grid[0];
     int columns = grid[1];
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent, // same as appbar
-          statusBarIconBrightness: Brightness.dark, // dark icons
-          statusBarBrightness: Brightness.light,
-        ),
-        foregroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_new, size: 24, color: Colors.black),
-        ),
-        title: const TrText(
-          "preview",
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: true,
+      appBar: CustomAppBar(
+        title: 'preview',
         actions: [
           IconButton(
             icon: _isPrinting
@@ -353,31 +290,6 @@ class _PdfLabelPreviewScreenState extends State<PdfLabelPreviewScreen> {
           ),
         ),
       ),
-      // body: Container(
-      //   padding: const EdgeInsets.all(12),
-      //   decoration: BoxDecoration(
-      //     color: Colors.white,
-      //     borderRadius: BorderRadius.circular(12),
-      //     boxShadow: [
-      //       BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(0.05)),
-      //     ],
-      //   ),
-      //   child: Center(
-      //     child: GridView.builder(
-      //       physics: const NeverScrollableScrollPhysics(),
-      //       itemCount: template.perSheet,
-      //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //         crossAxisCount: columns,
-      //         mainAxisSpacing: 4,
-      //         crossAxisSpacing: 4,
-      //         childAspectRatio: ratio,
-      //       ),
-      //       itemBuilder: (context, index) {
-      //         return _buildPreviewLabel(template, imageFile);
-      //       },
-      //     ),
-      //   ),
-      // ),
     );
   }
 

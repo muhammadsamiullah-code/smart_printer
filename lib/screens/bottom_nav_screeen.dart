@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_scanner/const/color.dart';
 import 'package:smart_scanner/providers/translator_provider.dart';
 import 'package:smart_scanner/screens/pdf_scan_view.dart';
+import 'package:smart_scanner/screens/tools_screen.dart';
 import '../providers/bottom_nav_provider.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
@@ -51,9 +52,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     // 👇 Screens ek hi dafa create hongi (important for smoothness)
     screens = [
       const HomeScreen(),
-      SizedBox(),
       // const ToolsScreen(),
-      // const ScannerScreen(),
+      SizedBox(),
       const SettingScreen(),
     ];
 
@@ -74,18 +74,15 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
             children: [
               IndexedStack(index: provider.currentIndex, children: screens),
               if (provider.isLoading)
-            Positioned.fill(
-              child: Container(
-                color: Colors.black.withOpacity(0.4),
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
+                Positioned.fill(
+                  child: Container(
+                    color: Colors.black.withOpacity(0.4),
+                    child: const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    ),
                   ),
                 ),
-              ),
-            ),
             ],
-            
           ),
 
           bottomNavigationBar: Theme(

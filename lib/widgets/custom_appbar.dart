@@ -1,24 +1,29 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:smart_scanner/widgets/tr_text.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showBackButton;
+  final List<Widget>? actions;
   final Color backgroundColor;
-  final Color titleColor;
   final Color iconColor;
-  final bool showIcon;
-  final bool useCloseIcon;
+  final double titleFontSize;
+  final FontWeight titleFontWeight;
+  final bool centerTitle;
+    final PreferredSizeWidget? bottom; // 👈 optional bottom widget
+
   const CustomAppBar({
     super.key,
     required this.title,
     this.showBackButton = true,
-    this.useCloseIcon = true,
+    this.actions,
     this.backgroundColor = Colors.transparent,
-    this.titleColor = Colors.black,
-    this.iconColor = Colors.pink,
-    this.showIcon = true,
+    this.iconColor = Colors.black,
+    this.titleFontSize = 22,
+    this.titleFontWeight = FontWeight.w600,
+    this.centerTitle = true,
+     this.bottom, // 👈 constructor
   });
 
   @override
@@ -28,38 +33,38 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor,
       surfaceTintColor: Colors.transparent,
       systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: backgroundColor, // same as appbar
-        statusBarIconBrightness: Brightness.dark, // dark icons
+        statusBarColor: backgroundColor,
+        statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light,
       ),
-      title: Row(
-        children: [
-          if (showBackButton)
-            GestureDetector(
-              onTap: () {
+      foregroundColor: Colors.transparent,
+      leading: showBackButton
+          ? IconButton(
+              onPressed: () {
                 Navigator.pop(context);
               },
-              child: Icon(
-                useCloseIcon ? Icons.close : Icons.arrow_back_ios_new,
-                size: 18,
-                color: Colors.white,
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                size: 24,
+                color: iconColor,
               ),
-            ),
-          if (showBackButton) const SizedBox(width: 16),
-          Text(
-            title,
-            style: TextStyle(
-              color: titleColor,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-         
-        ],
+            )
+          : null,
+      title: TrText(
+        title,
+        style: TextStyle(
+          fontSize: titleFontSize,
+          fontWeight: titleFontWeight,
+          color: iconColor,
+        ),
       ),
+      centerTitle: centerTitle,
+      actions: actions,
+      bottom: bottom,
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize =>
+      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 0));
 }

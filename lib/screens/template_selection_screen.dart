@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,8 +12,9 @@ import 'package:smart_scanner/providers/translator_provider.dart';
 import 'package:smart_scanner/screens/pdf_label_preview_screen.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:smart_scanner/widgets/snack_bar_helper.dart';
-import 'package:smart_scanner/widgets/tr_text.dart';
 import 'package:image/image.dart' as img;
+
+import '../widgets/custom_appbar.dart';
 
 class TemplateSelectionScreen extends StatefulWidget {
   const TemplateSelectionScreen({super.key});
@@ -342,32 +342,7 @@ class _TemplateSelectionScreenState extends State<TemplateSelectionScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xffEDEDED),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent, // same as appbar
-          statusBarIconBrightness: Brightness.dark, // dark icons
-          statusBarBrightness: Brightness.light,
-        ),
-        foregroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_new, size: 24, color: Colors.black),
-        ),
-        title: const TrText(
-          "select_label_template",
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: true,
-      ),
+      appBar: CustomAppBar(title: 'select_label_template'),
       body: Column(
         children: [
           /// GRID
@@ -408,12 +383,12 @@ class _TemplateSelectionScreenState extends State<TemplateSelectionScreen> {
                         ),
                         child: Column(
                           children: [
-                            // Expanded(
-                            //   child: SvgPicture.asset(
-                            //     template.svgPath,
-                            //     fit: BoxFit.contain,
-                            //   ),
-                            // ),
+                            Expanded(
+                              child: SvgPicture.asset(
+                                template.svgPath,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
                             const SizedBox(height: 8),
 
                             Text(
@@ -429,13 +404,6 @@ class _TemplateSelectionScreenState extends State<TemplateSelectionScreen> {
                                 color: Colors.black,
                               ),
                             ),
-                            // Text(
-                            //   "${template.widthInch}\" x ${template.heightInch}\"",
-                            //   style: const TextStyle(
-                            //     fontSize: 12,
-                            //     color: Colors.grey,
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),

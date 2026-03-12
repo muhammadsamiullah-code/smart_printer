@@ -1,17 +1,32 @@
-<svg width="125" height="211" viewBox="0 0 125 211" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="19.5" cy="19.5" r="19.5" fill="#0A4D92"/>
-<circle cx="62.5" cy="19.5" r="19.5" fill="#0A4D92"/>
-<circle cx="105.5" cy="19.5" r="19.5" fill="#0A4D92"/>
-<circle cx="62.5" cy="62.5" r="19.5" fill="#0A4D92"/>
-<circle cx="19.5" cy="62.5" r="19.5" fill="#0A4D92"/>
-<circle cx="62.5" cy="105.5" r="19.5" fill="#0A4D92"/>
-<circle cx="105.5" cy="62.5" r="19.5" fill="#0A4D92"/>
-<circle cx="62.5" cy="148.5" r="19.5" fill="#0A4D92"/>
-<circle cx="62.5" cy="191.5" r="19.5" fill="#0A4D92"/>
-<circle cx="19.5" cy="105.5" r="19.5" fill="#0A4D92"/>
-<circle cx="19.5" cy="148.5" r="19.5" fill="#0A4D92"/>
-<circle cx="105.5" cy="148.5" r="19.5" fill="#0A4D92"/>
-<circle cx="105.5" cy="105.5" r="19.5" fill="#0A4D92"/>
-<circle cx="19.5" cy="191.5" r="19.5" fill="#0A4D92"/>
-<circle cx="105.5" cy="191.5" r="19.5" fill="#0A4D92"/>
+<svg width="76" height="128" viewBox="0 0 76 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="12" r="11.5" stroke="#0A4D92"/>
+<circle cx="12" cy="12" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="38" cy="12" r="11.5" stroke="#0A4D92"/>
+<circle cx="38" cy="12" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="64" cy="12" r="11.5" stroke="#0A4D92"/>
+<circle cx="64" cy="12" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="12" cy="38" r="11.5" stroke="#0A4D92"/>
+<circle cx="12" cy="38" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="38" cy="38" r="11.5" stroke="#0A4D92"/>
+<circle cx="38" cy="38" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="64" cy="38" r="11.5" stroke="#0A4D92"/>
+<circle cx="64" cy="38" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="12" cy="64" r="11.5" stroke="#0A4D92"/>
+<circle cx="12" cy="64" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="38" cy="64" r="11.5" stroke="#0A4D92"/>
+<circle cx="38" cy="64" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="64" cy="64" r="11.5" stroke="#0A4D92"/>
+<circle cx="64" cy="64" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="12" cy="90" r="11.5" stroke="#0A4D92"/>
+<circle cx="12" cy="90" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="38" cy="90" r="11.5" stroke="#0A4D92"/>
+<circle cx="38" cy="90" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="64" cy="90" r="11.5" stroke="#0A4D92"/>
+<circle cx="64" cy="90" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="12" cy="116" r="11.5" stroke="#0A4D92"/>
+<circle cx="12" cy="116" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="38" cy="116" r="11.5" stroke="#0A4D92"/>
+<circle cx="38" cy="116" r="11.5" stroke="black" stroke-opacity="0.2"/>
+<circle cx="64" cy="116" r="11.5" stroke="#0A4D92"/>
+<circle cx="64" cy="116" r="11.5" stroke="black" stroke-opacity="0.2"/>
 </svg>

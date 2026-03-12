@@ -17,6 +17,8 @@ import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:smart_scanner/widgets/snack_bar_helper.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 
+import '../widgets/custom_appbar.dart';
+
 class FormatSelectionScreen extends StatefulWidget {
   const FormatSelectionScreen({super.key});
 
@@ -100,32 +102,7 @@ class _FormatSelectionScreenState extends State<FormatSelectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffEDEDED),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent, // same as appbar
-          statusBarIconBrightness: Brightness.dark, // dark icons
-          statusBarBrightness: Brightness.light,
-        ),
-        foregroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_new, size: 24, color: Colors.black),
-        ),
-        title: const TrText(
-          "select_photo_layout",
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: true,
-      ),
+      appBar:  CustomAppBar(title: 'select_photo_layout', ),
       body: Column(
         children: [
           Expanded(

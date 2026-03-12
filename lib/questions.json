@@ -1,0 +1,3082 @@
+[
+    {
+        "topic": "Sport",
+        "question": "Which sport uses a bat and a ball?",
+        "options": [
+            "Football",
+            "Cricket",
+            "Hockey",
+            "Tennis"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Sport",
+        "question": "How many players are there in a football (soccer) team on the field?",
+        "options": [
+            "9",
+            "10",
+            "11",
+            "12"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Sport",
+        "question": "Which sport is played at Wimbledon?",
+        "options": [
+            "Basketball",
+            "Tennis",
+            "Cricket",
+            "Rugby"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Sport",
+        "question": "In which sport would you perform a slam dunk?",
+        "options": [
+            "Volleyball",
+            "Basketball",
+            "Baseball",
+            "Rugby"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Sport",
+        "question": "Which country hosted the 2016 Summer Olympics?",
+        "options": [
+            "China",
+            "Brazil",
+            "Japan",
+            "UK"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Sport",
+        "question": "What is the national sport of Pakistan?",
+        "options": [
+            "Cricket",
+            "Hockey",
+            "Football",
+            "Squash"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Sport",
+        "question": "Which sport uses a shuttlecock?",
+        "options": [
+            "Tennis",
+            "Badminton",
+            "Table Tennis",
+            "Squash"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Sport",
+        "question": "How long is a standard marathon?",
+        "options": [
+            "26.2 miles",
+            "20 miles",
+            "30 miles",
+            "15 miles"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Sport",
+        "question": "Which sport is associated with the term 'home run'?",
+        "options": [
+            "Cricket",
+            "Baseball",
+            "Football",
+            "Hockey"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Sport",
+        "question": "How many rings are in the Olympic symbol?",
+        "options": [
+            "4",
+            "5",
+            "6",
+            "7"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Sport",
+        "question": "Which sport is known as the 'king of sports'?",
+        "options": [
+            "Cricket",
+            "Football (Soccer)",
+            "Tennis",
+            "Basketball"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Sport",
+        "question": "Which equipment is used in golf?",
+        "options": [
+            "Racket",
+            "Club",
+            "Bat",
+            "Stick"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Sport",
+        "question": "In which sport do players wear skates?",
+        "options": [
+            "Ice Hockey",
+            "Cricket",
+            "Tennis",
+            "Rugby"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Sport",
+        "question": "Which sport uses a ring, gloves, and a referee?",
+        "options": [
+            "Boxing",
+            "Wrestling",
+            "Judo",
+            "Karate"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Sport",
+        "question": "Which sport is played on a diamond-shaped field?",
+        "options": [
+            "Baseball",
+            "Cricket",
+            "Football",
+            "Hockey"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Sport",
+        "question": "What is the maximum score in one frame of bowling?",
+        "options": [
+            "20",
+            "25",
+            "30",
+            "40"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Sport",
+        "question": "Which sport includes the terms 'birdie' and 'eagle'?",
+        "options": [
+            "Tennis",
+            "Golf",
+            "Cricket",
+            "Rugby"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Sport",
+        "question": "Which sport is played with a cue and balls on a table?",
+        "options": [
+            "Snooker",
+            "Tennis",
+            "Baseball",
+            "Volleyball"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Sport",
+        "question": "Which sport has the terms 'serve' and 'ace'?",
+        "options": [
+            "Basketball",
+            "Tennis",
+            "Football",
+            "Hockey"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Sport",
+        "question": "Which sport is played during the Tour de France?",
+        "options": [
+            "Running",
+            "Swimming",
+            "Cycling",
+            "Skiing"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Film",
+        "question": "What is the place where movies are shown called?",
+        "options": [
+            "Stadium",
+            "Cinema",
+            "Library",
+            "Museum"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Film",
+        "question": "Who directs a film?",
+        "options": [
+            "Producer",
+            "Writer",
+            "Director",
+            "Editor"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Film",
+        "question": "What do we call the main character in a film?",
+        "options": [
+            "Villain",
+            "Hero",
+            "Actor",
+            "Writer"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Film",
+        "question": "What is the written script of a film called?",
+        "options": [
+            "Novel",
+            "Script",
+            "Essay",
+            "Dialogue"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Film",
+        "question": "Which award is famous for movies in Hollywood?",
+        "options": [
+            "Grammy",
+            "Oscar",
+            "Nobel Prize",
+            "Pulitzer"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Film",
+        "question": "What is a short preview of a movie called?",
+        "options": [
+            "Trailer",
+            "Clip",
+            "Episode",
+            "Scene"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Film",
+        "question": "Who performs the roles in a film?",
+        "options": [
+            "Directors",
+            "Actors",
+            "Editors",
+            "Producers"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Film",
+        "question": "What type of film is meant to make people laugh?",
+        "options": [
+            "Horror",
+            "Comedy",
+            "Action",
+            "Drama"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Film",
+        "question": "What genre of film is meant to scare the audience?",
+        "options": [
+            "Horror",
+            "Romance",
+            "Adventure",
+            "Comedy"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Film",
+        "question": "What do we call the background music in a film?",
+        "options": [
+            "Soundtrack",
+            "Dialogue",
+            "Voice-over",
+            "Audio clip"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Film",
+        "question": "What is the job of a film editor?",
+        "options": [
+            "Acting in scenes",
+            "Writing stories",
+            "Cutting and arranging film scenes",
+            "Directing actors"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Film",
+        "question": "Which film type is based on real events?",
+        "options": [
+            "Documentary",
+            "Fantasy",
+            "Animation",
+            "Comedy"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Film",
+        "question": "What is the animated movie style called?",
+        "options": [
+            "Animation",
+            "Action",
+            "Drama",
+            "Romance"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Film",
+        "question": "What is the first showing of a movie called?",
+        "options": [
+            "Launch",
+            "Premiere",
+            "Release",
+            "Opening"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Film",
+        "question": "What is the person who finances a film called?",
+        "options": [
+            "Director",
+            "Producer",
+            "Actor",
+            "Cameraman"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Film",
+        "question": "What type of film usually includes fights and explosions?",
+        "options": [
+            "Drama",
+            "Romance",
+            "Action",
+            "Comedy"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Film",
+        "question": "What do we call the spoken words in a film?",
+        "options": [
+            "Script",
+            "Dialogue",
+            "Story",
+            "Scene"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Film",
+        "question": "What is the visual recording of scenes done by?",
+        "options": [
+            "Cameraman",
+            "Actor",
+            "Writer",
+            "Producer"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Film",
+        "question": "What is the fictional story part of a film called?",
+        "options": [
+            "Plot",
+            "Scene",
+            "Clip",
+            "Episode"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Film",
+        "question": "What is a film made with drawings or computer graphics called?",
+        "options": [
+            "Documentary",
+            "Animation",
+            "Thriller",
+            "Drama"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Entertainment",
+        "question": "What is a common form of entertainment people watch at home?",
+        "options": [
+            "Television",
+            "Newspaper",
+            "Dictionary",
+            "Magazine"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Entertainment",
+        "question": "Which device is mainly used to listen to music?",
+        "options": [
+            "Printer",
+            "Speaker",
+            "Scanner",
+            "Router"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Entertainment",
+        "question": "Which type of entertainment involves actors performing live on stage?",
+        "options": [
+            "Cinema",
+            "Theater",
+            "Podcast",
+            "Radio"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Entertainment",
+        "question": "Which platform is popular for watching online videos?",
+        "options": [
+            "Excel",
+            "YouTube",
+            "Word",
+            "PowerPoint"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Entertainment",
+        "question": "What type of entertainment involves playing electronic games?",
+        "options": [
+            "Video Games",
+            "Novels",
+            "Painting",
+            "Blogging"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Entertainment",
+        "question": "Which activity involves listening to stories, music, or shows without video?",
+        "options": [
+            "Radio",
+            "Cinema",
+            "Theater",
+            "Painting"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Entertainment",
+        "question": "Which entertainment activity involves reading stories in books?",
+        "options": [
+            "Singing",
+            "Reading",
+            "Dancing",
+            "Acting"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Entertainment",
+        "question": "What do we call a series of episodes shown on television?",
+        "options": [
+            "Movie",
+            "TV Show",
+            "Documentary",
+            "Clip"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Entertainment",
+        "question": "Which type of entertainment includes singing and instruments?",
+        "options": [
+            "Dance",
+            "Music",
+            "Acting",
+            "Drawing"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Entertainment",
+        "question": "What is a funny TV or movie program called?",
+        "options": [
+            "Horror",
+            "Comedy",
+            "Thriller",
+            "Drama"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Entertainment",
+        "question": "Which entertainment activity involves performing dance moves to music?",
+        "options": [
+            "Painting",
+            "Dancing",
+            "Reading",
+            "Writing"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Entertainment",
+        "question": "Which entertainment activity involves watching stories on a big screen?",
+        "options": [
+            "Theater",
+            "Cinema",
+            "Library",
+            "Concert"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Entertainment",
+        "question": "What is a live music performance called?",
+        "options": [
+            "Concert",
+            "Match",
+            "Play",
+            "Lecture"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Entertainment",
+        "question": "Which entertainment platform allows streaming movies and shows online?",
+        "options": [
+            "Netflix",
+            "Excel",
+            "Notepad",
+            "Calculator"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Entertainment",
+        "question": "What type of entertainment involves people competing in fun quizzes on TV?",
+        "options": [
+            "Talk Show",
+            "Game Show",
+            "Drama",
+            "Documentary"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Entertainment",
+        "question": "What do we call a person who performs songs?",
+        "options": [
+            "Painter",
+            "Singer",
+            "Writer",
+            "Editor"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Entertainment",
+        "question": "Which entertainment activity involves telling jokes?",
+        "options": [
+            "Stand-up Comedy",
+            "Drama",
+            "Documentary",
+            "Action"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Entertainment",
+        "question": "Which entertainment activity involves drawing moving pictures?",
+        "options": [
+            "Animation",
+            "Photography",
+            "Writing",
+            "Singing"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Entertainment",
+        "question": "What type of entertainment is meant to thrill or excite the audience?",
+        "options": [
+            "Thriller",
+            "Comedy",
+            "Documentary",
+            "Biography"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Entertainment",
+        "question": "Which entertainment activity involves performing roles in movies or shows?",
+        "options": [
+            "Acting",
+            "Writing",
+            "Drawing",
+            "Editing"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Arts",
+        "question": "What is the art of making pictures using paint called?",
+        "options": [
+            "Sculpture",
+            "Painting",
+            "Acting",
+            "Dancing"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Arts",
+        "question": "Which art form involves shaping materials like clay or stone?",
+        "options": [
+            "Drawing",
+            "Sculpture",
+            "Photography",
+            "Music"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Arts",
+        "question": "What do we call a person who creates paintings?",
+        "options": [
+            "Painter",
+            "Singer",
+            "Writer",
+            "Actor"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Arts",
+        "question": "Which tool is commonly used for drawing?",
+        "options": [
+            "Brush",
+            "Pencil",
+            "Hammer",
+            "Drum"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Arts",
+        "question": "What type of art uses a camera to capture images?",
+        "options": [
+            "Drawing",
+            "Sculpture",
+            "Photography",
+            "Painting"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Arts",
+        "question": "What do we call the place where artworks are displayed?",
+        "options": [
+            "Library",
+            "Gallery",
+            "Stadium",
+            "Cinema"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Arts",
+        "question": "Which art form involves performing movements to music?",
+        "options": [
+            "Painting",
+            "Dancing",
+            "Drawing",
+            "Sculpture"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Arts",
+        "question": "What do we call art created using computers?",
+        "options": [
+            "Traditional Art",
+            "Digital Art",
+            "Street Art",
+            "Fine Art"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Arts",
+        "question": "Which art form involves creating images with lines and shapes?",
+        "options": [
+            "Drawing",
+            "Acting",
+            "Singing",
+            "Dancing"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Arts",
+        "question": "What is the art of beautiful handwriting called?",
+        "options": [
+            "Typography",
+            "Calligraphy",
+            "Photography",
+            "Animation"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Arts",
+        "question": "Which art form involves storytelling through acting on stage?",
+        "options": [
+            "Drama",
+            "Painting",
+            "Sculpture",
+            "Drawing"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Arts",
+        "question": "What material is commonly used in sculpture?",
+        "options": [
+            "Clay",
+            "Paper",
+            "Ink",
+            "Plastic"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Arts",
+        "question": "What do we call art painted on walls in public places?",
+        "options": [
+            "Canvas Art",
+            "Graffiti",
+            "Digital Art",
+            "Photography"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Arts",
+        "question": "Which art form involves creating moving images?",
+        "options": [
+            "Animation",
+            "Sculpture",
+            "Drawing",
+            "Painting"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Arts",
+        "question": "What do we call the main idea behind a piece of art?",
+        "options": [
+            "Theme",
+            "Frame",
+            "Brush",
+            "Color"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Arts",
+        "question": "Which art tool is used to apply paint on canvas?",
+        "options": [
+            "Knife",
+            "Brush",
+            "Pencil",
+            "Marker"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Arts",
+        "question": "What type of art focuses on beauty and creativity?",
+        "options": [
+            "Fine Art",
+            "Industrial Art",
+            "Technical Art",
+            "Digital Art"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Arts",
+        "question": "What is the background setting in a painting called?",
+        "options": [
+            "Frame",
+            "Landscape",
+            "Texture",
+            "Pattern"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Arts",
+        "question": "Which art form uses fabric and thread?",
+        "options": [
+            "Embroidery",
+            "Painting",
+            "Sculpture",
+            "Photography"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Arts",
+        "question": "What do we call a person who studies or appreciates art?",
+        "options": [
+            "Artist",
+            "Art Critic",
+            "Musician",
+            "Painter"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "What is the largest ocean on Earth?",
+        "options": [
+            "Atlantic Ocean",
+            "Indian Ocean",
+            "Pacific Ocean",
+            "Arctic Ocean"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Nature",
+        "question": "What gas do plants absorb from the atmosphere?",
+        "options": [
+            "Oxygen",
+            "Carbon Dioxide",
+            "Nitrogen",
+            "Hydrogen"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "Which part of a plant makes food through photosynthesis?",
+        "options": [
+            "Root",
+            "Stem",
+            "Leaf",
+            "Flower"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Nature",
+        "question": "What is the process by which water changes into vapor?",
+        "options": [
+            "Condensation",
+            "Evaporation",
+            "Freezing",
+            "Melting"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "Which is the tallest type of grass in the world?",
+        "options": [
+            "Bamboo",
+            "Wheat",
+            "Rice",
+            "Corn"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Nature",
+        "question": "What do we call animals that eat only plants?",
+        "options": [
+            "Carnivores",
+            "Herbivores",
+            "Omnivores",
+            "Predators"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "Which natural disaster involves shaking of the ground?",
+        "options": [
+            "Flood",
+            "Earthquake",
+            "Tornado",
+            "Volcano"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "What do we call water falling from clouds?",
+        "options": [
+            "Wind",
+            "Rain",
+            "Fog",
+            "Snow"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "Which animal is known as the 'King of the Jungle'?",
+        "options": [
+            "Tiger",
+            "Lion",
+            "Elephant",
+            "Bear"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "What is the layer of gases surrounding Earth called?",
+        "options": [
+            "Biosphere",
+            "Atmosphere",
+            "Lithosphere",
+            "Hydrosphere"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "Which planet is known as the 'Blue Planet'?",
+        "options": [
+            "Mars",
+            "Earth",
+            "Venus",
+            "Jupiter"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "What do bees collect from flowers?",
+        "options": [
+            "Oil",
+            "Water",
+            "Nectar",
+            "Dust"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Nature",
+        "question": "Which season comes after spring?",
+        "options": [
+            "Winter",
+            "Autumn",
+            "Summer",
+            "Monsoon"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Nature",
+        "question": "What do we call a group of trees growing together?",
+        "options": [
+            "Garden",
+            "Forest",
+            "Field",
+            "Farm"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "Which bird cannot fly?",
+        "options": [
+            "Eagle",
+            "Sparrow",
+            "Penguin",
+            "Parrot"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Nature",
+        "question": "What is frozen water called?",
+        "options": [
+            "Steam",
+            "Ice",
+            "Fog",
+            "Rain"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "What do we call animals that eat other animals?",
+        "options": [
+            "Herbivores",
+            "Carnivores",
+            "Omnivores",
+            "Insects"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "Which natural feature is a very large body of water surrounded by land?",
+        "options": [
+            "River",
+            "Lake",
+            "Ocean",
+            "Pond"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "What do we call the young of a frog?",
+        "options": [
+            "Larva",
+            "Tadpole",
+            "Chick",
+            "Cub"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Nature",
+        "question": "Which natural source provides light and heat to Earth?",
+        "options": [
+            "Moon",
+            "Stars",
+            "Sun",
+            "Fire"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "History",
+        "question": "Who was the first President of the United States?",
+        "options": [
+            "Abraham Lincoln",
+            "George Washington",
+            "Thomas Jefferson",
+            "John Adams"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "History",
+        "question": "In which year did World War II end?",
+        "options": [
+            "1943",
+            "1944",
+            "1945",
+            "1946"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "History",
+        "question": "Who discovered America in 1492?",
+        "options": [
+            "Christopher Columbus",
+            "Vasco da Gama",
+            "Ferdinand Magellan",
+            "Marco Polo"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "History",
+        "question": "Which ancient civilization built the pyramids?",
+        "options": [
+            "Romans",
+            "Greeks",
+            "Egyptians",
+            "Persians"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "History",
+        "question": "Who was known as the 'Father of the Nation' in India?",
+        "options": [
+            "Jawaharlal Nehru",
+            "Mahatma Gandhi",
+            "Subhas Chandra Bose",
+            "Bhagat Singh"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "History",
+        "question": "Which wall divided Berlin from 1961 to 1989?",
+        "options": [
+            "China Wall",
+            "Berlin Wall",
+            "Roman Wall",
+            "Iron Wall"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "History",
+        "question": "Who was the first man to walk on the Moon?",
+        "options": [
+            "Buzz Aldrin",
+            "Neil Armstrong",
+            "Yuri Gagarin",
+            "Michael Collins"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "History",
+        "question": "Which war was fought between the North and South regions in the United States?",
+        "options": [
+            "World War I",
+            "Civil War",
+            "Cold War",
+            "Vietnam War"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "History",
+        "question": "Who was the famous queen of ancient Egypt?",
+        "options": [
+            "Cleopatra",
+            "Victoria",
+            "Elizabeth",
+            "Mary"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "History",
+        "question": "Which empire was ruled by Julius Caesar?",
+        "options": [
+            "Greek Empire",
+            "Roman Empire",
+            "Ottoman Empire",
+            "Persian Empire"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "History",
+        "question": "What ship famously sank in 1912 after hitting an iceberg?",
+        "options": [
+            "Britannic",
+            "Titanic",
+            "Lusitania",
+            "Queen Mary"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "History",
+        "question": "Who was the first Emperor of China?",
+        "options": [
+            "Qin Shi Huang",
+            "Sun Yat-sen",
+            "Mao Zedong",
+            "Kublai Khan"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "History",
+        "question": "In which country did the Renaissance begin?",
+        "options": [
+            "France",
+            "Italy",
+            "Germany",
+            "Spain"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "History",
+        "question": "Who led the civil rights movement in the United States during the 1960s?",
+        "options": [
+            "Malcolm X",
+            "Martin Luther King Jr.",
+            "Barack Obama",
+            "Frederick Douglass"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "History",
+        "question": "What was the name of the trade route connecting Europe and Asia?",
+        "options": [
+            "Spice Road",
+            "Silk Road",
+            "Gold Route",
+            "Royal Road"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "History",
+        "question": "Which country was ruled by Adolf Hitler during World War II?",
+        "options": [
+            "Italy",
+            "Germany",
+            "France",
+            "Japan"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "History",
+        "question": "Who invented the telephone?",
+        "options": [
+            "Thomas Edison",
+            "Alexander Graham Bell",
+            "Nikola Tesla",
+            "Guglielmo Marconi"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "History",
+        "question": "Which empire was known for its gladiators?",
+        "options": [
+            "Roman Empire",
+            "Greek Empire",
+            "Ottoman Empire",
+            "Mongol Empire"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "History",
+        "question": "When did World War I begin?",
+        "options": [
+            "1912",
+            "1914",
+            "1916",
+            "1918"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "History",
+        "question": "Who was the leader of the Mongol Empire?",
+        "options": [
+            "Attila the Hun",
+            "Genghis Khan",
+            "Kublai Khan",
+            "Timur"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Leisure",
+        "question": "What does the word 'leisure' mean?",
+        "options": [
+            "Work time",
+            "Free time for relaxation",
+            "Study time",
+            "Travel time"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which activity is commonly done during leisure time?",
+        "options": [
+            "Sleeping in class",
+            "Playing games",
+            "Working in an office",
+            "Taking exams"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which of the following is a popular leisure activity?",
+        "options": [
+            "Watching movies",
+            "Doing homework",
+            "Cleaning offices",
+            "Attending meetings"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which activity helps people relax in their leisure time?",
+        "options": [
+            "Meditation",
+            "Studying",
+            "Office work",
+            "Writing reports"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which outdoor activity is often done for leisure?",
+        "options": [
+            "Hiking",
+            "Filing documents",
+            "Driving a truck",
+            "Typing reports"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "What is a hobby?",
+        "options": [
+            "A type of job",
+            "An activity done for fun in free time",
+            "A school subject",
+            "A type of business"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which activity involves reading for enjoyment?",
+        "options": [
+            "Studying",
+            "Reading novels",
+            "Writing exams",
+            "Researching"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which leisure activity involves creativity?",
+        "options": [
+            "Painting",
+            "Accounting",
+            "Filing papers",
+            "Data entry"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which place do people often visit for leisure?",
+        "options": [
+            "Park",
+            "Office",
+            "Factory",
+            "Warehouse"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which activity involves listening to music for enjoyment?",
+        "options": [
+            "Broadcasting",
+            "Music streaming",
+            "Audio editing",
+            "Recording"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Leisure",
+        "question": "What do people often do at the beach during leisure time?",
+        "options": [
+            "Swim",
+            "Work",
+            "Study",
+            "Write reports"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which indoor activity is popular for relaxation?",
+        "options": [
+            "Video gaming",
+            "Office meetings",
+            "File management",
+            "Accounting"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which activity involves growing plants for enjoyment?",
+        "options": [
+            "Gardening",
+            "Farming work",
+            "Construction",
+            "Manufacturing"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which activity involves traveling to relax?",
+        "options": [
+            "Vacation",
+            "Commuting",
+            "Business trip",
+            "Delivery"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which activity involves watching performances on stage?",
+        "options": [
+            "Theater",
+            "Lecture",
+            "Meeting",
+            "Training"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which activity involves capturing pictures as a hobby?",
+        "options": [
+            "Photography",
+            "Editing",
+            "Printing",
+            "Designing"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which activity involves solving puzzles for fun?",
+        "options": [
+            "Puzzle games",
+            "Programming",
+            "Research",
+            "Analysis"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which leisure activity is good for physical fitness?",
+        "options": [
+            "Jogging",
+            "Sitting in meetings",
+            "Writing reports",
+            "Filing documents"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which activity involves socializing with friends in free time?",
+        "options": [
+            "Hanging out",
+            "Office work",
+            "Training",
+            "Studying"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Leisure",
+        "question": "Which board game is often played during leisure time?",
+        "options": [
+            "Chess",
+            "Accounting",
+            "Typing",
+            "Filing"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Television",
+        "question": "What does TV stand for?",
+        "options": [
+            "Total Video",
+            "Television",
+            "Time Vision",
+            "Tele View"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Television",
+        "question": "Which device is used to control a television from a distance?",
+        "options": [
+            "Keyboard",
+            "Remote Control",
+            "Mouse",
+            "Speaker"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Television",
+        "question": "What do we call a series of episodes shown on television?",
+        "options": [
+            "Movie",
+            "TV Show",
+            "Program",
+            "Advertisement"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Television",
+        "question": "What type of TV program shows current events and information?",
+        "options": [
+            "News",
+            "Cartoon",
+            "Drama",
+            "Game show"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Television",
+        "question": "Which TV program is designed mainly for children?",
+        "options": [
+            "Cartoon",
+            "Documentary",
+            "News",
+            "Talk show"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Television",
+        "question": "What do we call a short promotional video shown between TV programs?",
+        "options": [
+            "Trailer",
+            "Advertisement",
+            "Episode",
+            "Broadcast"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Television",
+        "question": "Which type of TV show involves answering questions to win prizes?",
+        "options": [
+            "Drama",
+            "Game Show",
+            "Documentary",
+            "Cartoon"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Television",
+        "question": "What is the person called who presents news on TV?",
+        "options": [
+            "Actor",
+            "Director",
+            "News Anchor",
+            "Producer"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Television",
+        "question": "What do we call a TV program that tells real-life stories or facts?",
+        "options": [
+            "Documentary",
+            "Drama",
+            "Comedy",
+            "Cartoon"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Television",
+        "question": "What type of TV show is meant to make people laugh?",
+        "options": [
+            "Comedy",
+            "Horror",
+            "Action",
+            "Documentary"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Television",
+        "question": "What is the screen of a television used for?",
+        "options": [
+            "Cooking",
+            "Displaying images and videos",
+            "Recording sound",
+            "Storing files"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Television",
+        "question": "What is a TV channel?",
+        "options": [
+            "A type of remote",
+            "A station that broadcasts programs",
+            "A speaker system",
+            "A type of cable"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Television",
+        "question": "What type of TV show features interviews and discussions?",
+        "options": [
+            "Talk Show",
+            "Cartoon",
+            "Drama",
+            "Game Show"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Television",
+        "question": "What type of TV program focuses on nature, history, or science?",
+        "options": [
+            "Documentary",
+            "Comedy",
+            "Soap Opera",
+            "Cartoon"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Television",
+        "question": "Which TV genre often includes emotional stories and relationships?",
+        "options": [
+            "Drama",
+            "News",
+            "Game Show",
+            "Sports"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Television",
+        "question": "What do we call the first episode of a TV series?",
+        "options": [
+            "Pilot",
+            "Trailer",
+            "Broadcast",
+            "Clip"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Television",
+        "question": "What device connects TV channels to a television?",
+        "options": [
+            "Set-top box",
+            "Keyboard",
+            "Printer",
+            "Scanner"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Television",
+        "question": "What type of TV show follows real people and their lives?",
+        "options": [
+            "Reality Show",
+            "Drama",
+            "Documentary",
+            "Cartoon"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Television",
+        "question": "What do we call watching many episodes of a TV series at once?",
+        "options": [
+            "Streaming",
+            "Binge-watching",
+            "Recording",
+            "Broadcasting"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Television",
+        "question": "What type of TV show often includes cooking demonstrations?",
+        "options": [
+            "Cooking Show",
+            "News",
+            "Drama",
+            "Cartoon"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Geography",
+        "question": "What is the largest continent on Earth?",
+        "options": [
+            "Africa",
+            "Europe",
+            "Asia",
+            "North America"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Geography",
+        "question": "Which is the largest ocean in the world?",
+        "options": [
+            "Atlantic Ocean",
+            "Indian Ocean",
+            "Pacific Ocean",
+            "Arctic Ocean"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Geography",
+        "question": "What is the capital city of Japan?",
+        "options": [
+            "Beijing",
+            "Seoul",
+            "Tokyo",
+            "Bangkok"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Geography",
+        "question": "Which river is the longest in the world?",
+        "options": [
+            "Amazon River",
+            "Nile River",
+            "Yangtze River",
+            "Mississippi River"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Geography",
+        "question": "Which desert is the largest hot desert in the world?",
+        "options": [
+            "Gobi Desert",
+            "Sahara Desert",
+            "Arabian Desert",
+            "Kalahari Desert"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Geography",
+        "question": "Mount Everest is located in which mountain range?",
+        "options": [
+            "Andes",
+            "Alps",
+            "Himalayas",
+            "Rockies"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Geography",
+        "question": "Which country has the largest population in the world?",
+        "options": [
+            "United States",
+            "China",
+            "India",
+            "Russia"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Geography",
+        "question": "Which continent is known as the 'Dark Continent'?",
+        "options": [
+            "Asia",
+            "Africa",
+            "Europe",
+            "Australia"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Geography",
+        "question": "Which country is famous for the Great Wall?",
+        "options": [
+            "Japan",
+            "India",
+            "China",
+            "Korea"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Geography",
+        "question": "Which continent is the smallest?",
+        "options": [
+            "Europe",
+            "Australia",
+            "Antarctica",
+            "South America"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Geography",
+        "question": "What is the capital of Canada?",
+        "options": [
+            "Toronto",
+            "Ottawa",
+            "Vancouver",
+            "Montreal"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Geography",
+        "question": "Which ocean is located between Africa and Australia?",
+        "options": [
+            "Pacific Ocean",
+            "Atlantic Ocean",
+            "Indian Ocean",
+            "Arctic Ocean"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Geography",
+        "question": "Which country has the largest land area in the world?",
+        "options": [
+            "USA",
+            "China",
+            "Russia",
+            "Canada"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Geography",
+        "question": "Which river flows through Egypt?",
+        "options": [
+            "Amazon",
+            "Nile",
+            "Yangtze",
+            "Danube"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Geography",
+        "question": "Which continent is the coldest on Earth?",
+        "options": [
+            "Europe",
+            "Antarctica",
+            "Asia",
+            "North America"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Geography",
+        "question": "What is the capital of Australia?",
+        "options": [
+            "Sydney",
+            "Melbourne",
+            "Canberra",
+            "Perth"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Geography",
+        "question": "Which mountain is the highest in the world?",
+        "options": [
+            "K2",
+            "Mount Everest",
+            "Kangchenjunga",
+            "Lhotse"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Geography",
+        "question": "Which country is known as the Land of the Rising Sun?",
+        "options": [
+            "China",
+            "Japan",
+            "Thailand",
+            "South Korea"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Geography",
+        "question": "Which sea separates Europe and Africa?",
+        "options": [
+            "Black Sea",
+            "Red Sea",
+            "Mediterranean Sea",
+            "Arabian Sea"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Geography",
+        "question": "Which continent has the most countries?",
+        "options": [
+            "Asia",
+            "Africa",
+            "Europe",
+            "South America"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Science",
+        "question": "What is the chemical symbol for water?",
+        "options": [
+            "O2",
+            "H2O",
+            "CO2",
+            "HO"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Science",
+        "question": "Which planet is known as the Red Planet?",
+        "options": [
+            "Venus",
+            "Mars",
+            "Jupiter",
+            "Mercury"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Science",
+        "question": "What gas do humans need to breathe?",
+        "options": [
+            "Nitrogen",
+            "Oxygen",
+            "Carbon dioxide",
+            "Hydrogen"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Science",
+        "question": "Which part of the human body pumps blood?",
+        "options": [
+            "Brain",
+            "Liver",
+            "Heart",
+            "Kidney"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Science",
+        "question": "What is the center of our solar system?",
+        "options": [
+            "Earth",
+            "Moon",
+            "Sun",
+            "Mars"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Science",
+        "question": "Which organ helps humans breathe?",
+        "options": [
+            "Heart",
+            "Lungs",
+            "Brain",
+            "Liver"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Science",
+        "question": "What force pulls objects toward the Earth?",
+        "options": [
+            "Magnetism",
+            "Gravity",
+            "Electricity",
+            "Friction"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Science",
+        "question": "What is the boiling point of water at sea level?",
+        "options": [
+            "50°C",
+            "75°C",
+            "100°C",
+            "120°C"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Science",
+        "question": "Which vitamin do we get from sunlight?",
+        "options": [
+            "Vitamin A",
+            "Vitamin B",
+            "Vitamin C",
+            "Vitamin D"
+        ],
+        "correctIndex": 3
+    },
+    {
+        "topic": "Science",
+        "question": "Which gas do plants absorb from the air?",
+        "options": [
+            "Oxygen",
+            "Nitrogen",
+            "Carbon dioxide",
+            "Hydrogen"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Science",
+        "question": "What is the largest planet in our solar system?",
+        "options": [
+            "Earth",
+            "Mars",
+            "Jupiter",
+            "Saturn"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Science",
+        "question": "What part of the plant absorbs water from the soil?",
+        "options": [
+            "Leaf",
+            "Root",
+            "Stem",
+            "Flower"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Science",
+        "question": "What is the freezing point of water?",
+        "options": [
+            "0°C",
+            "10°C",
+            "20°C",
+            "32°C"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Science",
+        "question": "Which scientist developed the theory of gravity?",
+        "options": [
+            "Albert Einstein",
+            "Isaac Newton",
+            "Galileo Galilei",
+            "Nikola Tesla"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Science",
+        "question": "Which planet is closest to the Sun?",
+        "options": [
+            "Mercury",
+            "Venus",
+            "Earth",
+            "Mars"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Science",
+        "question": "What is the process by which plants make food?",
+        "options": [
+            "Respiration",
+            "Digestion",
+            "Photosynthesis",
+            "Absorption"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Science",
+        "question": "What gas do humans breathe out?",
+        "options": [
+            "Oxygen",
+            "Nitrogen",
+            "Carbon dioxide",
+            "Hydrogen"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Science",
+        "question": "What is the main source of energy for Earth?",
+        "options": [
+            "Moon",
+            "Sun",
+            "Wind",
+            "Water"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Science",
+        "question": "What do we call animals that eat both plants and meat?",
+        "options": [
+            "Herbivores",
+            "Carnivores",
+            "Omnivores",
+            "Insects"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Science",
+        "question": "What is the hardest natural substance on Earth?",
+        "options": [
+            "Iron",
+            "Gold",
+            "Diamond",
+            "Silver"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Literature",
+        "question": "Who wrote the play 'Romeo and Juliet'?",
+        "options": [
+            "Charles Dickens",
+            "William Shakespeare",
+            "Mark Twain",
+            "Jane Austen"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Literature",
+        "question": "Who wrote the novel 'Pride and Prejudice'?",
+        "options": [
+            "Jane Austen",
+            "Emily Brontë",
+            "Charles Dickens",
+            "George Eliot"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Literature",
+        "question": "What is a poem that tells a story called?",
+        "options": [
+            "Ballad",
+            "Sonnet",
+            "Haiku",
+            "Limerick"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Literature",
+        "question": "Who wrote 'Oliver Twist'?",
+        "options": [
+            "Charles Dickens",
+            "Mark Twain",
+            "Leo Tolstoy",
+            "Victor Hugo"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Literature",
+        "question": "What is the main character of a story called?",
+        "options": [
+            "Antagonist",
+            "Protagonist",
+            "Narrator",
+            "Author"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Literature",
+        "question": "Who wrote the famous epic 'The Odyssey'?",
+        "options": [
+            "Homer",
+            "Plato",
+            "Aristotle",
+            "Socrates"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Literature",
+        "question": "What is a short fictional story called?",
+        "options": [
+            "Novel",
+            "Drama",
+            "Short story",
+            "Essay"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Literature",
+        "question": "Who wrote 'Harry Potter'?",
+        "options": [
+            "J.R.R. Tolkien",
+            "J.K. Rowling",
+            "C.S. Lewis",
+            "Stephen King"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Literature",
+        "question": "What do we call a written work that tells a long story?",
+        "options": [
+            "Poem",
+            "Essay",
+            "Novel",
+            "Speech"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Literature",
+        "question": "Who wrote the play 'Hamlet'?",
+        "options": [
+            "William Shakespeare",
+            "George Bernard Shaw",
+            "Oscar Wilde",
+            "Arthur Miller"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Literature",
+        "question": "What is the person who writes a book called?",
+        "options": [
+            "Reader",
+            "Author",
+            "Editor",
+            "Publisher"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Literature",
+        "question": "Which novel was written by George Orwell?",
+        "options": [
+            "1984",
+            "Dracula",
+            "Frankenstein",
+            "Moby Dick"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Literature",
+        "question": "What type of literature is written to be performed on stage?",
+        "options": [
+            "Poetry",
+            "Drama",
+            "Novel",
+            "Essay"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Literature",
+        "question": "Who wrote 'The Adventures of Tom Sawyer'?",
+        "options": [
+            "Mark Twain",
+            "Charles Dickens",
+            "Robert Louis Stevenson",
+            "Herman Melville"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Literature",
+        "question": "What is a poem with 14 lines called?",
+        "options": [
+            "Haiku",
+            "Ballad",
+            "Sonnet",
+            "Ode"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Literature",
+        "question": "Who wrote the novel 'Moby Dick'?",
+        "options": [
+            "Herman Melville",
+            "Nathaniel Hawthorne",
+            "Edgar Allan Poe",
+            "Mark Twain"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Literature",
+        "question": "What is the opposite of the protagonist in a story?",
+        "options": [
+            "Narrator",
+            "Author",
+            "Antagonist",
+            "Editor"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Literature",
+        "question": "Who wrote 'The Great Gatsby'?",
+        "options": [
+            "Ernest Hemingway",
+            "F. Scott Fitzgerald",
+            "John Steinbeck",
+            "William Faulkner"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Literature",
+        "question": "What type of poem has three lines and follows a 5-7-5 syllable pattern?",
+        "options": [
+            "Sonnet",
+            "Limerick",
+            "Haiku",
+            "Ode"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Literature",
+        "question": "Who wrote 'Alice’s Adventures in Wonderland'?",
+        "options": [
+            "Lewis Carroll",
+            "J.M. Barrie",
+            "Roald Dahl",
+            "Rudyard Kipling"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "What ingredient is mainly used to make bread?",
+        "options": [
+            "Rice",
+            "Flour",
+            "Corn",
+            "Oats"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which kitchen appliance is used to bake cakes?",
+        "options": [
+            "Refrigerator",
+            "Oven",
+            "Blender",
+            "Toaster"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which vegetable is commonly used to make French fries?",
+        "options": [
+            "Carrot",
+            "Potato",
+            "Onion",
+            "Cabbage"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "What is the main ingredient in an omelet?",
+        "options": [
+            "Milk",
+            "Egg",
+            "Cheese",
+            "Butter"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which spice is known for its yellow color and is used in curry?",
+        "options": [
+            "Turmeric",
+            "Pepper",
+            "Cinnamon",
+            "Clove"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which cooking method uses hot oil?",
+        "options": [
+            "Boiling",
+            "Frying",
+            "Steaming",
+            "Baking"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which fruit is used to make orange juice?",
+        "options": [
+            "Apple",
+            "Mango",
+            "Orange",
+            "Pineapple"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "What dairy product is used to make cheese?",
+        "options": [
+            "Milk",
+            "Butter",
+            "Cream",
+            "Yogurt"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which grain is used to make pasta?",
+        "options": [
+            "Wheat",
+            "Rice",
+            "Corn",
+            "Barley"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which utensil is used to cut food?",
+        "options": [
+            "Spoon",
+            "Knife",
+            "Fork",
+            "Plate"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which ingredient is used to sweeten food?",
+        "options": [
+            "Salt",
+            "Sugar",
+            "Pepper",
+            "Vinegar"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "What is the process of cooking food in water called?",
+        "options": [
+            "Frying",
+            "Baking",
+            "Boiling",
+            "Grilling"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which fruit is known as the 'King of Fruits'?",
+        "options": [
+            "Apple",
+            "Banana",
+            "Mango",
+            "Orange"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which kitchen tool is used to mix ingredients?",
+        "options": [
+            "Whisk",
+            "Knife",
+            "Fork",
+            "Plate"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which food is made from fermented milk?",
+        "options": [
+            "Bread",
+            "Yogurt",
+            "Rice",
+            "Pasta"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which cooking method uses direct heat over fire?",
+        "options": [
+            "Grilling",
+            "Boiling",
+            "Steaming",
+            "Simmering"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which vegetable is commonly used in salads?",
+        "options": [
+            "Lettuce",
+            "Potato",
+            "Pumpkin",
+            "Eggplant"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which spice is commonly used to add heat and spiciness to food?",
+        "options": [
+            "Chili",
+            "Sugar",
+            "Salt",
+            "Cinnamon"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "What do we call a professional cook in a restaurant?",
+        "options": [
+            "Baker",
+            "Chef",
+            "Waiter",
+            "Manager"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Food & Cooking",
+        "question": "Which food is made from ground meat and often grilled?",
+        "options": [
+            "Burger",
+            "Pizza",
+            "Pasta",
+            "Salad"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal is known as the largest land animal?",
+        "options": [
+            "Giraffe",
+            "Elephant",
+            "Rhino",
+            "Hippo"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal is known as the fastest land animal?",
+        "options": [
+            "Lion",
+            "Horse",
+            "Cheetah",
+            "Tiger"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which bird is known for its ability to mimic human speech?",
+        "options": [
+            "Eagle",
+            "Parrot",
+            "Owl",
+            "Sparrow"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "What do we call animals that eat only plants?",
+        "options": [
+            "Carnivores",
+            "Herbivores",
+            "Omnivores",
+            "Predators"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal is known as the 'King of the Jungle'?",
+        "options": [
+            "Tiger",
+            "Lion",
+            "Leopard",
+            "Jaguar"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal has the longest neck?",
+        "options": [
+            "Horse",
+            "Giraffe",
+            "Camel",
+            "Zebra"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "What is a baby dog called?",
+        "options": [
+            "Cub",
+            "Puppy",
+            "Calf",
+            "Kitten"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal is known for building dams in rivers?",
+        "options": [
+            "Otter",
+            "Beaver",
+            "Crocodile",
+            "Seal"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal is the largest mammal in the world?",
+        "options": [
+            "Elephant",
+            "Blue Whale",
+            "Shark",
+            "Giraffe"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which bird cannot fly?",
+        "options": [
+            "Eagle",
+            "Penguin",
+            "Sparrow",
+            "Crow"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal is famous for its black and white stripes?",
+        "options": [
+            "Tiger",
+            "Zebra",
+            "Panda",
+            "Leopard"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal is known for changing its color to blend with surroundings?",
+        "options": [
+            "Frog",
+            "Chameleon",
+            "Lizard",
+            "Snake"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal is known for carrying its baby in a pouch?",
+        "options": [
+            "Kangaroo",
+            "Monkey",
+            "Panda",
+            "Bear"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal is the largest reptile in the world?",
+        "options": [
+            "Crocodile",
+            "Snake",
+            "Turtle",
+            "Lizard"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which bird is known for its colorful tail feathers?",
+        "options": [
+            "Peacock",
+            "Swan",
+            "Flamingo",
+            "Duck"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "What do we call animals that eat both plants and meat?",
+        "options": [
+            "Herbivores",
+            "Carnivores",
+            "Omnivores",
+            "Predators"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal is known for its slow movement and shell?",
+        "options": [
+            "Turtle",
+            "Snake",
+            "Frog",
+            "Rabbit"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal sleeps during the day and hunts at night?",
+        "options": [
+            "Owl",
+            "Eagle",
+            "Sparrow",
+            "Parrot"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal is known as the tallest animal in the world?",
+        "options": [
+            "Elephant",
+            "Giraffe",
+            "Camel",
+            "Horse"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Animals & Wildlife",
+        "question": "Which animal is known for its ability to spray a strong odor for defense?",
+        "options": [
+            "Skunk",
+            "Fox",
+            "Wolf",
+            "Hyena"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which organ pumps blood throughout the human body?",
+        "options": [
+            "Brain",
+            "Heart",
+            "Liver",
+            "Kidney"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which part of the body helps us think and control actions?",
+        "options": [
+            "Heart",
+            "Brain",
+            "Lungs",
+            "Stomach"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "How many bones are there in the adult human body?",
+        "options": [
+            "200",
+            "206",
+            "210",
+            "220"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which organ helps us breathe?",
+        "options": [
+            "Liver",
+            "Lungs",
+            "Kidney",
+            "Stomach"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which part of the body is responsible for pumping blood?",
+        "options": [
+            "Brain",
+            "Heart",
+            "Liver",
+            "Pancreas"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which organ helps digest food?",
+        "options": [
+            "Brain",
+            "Stomach",
+            "Lungs",
+            "Heart"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "What part of the body helps us see?",
+        "options": [
+            "Nose",
+            "Eyes",
+            "Ears",
+            "Skin"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which part of the body helps us hear sounds?",
+        "options": [
+            "Nose",
+            "Mouth",
+            "Ears",
+            "Eyes"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Human Body",
+        "question": "What is the largest organ in the human body?",
+        "options": [
+            "Liver",
+            "Brain",
+            "Skin",
+            "Heart"
+        ],
+        "correctIndex": 2
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which organ cleans blood in the body?",
+        "options": [
+            "Kidneys",
+            "Lungs",
+            "Brain",
+            "Heart"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which body part is used for smelling?",
+        "options": [
+            "Mouth",
+            "Nose",
+            "Eyes",
+            "Ears"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which organ produces bile to help digest fats?",
+        "options": [
+            "Liver",
+            "Heart",
+            "Brain",
+            "Lungs"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Human Body",
+        "question": "What connects bones together?",
+        "options": [
+            "Muscles",
+            "Ligaments",
+            "Skin",
+            "Blood"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which part of the body contains the brain?",
+        "options": [
+            "Chest",
+            "Head",
+            "Arm",
+            "Leg"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "What part of the body pumps oxygenated blood to the body?",
+        "options": [
+            "Left ventricle of the heart",
+            "Right lung",
+            "Kidney",
+            "Liver"
+        ],
+        "correctIndex": 0
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which blood cells help fight infections?",
+        "options": [
+            "Red blood cells",
+            "White blood cells",
+            "Platelets",
+            "Plasma"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "What gives strength and structure to the body?",
+        "options": [
+            "Muscles",
+            "Bones",
+            "Skin",
+            "Blood"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which body system controls movement?",
+        "options": [
+            "Digestive system",
+            "Muscular system",
+            "Respiratory system",
+            "Nervous system"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which organ helps pump oxygen into the blood?",
+        "options": [
+            "Heart",
+            "Lungs",
+            "Brain",
+            "Liver"
+        ],
+        "correctIndex": 1
+    },
+    {
+        "topic": "Human Body",
+        "question": "Which part of the body helps in tasting food?",
+        "options": [
+            "Tongue",
+            "Nose",
+            "Teeth",
+            "Lips"
+        ],
+        "correctIndex": 0
+    }
+]
