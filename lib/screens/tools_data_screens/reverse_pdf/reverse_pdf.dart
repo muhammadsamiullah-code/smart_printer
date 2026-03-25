@@ -1,160 +1,109 @@
-
 import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
-
-import '../merge_pdf/pdf_results_screen.dart';
+import '../../../widgets/custom_appbar.dart';
+import '../../../widgets/pdf_list_card.dart';
+import '../../../widgets/success_dialoge.dart';
+import '../merge_pdf/pdf_preview_screen.dart';
 
 class ReversePdfScreen extends StatefulWidget {
-  const ReversePdfScreen({super.key});
+  final List<File> selectedFiles;
+  final String title;
+
+  const ReversePdfScreen({
+    super.key,
+    required this.selectedFiles,
+    required this.title,
+  });
 
   @override
   State<ReversePdfScreen> createState() => _ReversePdfScreenState();
 }
 
 class _ReversePdfScreenState extends State<ReversePdfScreen> {
+  late List<File> selectedFiles;
+  bool isProcessing = false;
 
-  File? selectedFile;
-  int totalPages = 0;
-
-  /// PICK PDF
-  Future<void> pickPdf() async {
-
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-    );
-
-    if (result != null) {
-
-      selectedFile = File(result.files.single.path!);
-
-      final bytes = await selectedFile!.readAsBytes();
-
-      final PdfDocument document = PdfDocument(inputBytes: bytes);
-
-      setState(() {
-        totalPages = document.pages.count;
-      });
-
-      document.dispose();
-    }
+  @override
+  void initState() {
+    super.initState();
+    selectedFiles = widget.selectedFiles;
   }
 
-  /// REVERSE PDF
-  Future<void> reversePdf() async {
+  /// REVERSE ALL FILES
+  Future<void> reverseAll() async {
+    if (selectedFiles.isEmpty) return;
 
-    if (selectedFile == null) {
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please select a PDF")),
-      );
-
-      return;
-    }
-
-    final bytes = await selectedFile!.readAsBytes();
-
-    final PdfDocument oldPdf = PdfDocument(inputBytes: bytes);
-
-    final PdfDocument newPdf = PdfDocument();
-
-    /// Reverse pages
-    for (int i = oldPdf.pages.count - 1; i >= 0; i--) {
-
-      newPdf.pages.add().graphics.drawPdfTemplate(
-        oldPdf.pages[i].createTemplate(),
-        const Offset(0, 0),
-      );
-    }
-
-    final dir = await getApplicationDocumentsDirectory();
-
-    final outputFile = File(
-      "${dir.path}/reversed_${DateTime.now().millisecondsSinceEpoch}.pdf",
+    /// 🔥 SHOW LOADER
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const Center(child: CircularProgressIndicator()),
     );
 
-    await outputFile.writeAsBytes(await newPdf.save());
+    for (final file in selectedFiles) {
+      final bytes = await file.readAsBytes();
 
-    oldPdf.dispose();
-    newPdf.dispose();
+      final oldPdf = PdfDocument(inputBytes: bytes);
+      final newPdf = PdfDocument();
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const ResultScreen(),
-      ),
-    );
-  }
+      for (int i = oldPdf.pages.count - 1; i >= 0; i--) {
+        newPdf.pages.add().graphics.drawPdfTemplate(
+          oldPdf.pages[i].createTemplate(),
+          const Offset(0, 0),
+        );
+      }
 
-  /// FILE SIZE
-  String getFileSize(File file) {
+      final dir = await getApplicationDocumentsDirectory();
 
-    int bytes = file.lengthSync();
-    double kb = bytes / 1024;
-    double mb = kb / 1024;
+      final output = File(
+        "${dir.path}/reversed_${DateTime.now().millisecondsSinceEpoch}.pdf",
+      );
 
-    if (mb >= 1) {
-      return "${mb.toStringAsFixed(2)} MB";
-    } else {
-      return "${kb.toStringAsFixed(2)} KB";
+      await output.writeAsBytes(await newPdf.save());
+
+      oldPdf.dispose();
+      newPdf.dispose();
+      Navigator.pop(context);
+
+      /// SHOW SUCCESS (last file)
+      SuccessDialog.show(context, output);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Reverse PDF"),
+      appBar: CustomAppBar(title: widget.title),
+
+      body: ListView.builder(
+        padding: const EdgeInsets.all(12),
+        itemCount: selectedFiles.length,
+        itemBuilder: (_, index) {
+          final file = selectedFiles[index];
+          final fileName = file.path.split('/').last;
+          return PdfListCard(
+            title: fileName,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => PdfPreviewPrintScreen(file: file),
+                ),
+              );
+            },
+          );
+        },
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-            ElevatedButton(
-              onPressed: pickPdf,
-              child: const Text("Select PDF"),
-            ),
-
-            const SizedBox(height: 20),
-
-            if (selectedFile != null) ...[
-
-              Text(
-                "File: ${selectedFile!.path.split('/').last}",
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-
-              const SizedBox(height: 5),
-
-              Text(
-                "Size: ${getFileSize(selectedFile!)}",
-              ),
-
-              const SizedBox(height: 5),
-
-              Text(
-                "Total Pages: $totalPages",
-              ),
-
-              const SizedBox(height: 30),
-
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: reversePdf,
-                  child: const Text("Reverse PDF"),
-                ),
-              ),
-            ]
-          ],
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(12),
+        height: 80,
+        child: CustomButton(
+          onPressed: reverseAll,
+          text: "reverse_pages",
         ),
       ),
     );

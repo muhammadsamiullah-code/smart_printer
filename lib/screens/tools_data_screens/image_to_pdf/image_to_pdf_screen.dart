@@ -5,10 +5,18 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
-import '../merge_pdf/pdf_results_screen.dart';
+import '../../../const/color.dart';
+import '../../../widgets/custom_appbar.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/success_dialoge.dart';
+import 'package:image/image.dart' as img;
+
 
 class ImageToPdfScreen extends StatefulWidget {
-  const ImageToPdfScreen({super.key});
+    final List<File> images;
+    final String title;
+
+  const ImageToPdfScreen({super.key,  required this.images, required this.title});
 
   @override
   State<ImageToPdfScreen> createState() => _ImageToPdfScreenState();
@@ -18,8 +26,13 @@ class _ImageToPdfScreenState extends State<ImageToPdfScreen> {
 
   final ImagePicker picker = ImagePicker();
 
-  List<File> images = [];
+late List<File> images;
 
+@override
+void initState() {
+  super.initState();
+  images = [...widget.images];
+}
   /// Pick Images
   Future<void> pickImages() async {
 
@@ -44,24 +57,86 @@ class _ImageToPdfScreenState extends State<ImageToPdfScreen> {
   }
 
   /// Convert Image to PDF
-  Future<void> convertPdf() async {
+//   Future<void> convertPdf() async {
+//   if (images.isEmpty) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       const SnackBar(content: Text("Please select images")),
+//     );
+//     return;
+//   }
 
-    if (images.isEmpty) {
+//   /// 🔥 SHOW LOADER
+//   showDialog(
+//     context: context,
+//     barrierDismissible: false,
+//     builder: (_) =>
+//         const Center(child: CircularProgressIndicator()),
+//   );
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please select images")),
-      );
+//   final PdfDocument document = PdfDocument();
 
-      return;
-    }
+//   for (var img in images) {
+//     final bytes = await img.readAsBytes();
+//     final PdfBitmap bitmap = PdfBitmap(bytes);
 
+//     final page = document.pages.add();
+
+//     page.graphics.drawImage(
+//       bitmap,
+//       Rect.fromLTWH(
+//         0,
+//         0,
+//         page.getClientSize().width,
+//         page.getClientSize().height,
+//       ),
+//     );
+//   }
+
+//   final dir = await getApplicationDocumentsDirectory();
+
+//   final file = File(
+//     "${dir.path}/image_pdf_${DateTime.now().millisecondsSinceEpoch}.pdf",
+//   );
+
+//   await file.writeAsBytes(await document.save());
+
+//   document.dispose();
+
+//   Navigator.pop(context); // ❌ remove loader
+
+//   /// ✅ SUCCESS DIALOG
+//   SuccessDialog.show(context, file);
+// }
+
+Future<void> convertPdf() async {
+  if (images.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Please select images")),
+    );
+    return;
+  }
+
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) => const Center(child: CircularProgressIndicator()),
+  );
+
+  try {
     final PdfDocument document = PdfDocument();
 
-    for (var img in images) {
+    for (var file in images) {
+      final bytes = await file.readAsBytes();
 
-      final bytes = await img.readAsBytes();
+      /// 🔥 DECODE IMAGE (fix unsupported issue)
+      final decodedImage = img.decodeImage(bytes);
 
-      final PdfBitmap bitmap = PdfBitmap(bytes);
+      if (decodedImage == null) continue;
+
+      /// 🔥 CONVERT TO JPG
+      final jpgBytes = img.encodeJpg(decodedImage);
+
+      final PdfBitmap bitmap = PdfBitmap(jpgBytes);
 
       final page = document.pages.add();
 
@@ -86,19 +161,22 @@ class _ImageToPdfScreenState extends State<ImageToPdfScreen> {
 
     document.dispose();
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const ResultScreen(),
-      ),
+    Navigator.pop(context); // remove loader
+
+    SuccessDialog.show(context, file);
+  } catch (e) {
+    Navigator.pop(context);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Error: $e")),
     );
   }
-
+}
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Image to PDF")),
+      appBar: CustomAppBar(title: widget.title),
 
       body: Padding(
         padding: const EdgeInsets.all(12),
@@ -106,11 +184,6 @@ class _ImageToPdfScreenState extends State<ImageToPdfScreen> {
         child: Column(
           children: [
 
-            /// Add Images
-            ElevatedButton(
-              onPressed: pickImages,
-              child: const Text("Select Images"),
-            ),
 
             const SizedBox(height: 10),
 
@@ -120,7 +193,7 @@ class _ImageToPdfScreenState extends State<ImageToPdfScreen> {
                 itemCount: images.length,
                 gridDelegate:
                     const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
+                  crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
@@ -169,28 +242,36 @@ class _ImageToPdfScreenState extends State<ImageToPdfScreen> {
 
             const SizedBox(height: 10),
 
-            /// Add More Images
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: pickImages,
-                child: const Text("Add More Images"),
-              ),
-            ),
-
-            const SizedBox(height: 10),
-
-            /// Convert PDF
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: convertPdf,
-                child: const Text("Convert to PDF"),
-              ),
-            )
           ],
         ),
       ),
+       bottomNavigationBar: Container(
+              padding: const EdgeInsets.all(12),
+              height: 80,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CustomButtonWithBorder(
+                      borderWidth: 1.5,
+                      borderColor: AppColors.primaryColor,
+                      onPressed: pickImages,
+                      text: 'add_more',
+
+                    ),
+                  ),
+
+                  const SizedBox(width: 12),
+
+                  Expanded(
+                    child: CustomButton(
+
+                      onPressed: convertPdf,
+                      text: "generate_pdf",
+                    ),
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }

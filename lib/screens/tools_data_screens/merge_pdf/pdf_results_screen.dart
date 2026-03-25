@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
-import 'pdf_merge_preview.dart';
+import 'pdf_preview_screen.dart';
 
 import 'package:path_provider/path_provider.dart';
 
@@ -99,10 +99,18 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Merged PDF Results")),
-
+      // appBar: AppBar(title: const Text("Merged PDF Results")),
       body: pdfFiles.isEmpty
-          ? const Center(child: Text("No merged PDFs found"))
+          ? const Center(
+              child: Text(
+                "No PDF Files found",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            )
           : ListView.builder(
               padding: const EdgeInsets.all(12),
               itemCount: pdfFiles.length,
@@ -128,7 +136,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => PdfMergePreviewScreen(file: file),
+                          builder: (_) => PdfPreviewPrintScreen(file: file),
                         ),
                       );
                     },

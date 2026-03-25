@@ -48,12 +48,12 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   @override
   void initState() {
     super.initState();
-
+    
     // 👇 Screens ek hi dafa create hongi (important for smoothness)
     screens = [
       const HomeScreen(),
-      // const ToolsScreen(),
       SizedBox(),
+      const ToolsScreen(),
       const SettingScreen(),
     ];
 
@@ -134,6 +134,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
               unselectedLabelStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
+              // iconSize: 24,
               items: [
                 BottomNavigationBarItem(
                   icon: provider.currentIndex == 0
@@ -141,21 +142,22 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                       : SvgPicture.asset('assets/bottomNavImages/home.svg'),
                   label: context.watch<TranslatorProvider>().tr("home"),
                 ),
-
-                // BottomNavigationBarItem(
-                //   icon: provider.currentIndex == 1
-                //       ? _selectedIcon('assets/bottomNavImages/toolColor.svg')
-                //       : SvgPicture.asset('assets/bottomNavImages/tool.svg'),
-                //   label: context.watch<TranslatorProvider>().tr("tool"),
-                // ),
                 BottomNavigationBarItem(
                   icon: provider.currentIndex == 1
                       ? _selectedIcon('assets/bottomNavImages/scannerColor.svg')
                       : SvgPicture.asset('assets/bottomNavImages/scanner.svg'),
                   label: context.watch<TranslatorProvider>().tr("scanner"),
                 ),
+
                 BottomNavigationBarItem(
                   icon: provider.currentIndex == 2
+                      ? _selectedIcon('assets/bottomNavImages/toolColor.svg')
+                      : SvgPicture.asset('assets/bottomNavImages/tool.svg'),
+                  label: context.watch<TranslatorProvider>().tr("tool"),
+                ),
+
+                BottomNavigationBarItem(
+                  icon: provider.currentIndex == 3
                       ? _selectedIcon('assets/bottomNavImages/settingColor.svg')
                       : SvgPicture.asset('assets/bottomNavImages/setting.svg'),
                   label: context.watch<TranslatorProvider>().tr("setting"),
@@ -178,7 +180,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
         color: const Color.fromRGBO(222, 238, 255, 1),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: SvgPicture.asset(assetPath),
+      child: SvgPicture.asset(assetPath, height: 20, width: 20),
     );
   }
 }

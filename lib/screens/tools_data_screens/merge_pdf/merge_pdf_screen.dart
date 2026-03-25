@@ -1,23 +1,41 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:path_provider/path_provider.dart';
-
-import 'pdf_merge_preview.dart';
-import 'pdf_results_screen.dart';
+import '../../../const/color.dart';
+import '../../../widgets/custom_appbar.dart';
+import '../../../widgets/pdf_list_card.dart';
+import '../../../widgets/success_dialoge.dart';
+import '../../../widgets/tr_text.dart';
+import 'pdf_preview_screen.dart';
+import 'package:intl/intl.dart';
 
 class MergePdfScreen extends StatefulWidget {
-  const MergePdfScreen({super.key});
+  final List<File>? initialFiles;
+  final String title;
+
+  const MergePdfScreen({super.key, this.initialFiles, required this.title});
 
   @override
   State<MergePdfScreen> createState() => _MergePdfScreenState();
 }
 
 class _MergePdfScreenState extends State<MergePdfScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    /// 👇 receive files from previous screen
+    if (widget.initialFiles != null) {
+      selectedFiles = List.from(widget.initialFiles!);
+    }
+  }
+
   List<File> selectedFiles = [];
 
-  /// Select PDF files
   Future<void> pickFiles() async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -26,125 +44,165 @@ class _MergePdfScreenState extends State<MergePdfScreen> {
     );
 
     if (result != null) {
+      final newFiles = result.paths.map((path) => File(path!)).toList();
+
+      /// 🔥 REMOVE DUPLICATES (MERGE WITH EXISTING)
+      final allFiles = [...selectedFiles, ...newFiles];
+
+      final uniqueFiles = removeDuplicates(allFiles);
+
       setState(() {
-        selectedFiles.addAll(
-          result.paths.map((path) => File(path!)),
-        );
+        selectedFiles = uniqueFiles;
       });
     }
   }
 
-  /// Remove file
+  List<File> removeDuplicates(List<File> files) {
+    final paths = <String>{};
+
+    return files.where((file) {
+      if (paths.contains(file.path)) {
+        return false;
+      } else {
+        paths.add(file.path);
+        return true;
+      }
+    }).toList();
+  }
+
   void removeFile(int index) {
     setState(() {
       selectedFiles.removeAt(index);
     });
   }
 
-  /// Merge PDFs
   Future<void> mergePdf() async {
     if (selectedFiles.length < 2) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please select at least 2 PDF files for merging"),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: TrText("select_at_least_2_pdf")));
       return;
     }
 
-    final PdfDocument newDocument = PdfDocument();
+    /// 🔄 SHOW LOADER
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const Center(child: CircularProgressIndicator()),
+    );
 
-    for (File file in selectedFiles) {
-      final bytes = await file.readAsBytes();
-      final PdfDocument document = PdfDocument(inputBytes: bytes);
+    try {
+      final PdfDocument newDocument = PdfDocument();
 
-      for (int i = 0; i < document.pages.count; i++) {
-        newDocument.pages.add().graphics.drawPdfTemplate(
-          document.pages[i].createTemplate(),
-          const Offset(0, 0),
-        );
+      for (File file in selectedFiles) {
+        final bytes = await file.readAsBytes();
+        final PdfDocument document = PdfDocument(inputBytes: bytes);
+
+        for (int i = 0; i < document.pages.count; i++) {
+          newDocument.pages.add().graphics.drawPdfTemplate(
+            document.pages[i].createTemplate(),
+            const Offset(0, 0),
+          );
+        }
+
+        document.dispose();
       }
 
-      document.dispose();
+      final directory = await getApplicationDocumentsDirectory();
+
+      final mergedFile = File(
+        "${directory.path}/merged_${DateTime.now().millisecondsSinceEpoch}.pdf",
+      );
+
+      await mergedFile.writeAsBytes(await newDocument.save());
+      newDocument.dispose();
+
+      Navigator.pop(context);
+
+      SuccessDialog.show(context, mergedFile);
+    } catch (e) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Something went wrong")));
     }
+  }
 
-    final directory = await getApplicationDocumentsDirectory();
+  String formatFileSize(int bytes) {
+    if (bytes >= 1024 * 1024) {
+      return "${(bytes / (1024 * 1024)).toStringAsFixed(2)} MB";
+    } else if (bytes >= 1024) {
+      return "${(bytes / 1024).toStringAsFixed(2)} KB";
+    } else {
+      return "$bytes B";
+    }
+  }
 
-    final mergedFile = File(
-        "${directory.path}/merged_${DateTime.now().millisecondsSinceEpoch}.pdf");
-
-    await mergedFile.writeAsBytes(await newDocument.save());
-
-    newDocument.dispose();
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => ResultScreen(),
-      ),
-    );
+  String formatDateTime(DateTime dateTime) {
+    return DateFormat("dd MMM yyyy 'at' hh:mm a").format(dateTime);
   }
 
   @override
   Widget build(BuildContext context) {
+    final isEmpty = selectedFiles.isEmpty;
     return Scaffold(
-      appBar: AppBar(title: const Text("Merge PDF")),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: pickFiles,
-              child: const Text("Select PDF Files"),
+      appBar: CustomAppBar(title: widget.title),
+
+      body: ListView.builder(
+        padding: const EdgeInsets.all(12),
+        itemCount: selectedFiles.length,
+        itemBuilder: (context, index) {
+          final file = selectedFiles[index];
+          final fileName = file.path.split('/').last;
+          return PdfListCard(
+            title: fileName,
+
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => PdfPreviewPrintScreen(file: file),
+                ),
+              );
+            },
+            trailing: IconButton(
+              icon: Icon(Icons.delete, color: AppColors.primaryColor),
+              onPressed: () => removeFile(index),
             ),
+          );
+        },
+      ),
 
-            const SizedBox(height: 20),
+      /// Bottom Buttons (ONLY WHEN FILES EXIST)
+      bottomNavigationBar: isEmpty
+          ? null
+          : Container(
+              padding: const EdgeInsets.all(12),
+              height: 80,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CustomButtonWithBorder(
+                      borderWidth: 1.5,
+                      borderColor: AppColors.primaryColor,
+                      onPressed: pickFiles,
+                      text: 'add_more',
 
-            /// FILE LIST
-            Expanded(
-              child: ListView.builder(
-                itemCount: selectedFiles.length,
-                itemBuilder: (context, index) {
-                  final file = selectedFiles[index];
-
-                  return Card(
-                    child: ListTile(
-                      leading: const Icon(Icons.picture_as_pdf,
-                          color: Colors.red),
-
-                      title: Text(file.path.split('/').last),
-
-                      /// Preview
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) =>
-                                PdfMergePreviewScreen(file: file),
-                          ),
-                        );
-                      },
-
-                      /// Remove button
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete, color: Colors.red),
-                        onPressed: () => removeFile(index),
-                      ),
                     ),
-                  );
-                },
+                  ),
+
+                  const SizedBox(width: 12),
+
+                  Expanded(
+                    child: CustomButton(
+
+                      onPressed: mergePdf,
+                      text: "merge_pdf",
+                    ),
+                  ),
+                ],
               ),
             ),
-
-            const SizedBox(height: 10),
-
-            ElevatedButton(
-              onPressed: mergePdf,
-              child: const Text("Merge PDFs"),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

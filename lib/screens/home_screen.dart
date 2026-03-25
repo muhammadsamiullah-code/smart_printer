@@ -17,7 +17,6 @@ import '../models/menu_item_model.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:multicast_dns/multicast_dns.dart';
-
 import 'contacts_screen.dart';
 import 'shape_selection_screen.dart';
 import 'topic_selection_screen.dart';
@@ -165,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final File file = File(image.path);
 
     /// Preview Screen
-    final result = await Navigator.push<bool>(
+    await Navigator.push<bool>(
       context,
       MaterialPageRoute(
         builder: (_) => CameraPreviewScreen(
@@ -337,11 +336,9 @@ class _HomeScreenState extends State<HomeScreen> {
         color: const Color.fromRGBO(255, 240, 248, 1),
         onTap: () {
           Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ContactsScreen(),
-      ),
-    );
+            context,
+            MaterialPageRoute(builder: (context) => const ContactsScreen()),
+          );
         },
       ),
 
@@ -378,7 +375,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // ),
     ];
     return Scaffold(
-      backgroundColor: Colors.white,
+      //  backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       body: Stack(
         children: [
           SafeArea(
@@ -484,7 +481,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
 
                   const SizedBox(height: 16),
-
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     FirebaseCrashlytics.instance.crash();
+                  //   },
+                  //   child: const Text("Test Crash"),
+                  // ),
                   // ======= GRID MENU =======
                   Column(
                     children: List.generate((menuItems.length / 2).ceil(), (
@@ -494,7 +496,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       final secondIndex = firstIndex + 1;
 
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: 4),
+                        padding: const EdgeInsets.only(bottom: 4, top: 4),
                         child: Row(
                           children: [
                             Expanded(
@@ -538,24 +540,24 @@ class _HomeScreenState extends State<HomeScreen> {
   }) {
     return GestureDetector(
       onTap: onTap,
-      child: Card(
-        color: Colors.white,
-        elevation: 4,
-        shadowColor: Color.fromRGBO(94, 94, 94, 0.25),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Container(
+        margin: EdgeInsets.only(left: 4, right: 4),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+        ),
+        // color: Colors.white,
+        // elevation: 4,
+        // shadowColor: Color.fromRGBO(94, 94, 94, 0.25),
+        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
           child: Row(
             children: [
               CircleAvatar(
-                radius: 24,
+                radius: 26,
                 backgroundColor: color,
-                child: SvgPicture.asset(
-                  svgPath,
-                  height: 20,
-                  width: 20,
-                  // colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-                ),
+                child: SvgPicture.asset(svgPath, height: 24, width: 24),
               ),
               const SizedBox(width: 12), // use width in Row (not height)
               Expanded(

@@ -442,7 +442,6 @@ class _TemplateSelectionScreenState extends State<TemplateSelectionScreen> {
                   SnackbarHelper.show(context, "Please Select Label Template");
                   return;
                 }
-
                 _pickImage();
               },
             ),

@@ -1,9 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
-import 'package:smart_scanner/widgets/tr_text.dart';
-
 import '../widgets/custom_appbar.dart';
 
 class CameraPreviewScreen extends StatelessWidget {

@@ -166,7 +166,6 @@ class _QuizScreenState extends State<QuizScreen>
     // const optionLetters = ['A', 'B', 'C', 'D'];
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: CustomAppBar(
         title: "quiz",
         bottom: PreferredSize(

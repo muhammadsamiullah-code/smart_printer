@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "317008220879",
+    "project_id": "smart-printer-9f46e",
+    "storage_bucket": "smart-printer-9f46e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317008220879:android:15c1fab52adaadec2eddba",
+        "android_client_info": {
+          "package_name": "smartprinter.mobileprint.wirelessprinter.printdocuments"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWX2pyOwuY_fXOkUUYoYEqMWw00AslPQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

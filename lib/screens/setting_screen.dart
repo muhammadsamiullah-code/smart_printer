@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_scanner/screens/select_language_screen.dart';
-import 'package:smart_scanner/screens/tools_screen.dart';
+import 'package:smart_scanner/widgets/custom_appbar.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'tools_data_screens/merge_pdf/pdf_results_screen.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -37,19 +39,22 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF5F6FA),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        // leading: const BackButton(color: Colors.black),
-        title: const TrText(
-          "settings_title",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-        ),
-        centerTitle: true,
-      ),
+      // backgroundColor: const Color(0xffF5F6FA),
+    appBar: CustomAppBar(title: 'settings_title', 
+    showBackButton: false,
+    ),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   backgroundColor: Colors.transparent,
+      //   // leading: const BackButton(color: Colors.black),
+      //   title: const TrText(
+      //     "settings_title",
+      //     style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+      //   ),
+      //   centerTitle: true,
+      // ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.only(left: 16, right: 16),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -100,7 +105,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   );
                 },
               ),
-              //  const SizedBox(height: 14),
+               const SizedBox(height: 14),
               // _buildTile(
               //   svgPath: 'assets/settingIcons/language.svg',
               //   titleKey: "tools",
@@ -109,7 +114,7 @@ class _SettingScreenState extends State<SettingScreen> {
               //       context,
               //       MaterialPageRoute(
               //         builder: (_) =>
-              //             const ToolsScreen(),
+              //             const ResultScreen(),
               //       ),
               //     );
               //   },
@@ -134,13 +139,13 @@ class _SettingScreenState extends State<SettingScreen> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 6,
-              offset: const Offset(0, 3),
-            ),
-          ],
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.black.withOpacity(0.04),
+          //     blurRadius: 6,
+          //     offset: const Offset(0, 3),
+          //   ),
+          // ],
         ),
         child: Row(
           children: [

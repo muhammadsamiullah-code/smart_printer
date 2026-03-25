@@ -8,11 +8,23 @@ import 'package:get_storage/get_storage.dart';
 import 'providers/bottom_nav_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'providers/question_provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'services/notification_service.dart';
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("Background Message: ${message.messageId}");
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   final quizProvider = QuizProvider();
 
   await quizProvider.loadQuestions();
@@ -24,7 +36,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => BottomNavProvider()),
         ChangeNotifierProvider(create: (context) => LabelProvider()),
-        ChangeNotifierProvider.value(value: quizProvider,),
+        ChangeNotifierProvider.value(value: quizProvider),
         ChangeNotifierProvider(create: (_) => LanguageProvider(savedLang)),
         ChangeNotifierProvider(create: (_) => TranslatorProvider(savedLang)),
       ],
@@ -33,10 +45,68 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    initFCM();
+  }
+
+  void initFCM() async {
+    await NotificationService.init();
+
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    await messaging.requestPermission();
+
+    String? token = await messaging.getToken();
+    print("FCM Token: $token");
+
+    // 🔥 IMPORTANT: Token refresh
+    FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
+      print("NEW TOKEN: $newToken");
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("Foreground Message: ${message.notification?.title}");
+      NotificationService.showNotification(message);
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      print("Clicked Notification");
+    });
+  }
   // This widget is the root of your application.
+  // void initFCM() async {
+  //   await NotificationService.init();
+
+  //   FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  //   // Permission (IMPORTANT for Android 13+)
+  //   await messaging.requestPermission();
+
+  //   // Get Token (VERY IMPORTANT)
+  //   String? token = await messaging.getToken();
+  //   print("FCM Token: $token");
+
+  //   // Foreground message
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //     print("Foreground Message: ${message.notification?.title}");
+  //     NotificationService.showNotification(message);
+  //   });
+
+  //   // App opened from notification
+  //   FirebaseMessaging.onMessageOpenedApp.listen((message) {
+  //     print("Clicked Notification");
+  //   });
+  // }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,78 +115,26 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [
         Locale('en'),
         Locale('af'),
-        // Locale('sq'),
-        // Locale('am'),
         Locale('ar'),
-        // Locale('hy'),
-        // Locale('az'),
         Locale('bn'),
-        // Locale('eu'),
-        // Locale('be'),
-        // Locale('bg'),
-        // Locale('my'),
-        // Locale('ca'),
         Locale('zh'), // Chinese Simplified
         Locale('zh', 'TW'), // Chinese Traditional
-        // Locale('zh', 'CN'), // Chinese Simplified
-        // Locale('zh', 'TW'), // Chinese Traditional
-        // Locale('hr'),
-        // Locale('cs'),
-        // Locale('da'),
-        // Locale('nl'),
-        // Locale('et'),
-        // Locale('fil'),
-        // Locale('fi'),
         Locale('fr'),
-        // Locale('gl'),
-        // Locale('ka'),
         Locale('de'),
-        // Locale('el'),
-        // Locale('gu'),
-        // Locale('he'), // Hebrew (not iw)
         Locale('hi'),
-        // Locale('hu'),
-        // Locale('is'),
         Locale('id'),
         Locale('it'),
         Locale('ja'),
-        // Locale('kn'),
-        // Locale('kk'),
-        // Locale('km'),
         Locale('ko'),
-        // Locale('ky'),
-        // Locale('lo'),
-        // Locale('lv'),
-        // Locale('lt'),
-        // Locale('mk'),
         Locale('ms'),
-        // Locale('ml'),
-        // Locale('mr'),
-        // Locale('mn'),
-        // Locale('ne'),
-        // Locale('no'),
         Locale('fa'),
         Locale('pl'),
         Locale('pt'),
-        // Locale('pa'),
-        // Locale('ro'),
-        // // Locale('rm'),
         Locale('ru'),
-        // Locale('sr'),
-        // Locale('si'),
-        // Locale('sk'),
-        // Locale('sl'),
         Locale('es'),
-        // Locale('sw'),
-        // Locale('sv'),
-        // Locale('ta'),
-        // Locale('te'),
         Locale('th'),
         Locale('tr'),
-        // Locale('uk'),
-        // Locale('ur'),
         Locale('vi'),
-        // Locale('zu'),
       ],
       localizationsDelegates: const [
         FlutterQuillLocalizations.delegate,
@@ -125,6 +143,9 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xffF5F6FA),
+        //  scaffoldBackgroundColor:
+        //   Color.fromRGBO(255, 255, 255, 1),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const SplashScreen(),
