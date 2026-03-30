@@ -122,5 +122,9 @@
     "add_signature": "Добавить подпись",
     "import_signature": "Импорт подписи",
     "draw_your_sign": "Нарисуйте подпись",
-    "sign_pdf": "Подписать PDF"
+    "sign_pdf": "Подписать PDF",
+    "apply_watermark": "Применить водяной знак",
+    "delete_file": "Удалить файл",
+    "delete_file_confirmation": "Вы уверены, что хотите удалить этот файл?",
+    "watermark_pdf": "Водяной знак для PDF"
 }

@@ -1,4 +1,3 @@
-
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,18 +17,19 @@ class PdfPreviewPrintScreen extends StatefulWidget {
   const PdfPreviewPrintScreen({super.key, required this.file});
 
   @override
-  State<PdfPreviewPrintScreen> createState() =>
-      _PdfPreviewPrintScreenState();
+  State<PdfPreviewPrintScreen> createState() => _PdfPreviewPrintScreenState();
 }
 
 class _PdfPreviewPrintScreenState extends State<PdfPreviewPrintScreen> {
   bool _isPrinting = false;
 
   PdfDocument? _document;
+  late PdfViewerController _pdfViewerController;
 
   @override
   void initState() {
     super.initState();
+    _pdfViewerController = PdfViewerController();
     _loadPdf();
   }
 
@@ -50,18 +50,11 @@ class _PdfPreviewPrintScreenState extends State<PdfPreviewPrintScreen> {
     for (int i = 1; i <= _document!.pagesCount; i++) {
       final page = await _document!.getPage(i);
 
-      final img = await page.render(
-        width: page.width,
-        height: page.height,
-      );
+      final img = await page.render(width: page.width, height: page.height);
 
       final image = pw.MemoryImage(img!.bytes);
 
-      pdf.addPage(
-        pw.Page(
-          build: (_) => pw.Center(child: pw.Image(image)),
-        ),
-      );
+      pdf.addPage(pw.Page(build: (_) => pw.Center(child: pw.Image(image))));
 
       await page.close();
     }
@@ -69,66 +62,88 @@ class _PdfPreviewPrintScreenState extends State<PdfPreviewPrintScreen> {
     return pdf.save();
   }
 
+
   /// 🔹 Print Function
+  /// 
   Future<void> printAllPages() async {
-    setState(() => _isPrinting = true);
+  setState(() => _isPrinting = true);
 
-    try {
-      final pdfBytes = await buildPrintablePdf();
+  try {
+    final bytes = await widget.file.readAsBytes();
 
-      await Printing.layoutPdf(
-        onLayout: (PdfPageFormat format) async => pdfBytes,
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Printing failed")),
-      );
-    } finally {
-      setState(() => _isPrinting = false);
-    }
+    await Printing.layoutPdf(
+      onLayout: (PdfPageFormat format) async => bytes,
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Printing failed")),
+    );
+  } finally {
+    setState(() => _isPrinting = false);
   }
+}
+  // Future<void> printAllPages() async {
+  //   setState(() => _isPrinting = true);
+
+  //   try {
+  //     final pdfBytes = await buildPrintablePdf();
+
+  //     await Printing.layoutPdf(
+  //       onLayout: (PdfPageFormat format) async => pdfBytes,
+  //     );
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(const SnackBar(content: Text("Printing failed")));
+  //   } finally {
+  //     setState(() => _isPrinting = false);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Scaffold(
-          appBar: CustomAppBar(
-            title: widget.file.path.split('/').last,
-            // actions: [
-            //   IconButton(
-            //     icon: const Icon(Icons.print),
-            //     onPressed: printAllPages,
-            //     color: Colors.black,
-            //     iconSize: 36,
-            //   ),
-            // ],
-          ),
+          appBar: CustomAppBar(title: widget.file.path.split('/').last),
 
           /// 🔹 Smooth scroll enabled
           body: SfPdfViewer.file(
             widget.file,
-            canShowScrollHead: true,
-            canShowScrollStatus: true,
-            pageSpacing: 4,
+            controller: _pdfViewerController,
+
+            /// 🔥 Core smooth settings
+            scrollDirection: PdfScrollDirection.vertical,
+            pageLayoutMode: PdfPageLayoutMode.continuous,
+
+            /// 🔥 Reduce lag
+            interactionMode: PdfInteractionMode.pan,
+            enableDoubleTapZooming: false, // heavy hota hai
+            canShowPaginationDialog: false,
+
+            /// 🔥 Less repaint / lighter UI
+            enableDocumentLinkAnnotation: false,
+            enableTextSelection: false,
+
+            /// 🔥 spacing smooth feel deta hai
+            pageSpacing: 2,
           ),
           bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(12),
-        height: 80,
-        child: CustomButton(
-          onPressed: printAllPages,
-          text: "print",
-        ),
-      ),
+              padding: const EdgeInsets.all(12),
+              height: 70,
+              child: CustomButton(
+                            
+                onPressed: _isPrinting ? null : printAllPages,
+                text: "print",
+              ),
+            ),
         ),
 
         /// 🔹 Loader Overlay
         if (_isPrinting)
           Container(
             color: Colors.black.withOpacity(0.4),
-            child: const Center(
-              child: CircularProgressIndicator(),
-            ),
+            child: const Center(child: CircularProgressIndicator()),
           ),
       ],
     );

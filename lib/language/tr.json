@@ -122,5 +122,9 @@
     "add_signature": "İmza Ekle",
     "import_signature": "İmzayı İçe Aktar",
     "draw_your_sign": "İmzanızı Çizin",
-    "sign_pdf": "PDF İmzala"
+    "sign_pdf": "PDF İmzala",
+    "apply_watermark": "Filigran Uygula",
+    "delete_file": "Dosyayı Sil",
+    "delete_file_confirmation": "Bu dosyayı silmek istediğinizden emin misiniz?",
+    "watermark_pdf": "PDF Filigran"
 }

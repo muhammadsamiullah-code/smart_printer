@@ -122,5 +122,9 @@
     "add_signature": "إضافة توقيع",
     "import_signature": "استيراد توقيع",
     "draw_your_sign": "ارسم توقيعك",
-    "sign_pdf": "توقيع PDF"
+    "sign_pdf": "توقيع PDF",
+    "apply_watermark": "إضافة علامة مائية",
+    "delete_file": "حذف الملف",
+    "delete_file_confirmation": "هل أنت متأكد أنك تريد حذف هذا الملف؟",
+    "watermark_pdf": "علامة مائية لملف PDF"
 }

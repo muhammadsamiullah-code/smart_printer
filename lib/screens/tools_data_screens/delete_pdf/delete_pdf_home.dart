@@ -139,6 +139,7 @@ class _DeletePdfHomeState extends State<DeletePdfHome> {
 
   @override
   Widget build(BuildContext context) {
+     final reversedList = pdfFiles.reversed.toList();
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
       body: pdfFiles.isEmpty
@@ -149,9 +150,9 @@ class _DeletePdfHomeState extends State<DeletePdfHome> {
             )
           : ListView.builder(
               padding: const EdgeInsets.all(12),
-              itemCount: pdfFiles.length,
+              itemCount: reversedList.length,
               itemBuilder: (_, index) {
-                final file = pdfFiles[index];
+                final file = reversedList[index];
                 final fileName = file.path.split('/').last;
                 final fileSize = formatFileSize(file.lengthSync());
                 final lastModified = file.lastModifiedSync();

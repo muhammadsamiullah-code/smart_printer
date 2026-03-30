@@ -135,13 +135,34 @@ class _SplitPdfScreenState extends State<SplitPdfScreen> {
 
     setState(() => isSplitting = true);
 
+    // final newDoc = PdfDocument();
+    // for (int i = start - 1; i < end; i++) {
+    //   newDoc.pages.add().graphics.drawPdfTemplate(
+    //     document.pages[i].createTemplate(),
+    //     const Offset(0, 0),
+    //   );
+    // }
     final newDoc = PdfDocument();
-    for (int i = start - 1; i < end; i++) {
-      newDoc.pages.add().graphics.drawPdfTemplate(
-        document.pages[i].createTemplate(),
-        const Offset(0, 0),
-      );
-    }
+
+for (int i = start - 1; i < end; i++) {
+  final oldPage = document.pages[i];
+
+  final section = newDoc.sections!.add();
+  section.pageSettings.size = oldPage.size;
+
+  final newPage = section.pages.add();
+
+  final template = oldPage.createTemplate();
+
+  final width = newPage.getClientSize().width;
+  final height = newPage.getClientSize().height;
+
+  newPage.graphics.drawPdfTemplate(
+    template,
+    Offset.zero,
+    Size(width, height),
+  );
+}
 
     final dir = await getApplicationDocumentsDirectory();
     final outFile = File(

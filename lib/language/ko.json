@@ -122,5 +122,9 @@
     "add_signature": "서명 추가",
     "import_signature": "서명 가져오기",
     "draw_your_sign": "서명을 그리세요",
-    "sign_pdf": "PDF 서명"
+    "sign_pdf": "PDF 서명",
+    "apply_watermark": "워터마크 적용",
+    "delete_file": "파일 삭제",
+    "delete_file_confirmation": "이 파일을 삭제하시겠습니까?",
+    "watermark_pdf": "PDF 워터마크"
 }

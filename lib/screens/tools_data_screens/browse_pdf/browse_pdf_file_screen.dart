@@ -119,6 +119,8 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
 
   @override
   Widget build(BuildContext context) {
+        final reversedList = pdfFiles.reversed.toList();
+
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
 
@@ -130,9 +132,9 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
             )
           : ListView.builder(
               padding: const EdgeInsets.all(12),
-              itemCount: pdfFiles.length,
+              itemCount: reversedList.length,
               itemBuilder: (_, index) {
-                final file = pdfFiles[index];
+                final file = reversedList[index];
                 final fileName = file.path.split('/').last;
                 final fileSize = formatFileSize(file.lengthSync());
                 final lastModified = file.lastModifiedSync();

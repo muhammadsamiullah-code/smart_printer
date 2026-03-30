@@ -48,7 +48,7 @@ class _SignaturePdfScreenState extends State<SignaturePdfScreen> {
   bool isSaving = false;
   // Uint8List? signatureImage;
   double rotationAngle = 0;
-  double _initialScale = 1.0;
+  // double _initialScale = 1.0;
   Size? _initialSize;
   int currentPage = 0;
   int totalPages = 0;
@@ -152,6 +152,7 @@ class _SignaturePdfScreenState extends State<SignaturePdfScreen> {
       },
     );
   }
+
   void openSignatureOptions() {
     showDialog(
       context: context,
@@ -392,7 +393,11 @@ class _SignaturePdfScreenState extends State<SignaturePdfScreen> {
                           filePath: selectedFile!.path,
                           swipeHorizontal: true,
                           pageSnap: true,
+                          pageFling: true,
                           autoSpacing: false,
+                          fitPolicy:
+                              FitPolicy.BOTH, // ya WIDTH try kar sakte ho
+                      
                           onRender: (pages) =>
                               setState(() => totalPages = pages!),
                           onViewCreated: (controller) =>
@@ -490,46 +495,6 @@ class _SignaturePdfScreenState extends State<SignaturePdfScreen> {
                               )
                             : const SizedBox(),
                       ),
-                      // Positioned(
-                      //   bottom: 100,
-                      //   left: 140,
-                      //   child: !isSaving
-                      //       ? IconButton(
-                      //           onPressed: previousPage,
-                      //           icon: const Icon(Icons.arrow_back_ios),
-                      //         )
-                      //       : const SizedBox(),
-                      // ),
-
-                      // /// 🔢 Page Indicator (NEW)
-                      // Positioned(
-                      //   bottom: 112,
-                      //   left: 0,
-                      //   right: 0,
-                      //   child: Center(
-                      //     child: !isSaving
-                      //         ? Text(
-                      //             "${currentPage + 1} / $totalPages",
-                      //             style: const TextStyle(
-                      //               fontSize: 16,
-                      //               fontWeight: FontWeight.w500,
-                      //             ),
-                      //           )
-                      //         : const SizedBox(),
-                      //   ),
-                      // ),
-
-                      // /// ➡️ Next Button
-                      // Positioned(
-                      //   bottom: 100,
-                      //   right: 140,
-                      //   child: !isSaving
-                      //       ? IconButton(
-                      //           onPressed: nextPage,
-                      //           icon: const Icon(Icons.arrow_forward_ios),
-                      //         )
-                      //       : const SizedBox(),
-                      // ),
                     ],
                   ),
                 );

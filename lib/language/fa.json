@@ -122,5 +122,9 @@
     "add_signature": "افزودن امضا",
     "import_signature": "وارد کردن امضا",
     "draw_your_sign": "امضای خود را رسم کنید",
-    "sign_pdf": "امضای PDF"
+    "sign_pdf": "امضای PDF",
+    "apply_watermark": "اعمال واترمارک",
+    "delete_file": "حذف فایل",
+    "delete_file_confirmation": "آیا از حذف این فایل اطمینان دارید؟",
+    "watermark_pdf": "واترمارک کردن PDF"
 }

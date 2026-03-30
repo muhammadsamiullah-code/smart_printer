@@ -122,5 +122,9 @@
     "add_signature": "Tambah Tanda Tangan",
     "import_signature": "Impor Tanda Tangan",
     "draw_your_sign": "Gambarkan Tanda Tangan Anda",
-    "sign_pdf": "Tandatangani PDF"
+    "sign_pdf": "Tandatangani PDF",
+    "apply_watermark": "Terapkan Tanda Air",
+    "delete_file": "Hapus File",
+    "delete_file_confirmation": "Apakah Anda yakin ingin menghapus file ini?",
+    "watermark_pdf": "Tanda Air PDF"
 }

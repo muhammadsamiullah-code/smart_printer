@@ -122,5 +122,9 @@
   "add_signature":"Add Signature",
   "import_signature":"Import Signature",
   "draw_your_sign":"Draw Your Sign",
-  "sign_pdf":"Sign PDF"
+  "sign_pdf":"Sign PDF",
+  "apply_watermark":"Apply Watermark",
+  "delete_file":"Delete File",
+  "delete_file_confirmation":"Are you sure you want to delete this file?",
+  "watermark_pdf":"Watermark PDF"
   }

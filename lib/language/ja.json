@@ -122,5 +122,9 @@
     "add_signature": "署名追加",
     "import_signature": "署名インポート",
     "draw_your_sign": "署名を書いてください",
-    "sign_pdf": "PDFに署名"
+    "sign_pdf": "PDFに署名",
+    "apply_watermark": "透かしを適用",
+    "delete_file": "ファイルを削除",
+    "delete_file_confirmation": "このファイルを削除してもよろしいですか？",
+    "watermark_pdf": "PDFに透かしを入れる"
 }

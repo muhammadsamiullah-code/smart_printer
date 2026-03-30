@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:path_provider/path_provider.dart';
@@ -93,22 +92,33 @@ class _MergePdfScreenState extends State<MergePdfScreen> {
 
     try {
       final PdfDocument newDocument = PdfDocument();
-
       for (File file in selectedFiles) {
         final bytes = await file.readAsBytes();
         final PdfDocument document = PdfDocument(inputBytes: bytes);
 
         for (int i = 0; i < document.pages.count; i++) {
-          newDocument.pages.add().graphics.drawPdfTemplate(
-            document.pages[i].createTemplate(),
-            const Offset(0, 0),
+          final oldPage = document.pages[i];
+
+          final section = newDocument.sections!.add();
+          section.pageSettings.size = oldPage.size;
+
+          final newPage = section.pages.add();
+
+          final template = oldPage.createTemplate();
+          final width = newPage.getClientSize().width;
+          final height = newPage.getClientSize().height;
+
+          newPage.graphics.drawPdfTemplate(
+            template,
+            Offset.zero,
+            Size(width, height),
           );
         }
 
         document.dispose();
       }
 
-      final directory = await getApplicationDocumentsDirectory();
+            final directory = await getApplicationDocumentsDirectory();
 
       final mergedFile = File(
         "${directory.path}/merged_${DateTime.now().millisecondsSinceEpoch}.pdf",
@@ -187,18 +197,13 @@ class _MergePdfScreenState extends State<MergePdfScreen> {
                       borderColor: AppColors.primaryColor,
                       onPressed: pickFiles,
                       text: 'add_more',
-
                     ),
                   ),
 
                   const SizedBox(width: 12),
 
                   Expanded(
-                    child: CustomButton(
-
-                      onPressed: mergePdf,
-                      text: "merge_pdf",
-                    ),
+                    child: CustomButton(onPressed: mergePdf, text: "merge_pdf"),
                   ),
                 ],
               ),

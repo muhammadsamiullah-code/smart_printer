@@ -140,6 +140,7 @@ class _CreatePdfFileScreenState extends State<CreatePdfFileScreen> {
 
   @override
   Widget build(BuildContext context) {
+     final reversedList = createdFiles.reversed.toList();
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
 
@@ -151,9 +152,9 @@ class _CreatePdfFileScreenState extends State<CreatePdfFileScreen> {
             )
           : ListView.builder(
               padding: const EdgeInsets.all(12),
-              itemCount: createdFiles.length,
+              itemCount: reversedList.length,
               itemBuilder: (context, index) {
-                final file = createdFiles[index];
+                final file = reversedList[index];
                 final fileName = file.path.split('/').last;
                 final fileSize = formatFileSize(file.lengthSync());
                 final lastModified = file.lastModifiedSync();

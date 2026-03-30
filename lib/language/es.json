@@ -122,5 +122,9 @@
     "add_signature": "Añadir firma",
     "import_signature": "Importar firma",
     "draw_your_sign": "Dibuje su firma",
-    "sign_pdf": "Firmar PDF"
+    "sign_pdf": "Firmar PDF",
+    "apply_watermark": "Aplicar marca de agua",
+    "delete_file": "Eliminar archivo",
+    "delete_file_confirmation": "¿Está seguro de que desea eliminar este archivo?",
+    "watermark_pdf": "Marca de agua en PDF"
 }

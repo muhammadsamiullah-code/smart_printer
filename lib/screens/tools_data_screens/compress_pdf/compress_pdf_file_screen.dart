@@ -133,6 +133,7 @@ class _CompressPdfFileScreenState extends State<CompressPdfFileScreen> {
 
   @override
   Widget build(BuildContext context) {
+     final reversedList = pdfFiles.reversed.toList();
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
 
@@ -144,9 +145,9 @@ class _CompressPdfFileScreenState extends State<CompressPdfFileScreen> {
             )
           : ListView.builder(
               padding: const EdgeInsets.all(12),
-              itemCount: pdfFiles.length,
+              itemCount: reversedList.length,
               itemBuilder: (_, index) {
-                final file = pdfFiles[index];
+                final file = reversedList[index];
                 final fileSize = formatFileSize(file.lengthSync());
                 final fileName = file.path.split('/').last;
                 final lastModified = file.lastModifiedSync();

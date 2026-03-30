@@ -122,5 +122,9 @@
     "add_signature": "Aggiungi firma",
     "import_signature": "Importa firma",
     "draw_your_sign": "Disegna la tua firma",
-    "sign_pdf": "Firma PDF"
+    "sign_pdf": "Firma PDF",
+    "apply_watermark": "Applica filigrana",
+    "delete_file": "Elimina file",
+    "delete_file_confirmation": "Sei sicuro di voler eliminare questo file?",
+    "watermark_pdf": "Filigrana PDF"
 }

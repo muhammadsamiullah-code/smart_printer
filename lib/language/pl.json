@@ -122,5 +122,9 @@
     "add_signature": "Dodaj podpis",
     "import_signature": "Importuj podpis",
     "draw_your_sign": "Narysuj swój podpis",
-    "sign_pdf": "Podpisz PDF"
+    "sign_pdf": "Podpisz PDF",
+    "apply_watermark": "Zastosuj znak wodny",
+    "delete_file": "Usuń plik",
+    "delete_file_confirmation": "Czy na pewno chcesz usunąć ten plik?",
+    "watermark_pdf": "Znak wodny PDF"
 }

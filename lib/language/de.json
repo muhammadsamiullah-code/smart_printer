@@ -122,5 +122,9 @@
     "add_signature": "Unterschrift hinzufügen",
     "import_signature": "Unterschrift importieren",
     "draw_your_sign": "Zeichnen Sie Ihre Unterschrift",
-    "sign_pdf": "PDF unterzeichnen"
+    "sign_pdf": "PDF unterzeichnen",
+    "apply_watermark": "Wasserzeichen anwenden",
+    "delete_file": "Datei löschen",
+    "delete_file_confirmation": "Sind Sie sicher, dass Sie diese Datei löschen möchten?",
+    "watermark_pdf": "PDF mit Wasserzeichen versehen"
 }

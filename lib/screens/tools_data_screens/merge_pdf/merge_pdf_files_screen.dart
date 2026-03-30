@@ -151,6 +151,8 @@ class _MergedPDFFilesScreenState extends State<MergedPDFFilesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final reversedList = mergedFiles.reversed.toList();
+
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
 
@@ -162,13 +164,14 @@ class _MergedPDFFilesScreenState extends State<MergedPDFFilesScreen> {
             )
           : ListView.builder(
               padding: const EdgeInsets.all(12),
-              itemCount: mergedFiles.length,
+              itemCount: reversedList.length,
               itemBuilder: (context, index) {
-                final file = mergedFiles[index];
+                final file = reversedList[index];
                 final fileName = file.path.split('/').last;
                 final fileSize = formatFileSize(file.lengthSync());
                 final lastModified = file.lastModifiedSync();
                 final formattedDate = formatDateTime(lastModified);
+
 
                 return PdfListCard(
                   title: fileName,

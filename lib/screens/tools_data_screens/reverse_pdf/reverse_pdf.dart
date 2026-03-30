@@ -33,6 +33,45 @@ class _ReversePdfScreenState extends State<ReversePdfScreen> {
   }
 
   /// REVERSE ALL FILES
+  // Future<void> reverseAll() async {
+  //   if (selectedFiles.isEmpty) return;
+
+  //   /// 🔥 SHOW LOADER
+  //   showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (_) => const Center(child: CircularProgressIndicator()),
+  //   );
+
+  //   for (final file in selectedFiles) {
+  //     final bytes = await file.readAsBytes();
+
+  //     final oldPdf = PdfDocument(inputBytes: bytes);
+  //     final newPdf = PdfDocument();
+
+  //     for (int i = oldPdf.pages.count - 1; i >= 0; i--) {
+  //       newPdf.pages.add().graphics.drawPdfTemplate(
+  //         oldPdf.pages[i].createTemplate(),
+  //         const Offset(0, 0),
+  //       );
+  //     }
+
+  //     final dir = await getApplicationDocumentsDirectory();
+
+  //     final output = File(
+  //       "${dir.path}/reversed_${DateTime.now().millisecondsSinceEpoch}.pdf",
+  //     );
+
+  //     await output.writeAsBytes(await newPdf.save());
+
+  //     oldPdf.dispose();
+  //     newPdf.dispose();
+  //     Navigator.pop(context);
+
+  //     /// SHOW SUCCESS (last file)
+  //     SuccessDialog.show(context, output);
+  //   }
+  // }
   Future<void> reverseAll() async {
     if (selectedFiles.isEmpty) return;
 
@@ -50,9 +89,16 @@ class _ReversePdfScreenState extends State<ReversePdfScreen> {
       final newPdf = PdfDocument();
 
       for (int i = oldPdf.pages.count - 1; i >= 0; i--) {
-        newPdf.pages.add().graphics.drawPdfTemplate(
-          oldPdf.pages[i].createTemplate(),
-          const Offset(0, 0),
+        final newPage = newPdf.pages.add();
+        final template = oldPdf.pages[i].createTemplate();
+
+        final width = newPage.getClientSize().width;
+        final height = newPage.getClientSize().height;
+
+        newPage.graphics.drawPdfTemplate(
+          template,
+          Offset.zero, // top-left
+          Size(width, height), // full page scaling
         );
       }
 
@@ -66,8 +112,8 @@ class _ReversePdfScreenState extends State<ReversePdfScreen> {
 
       oldPdf.dispose();
       newPdf.dispose();
+      /// CLOSE LOADER (after each file)
       Navigator.pop(context);
-
       /// SHOW SUCCESS (last file)
       SuccessDialog.show(context, output);
     }
@@ -101,10 +147,7 @@ class _ReversePdfScreenState extends State<ReversePdfScreen> {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(12),
         height: 80,
-        child: CustomButton(
-          onPressed: reverseAll,
-          text: "reverse_pages",
-        ),
+        child: CustomButton(onPressed: reverseAll, text: "reverse_pages"),
       ),
     );
   }

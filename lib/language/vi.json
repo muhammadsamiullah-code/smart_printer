@@ -122,5 +122,9 @@
     "add_signature": "Thêm chữ ký",
     "import_signature": "Nhập chữ ký",
     "draw_your_sign": "Vẽ chữ ký của bạn",
-    "sign_pdf": "Ký PDF"
+    "sign_pdf": "Ký PDF",
+    "apply_watermark": "Áp dụng dấu chìm",
+    "delete_file": "Xóa tệp",
+    "delete_file_confirmation": "Bạn có chắc chắn muốn xóa tệp này không?",
+    "watermark_pdf": "Đóng dấu chìm PDF"
 }

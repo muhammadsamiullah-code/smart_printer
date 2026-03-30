@@ -122,5 +122,9 @@
     "add_signature": "हस्ताक्षर जोड़ें",
     "import_signature": "हस्ताक्षर इम्पोर्ट करें",
     "draw_your_sign": "अपना साइन बनाएं",
-    "sign_pdf": "पीडीएफ साइन करें"
+    "sign_pdf": "पीडीएफ साइन करें",
+    "apply_watermark": "वॉटरमार्क लगाएं",
+    "delete_file": "फ़ाइल हटाएं",
+    "delete_file_confirmation": "क्या आप वाकई इस फ़ाइल को हटाना चाहते हैं?",
+    "watermark_pdf": "PDF वॉटरमार्क"
 }

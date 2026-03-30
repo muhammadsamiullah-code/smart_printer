@@ -138,11 +138,12 @@ class _SplitPDFFilesScreenState extends State<SplitPDFFilesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final reversedList = splitFiles.reversed.toList();
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
       body: Stack(
         children: [
-          splitFiles.isEmpty
+          reversedList.isEmpty
               ? CenterWidgetForPDF(
                   title: widget.title,
                   icon: widget.icon,
@@ -150,9 +151,9 @@ class _SplitPDFFilesScreenState extends State<SplitPDFFilesScreen> {
                 )
               : ListView.builder(
                   padding: const EdgeInsets.all(12),
-                  itemCount: splitFiles.length,
+                  itemCount: reversedList.length,
                   itemBuilder: (context, index) {
-                    final file = splitFiles[index];
+                    final file = reversedList[index];
                     final fileName = file.path.split('/').last;
                     final fileSize = formatFileSize(file.lengthSync());
                     final lastModified = file.lastModifiedSync();

@@ -1,113 +1,58 @@
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
-
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import '../../../const/color.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/success_dialoge.dart';
 import 'package:image/image.dart' as img;
 
-
 class ImageToPdfScreen extends StatefulWidget {
-    final List<File> images;
-    final String title;
+  final List<File> images;
+  final String title;
 
-  const ImageToPdfScreen({super.key,  required this.images, required this.title});
+  const ImageToPdfScreen({
+    super.key,
+    required this.images,
+    required this.title,
+  });
 
   @override
   State<ImageToPdfScreen> createState() => _ImageToPdfScreenState();
 }
 
 class _ImageToPdfScreenState extends State<ImageToPdfScreen> {
-
   final ImagePicker picker = ImagePicker();
 
-late List<File> images;
+  late List<File> images;
 
-@override
-void initState() {
-  super.initState();
-  images = [...widget.images];
-}
+  @override
+  void initState() {
+    super.initState();
+    images = [...widget.images];
+  }
+
   /// Pick Images
   Future<void> pickImages() async {
-
     final List<XFile>? pickedImages = await picker.pickMultiImage();
 
     if (pickedImages != null) {
-
       setState(() {
-        images.addAll(
-          pickedImages.map((e) => File(e.path)),
-        );
+        images.addAll(pickedImages.map((e) => File(e.path)));
       });
     }
   }
 
   /// Remove image
   void removeImage(int index) {
-
     setState(() {
       images.removeAt(index);
     });
   }
-
-  /// Convert Image to PDF
-//   Future<void> convertPdf() async {
-//   if (images.isEmpty) {
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       const SnackBar(content: Text("Please select images")),
-//     );
-//     return;
-//   }
-
-//   /// 🔥 SHOW LOADER
-//   showDialog(
-//     context: context,
-//     barrierDismissible: false,
-//     builder: (_) =>
-//         const Center(child: CircularProgressIndicator()),
-//   );
-
-//   final PdfDocument document = PdfDocument();
-
-//   for (var img in images) {
-//     final bytes = await img.readAsBytes();
-//     final PdfBitmap bitmap = PdfBitmap(bytes);
-
-//     final page = document.pages.add();
-
-//     page.graphics.drawImage(
-//       bitmap,
-//       Rect.fromLTWH(
-//         0,
-//         0,
-//         page.getClientSize().width,
-//         page.getClientSize().height,
-//       ),
-//     );
-//   }
-
-//   final dir = await getApplicationDocumentsDirectory();
-
-//   final file = File(
-//     "${dir.path}/image_pdf_${DateTime.now().millisecondsSinceEpoch}.pdf",
-//   );
-
-//   await file.writeAsBytes(await document.save());
-
-//   document.dispose();
-
-//   Navigator.pop(context); // ❌ remove loader
-
-//   /// ✅ SUCCESS DIALOG
-//   SuccessDialog.show(context, file);
-// }
-
 Future<void> convertPdf() async {
   if (images.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -116,6 +61,7 @@ Future<void> convertPdf() async {
     return;
   }
 
+  // Show loader first
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -123,30 +69,23 @@ Future<void> convertPdf() async {
   );
 
   try {
-    final PdfDocument document = PdfDocument();
+    // Delay to allow UI to repaint
+    await Future.delayed(Duration(milliseconds: 100));
+
+    final pdf = pw.Document();
 
     for (var file in images) {
       final bytes = await file.readAsBytes();
 
-      /// 🔥 DECODE IMAGE (fix unsupported issue)
-      final decodedImage = img.decodeImage(bytes);
+      // Decode image off main thread (optional optimization)
+      final decoded = await decodeImageFromList(bytes);
 
-      if (decodedImage == null) continue;
+      final image = pw.MemoryImage(bytes);
 
-      /// 🔥 CONVERT TO JPG
-      final jpgBytes = img.encodeJpg(decodedImage);
-
-      final PdfBitmap bitmap = PdfBitmap(jpgBytes);
-
-      final page = document.pages.add();
-
-      page.graphics.drawImage(
-        bitmap,
-        Rect.fromLTWH(
-          0,
-          0,
-          page.getClientSize().width,
-          page.getClientSize().height,
+      pdf.addPage(
+        pw.Page(
+          pageFormat: PdfPageFormat(decoded.width.toDouble(), decoded.height.toDouble()),
+          build: (context) => pw.Image(image),
         ),
       );
     }
@@ -157,24 +96,111 @@ Future<void> convertPdf() async {
       "${dir.path}/image_pdf_${DateTime.now().millisecondsSinceEpoch}.pdf",
     );
 
-    await file.writeAsBytes(await document.save());
-
-    document.dispose();
+    await file.writeAsBytes(await pdf.save());
 
     Navigator.pop(context); // remove loader
-
     SuccessDialog.show(context, file);
   } catch (e) {
-    Navigator.pop(context);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Error: $e")),
-    );
+    Navigator.pop(context); // remove loader
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Error: $e")));
   }
 }
+  // Future<void> convertPdf() async {
+  //   if (images.isEmpty) {
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(const SnackBar(content: Text("Please select images")));
+  //     return;
+  //   }
+
+  //   showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (_) => const Center(child: CircularProgressIndicator()),
+  //   );
+
+  //   try {
+  //      final pdf = pw.Document();
+
+  //   for (var file in widget.images) {
+  //     final bytes = await file.readAsBytes();
+  //     final image = pw.MemoryImage(bytes);
+
+  //     final decoded = await decodeImageFromList(bytes);
+
+  //     pdf.addPage(
+  //       pw.Page(
+  //         pageFormat: PdfPageFormat(decoded.width.toDouble(), decoded.height.toDouble()),
+  //         build: (context) => pw.Image(image),
+  //       ),
+  //     );
+  //   }
+  //     // final PdfDocument document = PdfDocument();
+
+  //     // for (var file in images) {
+  //     //   final bytes = await file.readAsBytes();
+
+  //     //   /// 🔥 DECODE IMAGE (fix unsupported issue)
+  //     //   final decodedImage = img.decodeImage(bytes);
+  //     //   if (decodedImage == null) continue;
+
+  //     //   final jpgBytes = img.encodeJpg(decodedImage);
+  //     //   final PdfBitmap bitmap = PdfBitmap(jpgBytes);
+
+  //     //   /// ✅ USE ORIGINAL WIDTH & HEIGHT
+  //     //   final page = document.pages.add();
+
+  //     //   final pageSize = page.getClientSize();
+
+  //     //   double imgWidth = decodedImage.width.toDouble();
+  //     //   double imgHeight = decodedImage.height.toDouble();
+
+  //     //   double ratio = imgWidth / imgHeight;
+  //     //   double pageRatio = pageSize.width / pageSize.height;
+
+  //     //   double drawWidth, drawHeight;
+
+  //     //   if (ratio > pageRatio) {
+  //     //     drawWidth = pageSize.width;
+  //     //     drawHeight = pageSize.width / ratio;
+  //     //   } else {
+  //     //     drawHeight = pageSize.height;
+  //     //     drawWidth = pageSize.height * ratio;
+  //     //   }
+
+  //     //   page.graphics.drawImage(
+  //     //     bitmap,
+  //     //     Rect.fromLTWH(
+  //     //       (pageSize.width - drawWidth) / 2,
+  //     //       0, // 🔥 FIX: no extra top padding
+  //     //       drawWidth,
+  //     //       drawHeight,
+  //     //     ),
+  //     //   );
+  //     // }
+
+  //     final dir = await getApplicationDocumentsDirectory();
+
+  //     final file = File(
+  //       "${dir.path}/image_pdf_${DateTime.now().millisecondsSinceEpoch}.pdf",
+  //     );
+
+  //     await file.writeAsBytes(await pdf.save());
+  //     Navigator.pop(context); // remove loader
+
+  //     SuccessDialog.show(context, file);
+  //   } catch (e) {
+  //     Navigator.pop(context);
+
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(SnackBar(content: Text("Error: $e")));
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
 
@@ -183,33 +209,25 @@ Future<void> convertPdf() async {
 
         child: Column(
           children: [
-
-
             const SizedBox(height: 10),
 
             /// Image Preview Grid
             Expanded(
               child: GridView.builder(
                 itemCount: images.length,
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
 
                 itemBuilder: (context, index) {
-
                   return Stack(
                     children: [
-
                       Positioned.fill(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: Image.file(
-                            images[index],
-                            fit: BoxFit.cover,
-                          ),
+                          child: Image.file(images[index], fit: BoxFit.cover),
                         ),
                       ),
 
@@ -233,7 +251,7 @@ Future<void> convertPdf() async {
                             ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   );
                 },
@@ -241,37 +259,34 @@ Future<void> convertPdf() async {
             ),
 
             const SizedBox(height: 10),
-
           ],
         ),
       ),
-       bottomNavigationBar: Container(
-              padding: const EdgeInsets.all(12),
-              height: 80,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomButtonWithBorder(
-                      borderWidth: 1.5,
-                      borderColor: AppColors.primaryColor,
-                      onPressed: pickImages,
-                      text: 'add_more',
-
-                    ),
-                  ),
-
-                  const SizedBox(width: 12),
-
-                  Expanded(
-                    child: CustomButton(
-
-                      onPressed: convertPdf,
-                      text: "generate_pdf",
-                    ),
-                  ),
-                ],
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(12),
+        height: 80,
+        child: Row(
+          children: [
+            Expanded(
+              child: CustomButtonWithBorder(
+                borderWidth: 1.5,
+                borderColor: AppColors.primaryColor,
+                onPressed: pickImages,
+                text: 'add_more',
               ),
             ),
+
+            const SizedBox(width: 12),
+
+            Expanded(
+              child: CustomButton(
+                
+                onPressed: convertPdf, 
+                 text: "generate_pdf"),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

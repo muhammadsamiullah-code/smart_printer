@@ -11,6 +11,7 @@ import '../../../widgets/center_widget_for_pdf.dart';
 import '../../../widgets/file_option_menu.dart';
 import '../../../widgets/pdf_list_card.dart';
 import '../merge_pdf/pdf_preview_screen.dart';
+import 'newcode.dart';
 import 'signature_pdf_screen.dart';
 
 class SignaturePdfFileScreen extends StatefulWidget {
@@ -63,7 +64,7 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
       final updated = await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => SignaturePdfScreen(file: file, title: widget.title),
+          builder: (_) => NewSignaturePdfScreen(file: file, title: widget.title),
         ),
       );
 
@@ -132,29 +133,11 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final reversedList = pdfFiles.reversed.toList();
     return Scaffold(
       appBar: CustomAppBar(
         title: widget.title,
         actions: [
-          // if (pdfFiles.isNotEmpty)
-          //   Padding(
-          //     padding: const EdgeInsets.only(right: 16),
-          //     child: Center(
-          //       child: Container(
-          //         padding: const EdgeInsets.symmetric(
-          //             horizontal: 10, vertical: 5),
-          //         decoration: BoxDecoration(
-          //           color: Colors.red,
-          //           borderRadius: BorderRadius.circular(20),
-          //         ),
-          //         child: Text(
-          //           "${pdfFiles.length} Files",
-          //           style: const TextStyle(
-          //               color: Colors.white, fontSize: 12),
-          //         ),
-          //       ),
-          //     ),
-          //   )
         ],
       ),
 
@@ -166,9 +149,9 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
             )
           : ListView.builder(
               padding: const EdgeInsets.all(12),
-              itemCount: pdfFiles.length,
+              itemCount: reversedList.length,
               itemBuilder: (_, index) {
-                final file = pdfFiles[index];
+                final file = reversedList[index];
                 final fileName = file.path.split('/').last;
                 final fileSize = formatFileSize(file.lengthSync());
                 final lastModified = file.lastModifiedSync();

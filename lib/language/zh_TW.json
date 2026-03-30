@@ -122,5 +122,9 @@
     "add_signature": "添加簽名",
     "import_signature": "匯入簽名",
     "draw_your_sign": "繪製您的簽名",
-    "sign_pdf": "簽署 PDF"
+    "sign_pdf": "簽署 PDF",
+    "apply_watermark": "套用水印",
+    "delete_file": "刪除檔案",
+    "delete_file_confirmation": "您確定要刪除此檔案嗎？",
+    "watermark_pdf": "PDF 水印"
 }

@@ -122,5 +122,9 @@
     "add_signature": "Voeg handtekening by",
     "import_signature": "Voer handtekening in",
     "draw_your_sign": "Teken jou handtekening",
-    "sign_pdf": "Teken PDF"
+    "sign_pdf": "Teken PDF",
+    "apply_watermark": "Pas watermerk toe",
+    "delete_file": "Skrap lêer",
+    "delete_file_confirmation": "Is u seker u wil hierdie lêer skrap?",
+    "watermark_pdf": "Watermerk PDF"
 }

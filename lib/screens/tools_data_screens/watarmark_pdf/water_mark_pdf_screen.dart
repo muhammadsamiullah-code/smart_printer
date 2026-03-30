@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:smart_scanner/widgets/tr_text.dart';
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
 import '../../../widgets/custom_appbar.dart';
@@ -10,7 +11,7 @@ import '../../../widgets/file_option_menu.dart';
 import '../../../widgets/pdf_list_card.dart';
 import '../merge_pdf/pdf_preview_screen.dart';
 import 'add_water_mark_screen.dart';
-import 'watermark_view_screen.dart';
+
 
 class WatermarkPdfScreen extends StatefulWidget {
   final String title;
@@ -88,12 +89,12 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
     await showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text("Rename File"),
+        title: const TrText("rename_file"),
         content: TextField(controller: renameController),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
+            child: const TrText("cancel"),
           ),
           TextButton(
             onPressed: () async {
@@ -103,7 +104,7 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
               Navigator.pop(context);
               loadSavedFiles();
             },
-            child: const Text("Rename"),
+            child: const TrText("rename"),
           ),
         ],
       ),
@@ -115,16 +116,16 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
     bool? confirm = await showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text("Delete File"),
-        content: const Text("Are you sure you want to delete this file?"),
+        title: const TrText("delete_file"),
+        content: const TrText("delete_file_confirmation"),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text("Cancel"),
+            child: const TrText("cancel"),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text("Delete"),
+            child: const TrText("delete"),
           ),
         ],
       ),
@@ -152,18 +153,20 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
 
   @override
   Widget build(BuildContext context) {
+          final reversedList = savedFiles.reversed.toList();
+
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
-      body: savedFiles.isEmpty
+      body: reversedList.isEmpty
           ? CenterWidgetForPDF(
               title: widget.title,
               icon: widget.icon,
               color: widget.color,
             )
           : ListView.builder(
-              itemCount: savedFiles.length,
+              itemCount: reversedList.length,
               itemBuilder: (_, index) {
-                final file = savedFiles[index];
+                final file = reversedList[index];
                 final fileName = file.path.split('/').last;
                 final fileSize = formatFileSize(file.lengthSync());
                 final lastModified = file.lastModifiedSync();
@@ -194,7 +197,7 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
             ),
       floatingActionButton: buildCommonFAB(
         onPressed: () => pickPdf(context),
-        label: 'Select File',
+        label: 'select_file',
       ),
     );
   }

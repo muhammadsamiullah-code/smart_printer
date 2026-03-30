@@ -4,7 +4,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
-
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
 import '../../../widgets/custom_appbar.dart';
@@ -13,7 +12,6 @@ import '../../../widgets/pdf_list_card.dart';
 import '../../../widgets/tr_text.dart';
 import '../merge_pdf/pdf_preview_screen.dart';
 import 'image_to_pdf_screen.dart';
-
 class ImageToPdfFileScreen extends StatefulWidget {
   final String title;
   final String icon;
@@ -149,6 +147,7 @@ class _ImageToPdfFileScreenState extends State<ImageToPdfFileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final reversedList = pdfFiles.reversed.toList();
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
 
@@ -160,9 +159,9 @@ class _ImageToPdfFileScreenState extends State<ImageToPdfFileScreen> {
             )
           : ListView.builder(
               padding: const EdgeInsets.all(12),
-              itemCount: pdfFiles.length,
+              itemCount: reversedList.length,
               itemBuilder: (context, index) {
-                final file = pdfFiles[index];
+                final file = reversedList[index];
                 final fileName = file.path.split('/').last;
                 final fileSize = formatFileSize(file.lengthSync());
                 final lastModified = file.lastModifiedSync();

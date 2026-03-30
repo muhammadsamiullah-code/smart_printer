@@ -18,6 +18,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:multicast_dns/multicast_dns.dart';
 import 'contacts_screen.dart';
+import 'image_to_pdf_convert.dart';
 import 'shape_selection_screen.dart';
 import 'topic_selection_screen.dart';
 
@@ -522,7 +523,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     }),
+                
                   ),
+                  // TextButton(onPressed: (){
+                  //   Navigator.push(context, MaterialPageRoute(builder: (context) => ImageToPDFConvert()));
+                  // }, child: Text("Go to Image to PDF Convert Screen"))
                 ],
               ),
             ),

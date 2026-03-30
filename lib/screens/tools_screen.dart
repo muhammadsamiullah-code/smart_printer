@@ -58,11 +58,11 @@ class _ToolsScreenState extends State<ToolsScreen> {
     "icon": "assets/toolsIcon/qrToPDF.svg",
     "color": const Color.fromRGBO(209, 241, 255, 1),
   },
-  // {
-  //   "title": "watermark",
-  //   "icon": "assets/toolsIcon/watermarkPDF.svg",
-  //   "color": const Color.fromRGBO(255, 237, 234, 1),
-  // },
+  {
+    "title": "watermark_pdf",
+    "icon": "assets/toolsIcon/watermarkPDF.svg",
+    "color": const Color.fromRGBO(255, 237, 234, 1),
+  },
   {
     "title": "page_number",
     "icon": "assets/toolsIcon/pageNoPDF.svg",
@@ -145,13 +145,13 @@ class _ToolsScreenState extends State<ToolsScreen> {
       );
       break;
 
-    // case "watermark":
-    //   screen = WatermarkPdfScreen(
-    //     title: tool["title"],
-    //     icon: tool["icon"],
-    //     color: tool["color"],
-    //   );
-    //   break;
+    case "watermark_pdf":
+      screen = WatermarkPdfScreen(
+        title: tool["title"],
+        icon: tool["icon"],
+        color: tool["color"],
+      );
+      break;
 
     case "page_number":
       screen = PageNumberFileScreen(

@@ -1,11 +1,15 @@
 import 'dart:io';
+import 'dart:math';
+import 'dart:typed_data';
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdfx/pdfx.dart' as pdfx;
 import 'package:syncfusion_flutter_pdf/pdf.dart';
-import 'dart:math';
-
 import '../../../widgets/custom_appbar.dart';
+import '../../../widgets/custom_button.dart';
 import '../../../widgets/success_dialoge.dart';
 
 class AddWatermarkScreen extends StatefulWidget {
@@ -24,46 +28,35 @@ class AddWatermarkScreen extends StatefulWidget {
 
 class _AddWatermarkScreenState extends State<AddWatermarkScreen> {
   final GlobalKey previewKey = GlobalKey();
-  pdfx.PdfPage? page;
   pdfx.PdfControllerPinch? pdfController;
   final controller = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    pdfController = pdfx.PdfControllerPinch(
-      document: pdfx.PdfDocument.openFile(widget.file.path),
-    );
-
-    loadPageSize(); // ✅ controller ke baad call karo
-  }
-  // pdfx.PdfPage? page;
-
-  void loadPageSize() async {
-    if (pdfController == null) return;
-
-    final doc = await pdfController!.document;
-    final p = await doc.getPage(1);
-
-    setState(() {
-      page = p;
-    });
-  }
-
-  // pdfx.PdfControllerPinch? pdfController;
+  PDFViewController? pdfViewController;
+  bool isCapturing = false;
+  int totalPages = 0;
+  int currentPage = 0;
+  double scale = 1.0;
+  double minScale = 0.5;
+  double maxScale = 3.0;
   String fontType = "Helvetica";
   String fontStyle = "Regular";
   double fontSize = 24;
 
   Color textColor = Colors.red;
 
-  String alignment = "Middle Center";
-
   double transparency = 0.3;
   double rotation = 0;
 
   Offset previewPosition = const Offset(120, 120);
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   List<double> fontSizes = [
     12,
@@ -83,19 +76,6 @@ class _AddWatermarkScreenState extends State<AddWatermarkScreen> {
     108,
     120,
   ];
-
-  List<String> alignments = [
-    "Top Left",
-    "Top Center",
-    "Top Right",
-    "Middle Left",
-    "Middle Center",
-    "Middle Right",
-    "Bottom Left",
-    "Bottom Center",
-    "Bottom Right",
-  ];
-
   String get fileName => widget.file.path.split('/').last;
 
   /// FONT
@@ -121,243 +101,153 @@ class _AddWatermarkScreenState extends State<AddWatermarkScreen> {
     }
   }
 
-  void updateAlignment() {
-    const previewWidth = 300;
-    const previewHeight = 300;
+  Offset getClampedPosition(
+    Offset newPosition,
+    Size previewSize,
+    Size textSize,
+  ) {
+    final halfWidth = (textSize.width * scale) / 2;
+    final halfHeight = (textSize.height * scale) / 2;
 
-    switch (alignment) {
-      case "Top Left":
-        previewPosition = const Offset(10, 10);
-        break;
+    double dx = newPosition.dx;
+    double dy = newPosition.dy;
 
-      case "Top Center":
-        previewPosition = const Offset(previewWidth / 2 - 50, 10);
-        break;
+    dx = dx.clamp(halfWidth, previewSize.width - halfWidth);
+    dy = dy.clamp(halfHeight, previewSize.height - halfHeight);
 
-      case "Top Right":
-        previewPosition = const Offset(previewWidth - 120, 10);
-        break;
-
-      case "Middle Left":
-        previewPosition = const Offset(10, previewHeight / 2);
-        break;
-
-      case "Middle Center":
-        previewPosition = const Offset(
-          previewWidth / 2 - 50,
-          previewHeight / 2,
-        );
-        break;
-
-      case "Middle Right":
-        previewPosition = const Offset(previewWidth - 120, previewHeight / 2);
-        break;
-
-      case "Bottom Left":
-        previewPosition = const Offset(10, previewHeight - 50);
-        break;
-
-      case "Bottom Center":
-        previewPosition = const Offset(
-          previewWidth / 2 - 50,
-          previewHeight - 50,
-        );
-        break;
-
-      case "Bottom Right":
-        previewPosition = const Offset(previewWidth - 120, previewHeight - 50);
-        break;
-    }
+    return Offset(dx, dy);
   }
 
-  /// ALIGNMENT
-  Offset getAlignment(Size size) {
-    switch (alignment) {
-      case "Top Left":
-        return const Offset(20, 20);
+  Future<Uint8List> capturePreview() async {
+    RenderRepaintBoundary boundary =
+        previewKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
 
-      case "Top Center":
-        return Offset(size.width / 2, 20);
+    final image = await boundary.toImage(pixelRatio: 3);
 
-      case "Top Right":
-        return Offset(size.width - 200, 20);
+    final byteData = await image.toByteData(format: ImageByteFormat.png);
 
-      case "Middle Left":
-        return Offset(20, size.height / 2);
-
-      case "Middle Right":
-        return Offset(size.width - 200, size.height / 2);
-
-      case "Bottom Left":
-        return Offset(20, size.height - 50);
-
-      case "Bottom Center":
-        return Offset(size.width / 2, size.height - 50);
-
-      case "Bottom Right":
-        return Offset(size.width - 200, size.height - 50);
-
-      default:
-        return Offset(size.width / 2, size.height / 2);
-    }
+    return byteData!.buffer.asUint8List();
   }
 
-  Future<void> applyWatermark() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => const Center(child: CircularProgressIndicator()),
-    );
+Future<void> applyWatermark() async {
+  setState(() => isCapturing = true);
 
-    /// ✅ GET REAL PREVIEW SIZE
-    final RenderBox box =
-        previewKey.currentContext!.findRenderObject() as RenderBox;
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) => const Center(child: CircularProgressIndicator()),
+  );
 
-    final previewSize = box.size;
-    final previewWidth = previewSize.width;
-    final previewHeight = previewSize.height;
+  final pdf = PdfDocument();
 
-    final bytes = await widget.file.readAsBytes();
-    final PdfDocument document = PdfDocument(inputBytes: bytes);
+  /// LOOP ALL PAGES
+  for (int i = 0; i < totalPages; i++) {
+    /// 👉 switch page
+    await pdfViewController?.setPage(i);
 
-    final font = getFont();
+    /// 👉 wait UI render
+    await Future.delayed(const Duration(milliseconds: 300));
 
-    for (int i = 0; i < document.pages.count; i++) {
-      final page = document.pages[i];
-      final size = page.getClientSize();
+    /// 👉 capture preview (WITH watermark)
+    final screenshotBytes = await capturePreview();
 
-      page.graphics.save();
+    final page = pdf.pages.add();
 
-      /// ✅ transparency
-      page.graphics.setTransparency(transparency);
+    /// 🔥 GET CLIENT SIZE
+    final width = page.getClientSize().width;
+    final height = page.getClientSize().height;
 
-      /// ✅ CORRECT RATIO (NO HARDCODE)
-      final textSize = getTextSize();
-
-      final ratioX = previewPosition.dx / previewWidth;
-      final ratioY = previewPosition.dy / previewHeight;
-
-      final pdfX = ratioX * size.width;
-      final pdfY = ratioY * size.height;
-      final centerX = pdfX + (textSize.width / 2);
-      final centerY = pdfY + (textSize.height / 2);
-
-      /// ✅ MOVE TO POSITION
-      page.graphics.translateTransform(centerX, centerY);
-      page.graphics.rotateTransform(rotation);
-
-      page.graphics.drawString(
-        controller.text.isEmpty ? "Watermark" : controller.text,
-        font,
-        brush: PdfSolidBrush(
-          PdfColor(textColor.red, textColor.green, textColor.blue),
-        ),
-        bounds: Rect.fromCenter(
-          center: const Offset(0, 0),
-          width: textSize.width,
-          height: textSize.height,
-        ),
-        format: PdfStringFormat(
-          alignment: PdfTextAlignment.center,
-          lineAlignment: PdfVerticalAlignment.middle,
-        ),
-      );
-
-      page.graphics.restore();
-    }
-
-    final dir = await getApplicationDocumentsDirectory();
-
-    final file = File(
-      "${dir.path}/watermark_${DateTime.now().millisecondsSinceEpoch}.pdf",
-    );
-
-    await file.writeAsBytes(await document.save());
-    document.dispose();
-
-    if (!mounted) return;
-
-    Navigator.pop(context);
-
-    /// ✅ RETURN TRUE (IMPORTANT)
-    SuccessDialog.show(context, file);
-  }
-
-  @override
-  void dispose() {
-    pdfController?.dispose();
-    controller.dispose();
-    super.dispose();
-  }
-
-  Widget buildPreview() {
-    final textSize = getTextSize();
-
-    if (page == null) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    return Container(
-      key: previewKey, // ✅ IMPORTANT
-      child: Stack(
-        children: [
-          /// ✅ PDF VIEW (REAL RATIO)
-          AspectRatio(
-            aspectRatio: page!.width / page!.height,
-            child: pdfx.PdfViewPinch(
-              controller: pdfController!,
-              scrollDirection: Axis.vertical,
-              builders: pdfx.PdfViewPinchBuilders<pdfx.DefaultBuilderOptions>(
-                options: const pdfx.DefaultBuilderOptions(),
-                documentLoaderBuilder: (_) =>
-                    const Center(child: CircularProgressIndicator()),
-                pageLoaderBuilder: (_) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorBuilder: (_, error) =>
-                    Center(child: Text(error.toString())),
-              ),
-            ),
-          ),
-
-          /// ✅ WATERMARK (DRAGGABLE)
-          Positioned(
-            left: previewPosition.dx,
-            top: previewPosition.dy,
-            child: GestureDetector(
-              onPanUpdate: (details) {
-                setState(() {
-                  previewPosition += details.delta;
-                });
-              },
-              child: Transform.rotate(
-                angle: rotation * pi / 180,
-                child: Transform.translate(
-                  // ✅ ADD THIS
-                  offset: Offset(-textSize.width / 2, -textSize.height / 2),
-                  child: Opacity(
-                    opacity: 1 - transparency,
-                    child: Text(
-                      controller.text.isEmpty ? "Watermark" : controller.text,
-                      style: TextStyle(
-                        fontSize: fontSize,
-                        color: textColor,
-                        fontWeight: fontStyle == "Bold"
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                        fontStyle: fontStyle == "Italic"
-                            ? FontStyle.italic
-                            : FontStyle.normal,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+    /// 👉 draw screenshot full page (scaled perfectly)
+    page.graphics.drawImage(
+      PdfBitmap(screenshotBytes),
+      Rect.fromLTWH(0, 0, width, height),
     );
   }
+
+  final dir = await getApplicationDocumentsDirectory();
+
+  final file = File(
+    "${dir.path}/watermark_${DateTime.now().millisecondsSinceEpoch}.pdf",
+  );
+
+  await file.writeAsBytes(await pdf.save());
+  pdf.dispose();
+
+  if (!mounted) return;
+
+  Navigator.pop(context); // loader close
+  setState(() => isCapturing = false);
+
+  /// ✅ OPEN PDF VIEW
+  SuccessDialog.show(context, file);
+}
+  // Future<void> applyWatermark() async {
+  //   setState(() => isCapturing = true);
+
+  //   showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (_) => const Center(child: CircularProgressIndicator()),
+  //   );
+
+  //   final pdf = PdfDocument();
+
+  //   /// LOOP ALL PAGES
+  //   for (int i = 0; i < totalPages; i++) {
+  //     /// 👉 switch page
+  //     await pdfViewController?.setPage(i);
+
+  //     /// 👉 wait UI render
+  //     await Future.delayed(const Duration(milliseconds: 300));
+
+  //     /// 👉 capture preview (WITH watermark)
+  //     final screenshotBytes = await capturePreview();
+
+  //     final page = pdf.pages.add();
+  //     final size = page.getClientSize();
+
+  //     /// 👉 draw screenshot full page
+  //     page.graphics.drawImage(
+  //       PdfBitmap(screenshotBytes),
+  //       Rect.fromLTWH(0, 0, size.width, size.height),
+  //     );
+  //   }
+
+  //   final dir = await getApplicationDocumentsDirectory();
+
+  //   final file = File(
+  //     "${dir.path}/watermark_${DateTime.now().millisecondsSinceEpoch}.pdf",
+  //   );
+
+  //   await file.writeAsBytes(await pdf.save());
+
+  //   pdf.dispose();
+
+  //   if (!mounted) return;
+
+  //   Navigator.pop(context); // loader close
+  //   setState(() => isCapturing = false);
+
+  //   /// ✅ OPEN PDF VIEW
+  //   SuccessDialog.show(context, file);
+  // }
+
+  void nextPage() {
+    if (currentPage < totalPages - 1) {
+      pdfViewController?.setPage(currentPage + 1);
+    }
+  }
+
+  void previousPage() {
+    if (currentPage > 0) {
+      pdfViewController?.setPage(currentPage - 1);
+    }
+  }
+
+  double currentRotation = 0;
+  double baseRotation = 0;
+
+  double baseScale = 1.0;
 
   Size getTextSize() {
     final text = controller.text.isEmpty ? "Watermark" : controller.text;
@@ -382,15 +272,38 @@ class _AddWatermarkScreenState extends State<AddWatermarkScreen> {
 
   Widget buildColorPicker() {
     List<Color> colors = [
-      Colors.red,
-      Colors.blue,
-      Colors.green,
       Colors.black,
+      Colors.grey,
+      Colors.blueGrey,
+
+      Colors.red,
+      Colors.redAccent,
+      Colors.pink,
+
       Colors.orange,
+      Colors.deepOrange,
+      Colors.amber,
+
+      Colors.yellow,
+      Colors.green,
+      Colors.lightGreen,
+
+      Colors.teal,
+      Colors.cyan,
+
+      Colors.blue,
+      Colors.indigo,
+
       Colors.purple,
+      Colors.deepPurple,
+
+      Colors.brown,
+      Colors.white,
     ];
 
-    return Row(
+    return Wrap(
+      spacing: 10, // horizontal gap
+      runSpacing: 10, // vertical gap
       children: colors.map((color) {
         return GestureDetector(
           onTap: () {
@@ -399,115 +312,19 @@ class _AddWatermarkScreenState extends State<AddWatermarkScreen> {
             });
           },
           child: Container(
-            margin: const EdgeInsets.only(right: 10),
             width: 30,
             height: 30,
             decoration: BoxDecoration(
               color: color,
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.grey),
+              border: Border.all(
+                color: textColor == color ? Colors.black : Colors.grey,
+                width: textColor == color ? 3 : 1,
+              ),
             ),
           ),
         );
       }).toList(),
-    );
-  }
-
-  Widget buildWatermarkUI() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          /// ================= TEXT FORMAT =================
-          sectionTitle("Text Format"),
-          cardContainer(
-            Column(
-              children: [
-                buildTextFieldRow(),
-                buildDropdownRow(
-                  label: "Font Type",
-                  value: fontType,
-                  items: ["Helvetica", "Courier", "Times"],
-                  onChanged: (v) => setState(() => fontType = v!),
-                ),
-                buildDropdownRow(
-                  label: "Font Size",
-                  value: fontSize.toString(), // e.g. "24.0"
-                  items: fontSizes
-                      .map((e) => e.toString())
-                      .toList(), // double to string
-                  onChanged: (v) => setState(() => fontSize = double.parse(v!)),
-                ),
-                buildDropdownRow(
-                  label: "Font Style",
-                  value: fontStyle,
-                  items: ["Regular", "Bold", "Italic"],
-                  onChanged: (v) => setState(() => fontStyle = v!),
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 15),
-          const Text("Watermark Color"),
-          const SizedBox(height: 10),
-          buildColorPicker(),
-          const SizedBox(height: 15),
-
-          /// ================= POSITION =================
-          sectionTitle("Watermark Position"),
-          cardContainer(
-            Column(
-              children: [
-                buildDropdownRow(
-                  label: "Alignment",
-                  value: alignment,
-                  items: alignments,
-                  onChanged: (v) {
-                    setState(() {
-                      alignment = v!;
-                      updateAlignment();
-                    });
-                  },
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 15),
-
-          /// ================= SETTINGS =================
-          sectionTitle("Setting"),
-          cardContainer(
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /// Transparency
-                buildSlider(
-                  title: "Transparency",
-                  value: transparency,
-                  max: 1,
-                  label: transparency.toStringAsFixed(2),
-                  onChanged: (v) => setState(() => transparency = v),
-                ),
-
-                const SizedBox(height: 10),
-
-                /// Rotation
-                buildSlider(
-                  title: "Rotation",
-                  value: rotation,
-                  max: 180,
-                  min: -180,
-                  label: "${rotation.toInt()}°",
-                  onChanged: (v) => setState(() => rotation = v),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -616,37 +433,267 @@ class _AddWatermarkScreenState extends State<AddWatermarkScreen> {
     );
   }
 
+  Widget buildPreview() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+
+        /// ✅ A4 ratio
+        final height = width * 1.414;
+
+        return SizedBox(
+          height: height,
+          width: double.infinity,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: RepaintBoundary(
+              key: previewKey,
+              child: Stack(
+                children: [
+                  /// ✅ PDF VIEW (BACKGROUND)
+                  Positioned.fill(
+                    child: PDFView(
+                      filePath: widget.file.path,
+                      // swipeHorizontal: true,
+                      pageSnap: true,
+                      autoSpacing: false,
+                      enableSwipe: false,
+                      swipeHorizontal: false,
+
+                      onRender: (pages) {
+                        setState(() {
+                          totalPages = pages ?? 0;
+                        });
+                      },
+
+                      onViewCreated: (controller) {
+                        pdfViewController = controller;
+                      },
+
+                      onPageChanged: (page, total) {
+                        setState(() {
+                          currentPage = page ?? 0;
+                        });
+                      },
+                    ),
+                  ),
+
+                  /// ✅ WATERMARK (TOP LAYER)
+                  Positioned.fill(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        final previewSize = Size(
+                          constraints.maxWidth,
+                          constraints.maxHeight,
+                        );
+
+                        final textSize = getTextSize();
+
+                        return Stack(
+                          children: [
+                            Positioned(
+                              left: previewPosition.dx,
+                              top: previewPosition.dy,
+                              child: GestureDetector(
+                                onScaleStart: (details) {
+                                  baseScale = scale;
+                                  baseRotation = currentRotation;
+                                },
+
+                                onScaleUpdate: (details) {
+                                  setState(() {
+                                    /// ✅ SCALE (PINCH)
+                                    scale = (baseScale * details.scale).clamp(
+                                      minScale,
+                                      maxScale,
+                                    );
+
+                                    /// ✅ ROTATION (2 FINGER)
+                                    currentRotation =
+                                        baseRotation + details.rotation;
+
+                                    /// ✅ MOVE
+                                    final newPos =
+                                        previewPosition +
+                                        details.focalPointDelta;
+
+                                    previewPosition = getClampedPosition(
+                                      newPos,
+                                      previewSize,
+                                      textSize,
+                                    );
+                                  });
+                                },
+
+                                child: Transform.rotate(
+                                  angle:
+                                      currentRotation + (rotation * pi / 180),
+                                  child: Transform.scale(
+                                    scale: scale,
+                                    child: Opacity(
+                                      opacity: 1 - transparency,
+                                      child: Text(
+                                        controller.text.isEmpty
+                                            ? "Watermark"
+                                            : controller.text,
+                                        style: TextStyle(
+                                          fontSize: fontSize,
+                                          color: textColor,
+                                          fontWeight: fontStyle == "Bold"
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
+                                          fontStyle: fontStyle == "Italic"
+                                              ? FontStyle.italic
+                                              : FontStyle.normal,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+
+                  /// ✅ CONTROLS
+                  if (!isCapturing)
+                    Positioned(
+                      bottom: 10,
+                      left: 0,
+                      right: 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                            onPressed: previousPage,
+                            icon: const Icon(Icons.arrow_back_ios),
+                          ),
+                          Text("${currentPage + 1} / $totalPages"),
+                          IconButton(
+                            onPressed: nextPage,
+                            icon: const Icon(Icons.arrow_forward_ios),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buildWatermarkUI() {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// ================= TEXT FORMAT =================
+          sectionTitle("Text Format"),
+          cardContainer(
+            Column(
+              children: [
+                buildTextFieldRow(),
+                buildDropdownRow(
+                  label: "Font Type",
+                  value: fontType,
+                  items: ["Helvetica", "Courier", "Times"],
+                  onChanged: (v) => setState(() => fontType = v!),
+                ),
+                buildDropdownRow(
+                  label: "Font Size",
+                  value: fontSize.toString(), // e.g. "24.0"
+                  items: fontSizes
+                      .map((e) => e.toString())
+                      .toList(), // double to string
+                  onChanged: (v) => setState(() => fontSize = double.parse(v!)),
+                ),
+                buildDropdownRow(
+                  label: "Font Style",
+                  value: fontStyle,
+                  items: ["Regular", "Bold", "Italic"],
+                  onChanged: (v) => setState(() => fontStyle = v!),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 15),
+          const Text("Watermark Color"),
+          const SizedBox(height: 10),
+          buildColorPicker(),
+          const SizedBox(height: 15),
+          sectionTitle("Setting"),
+          cardContainer(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// Transparency
+                buildSlider(
+                  title: "Transparency",
+                  value: transparency,
+                  max: 1,
+                  label: transparency.toStringAsFixed(2),
+                  onChanged: (v) => setState(() => transparency = v),
+                ),
+
+                const SizedBox(height: 10),
+
+                // / Rotation
+                buildSlider(
+                  title: "Rotation",
+                  value: rotation,
+                  max: 180,
+                  min: -180,
+                  label: "${rotation.toInt()}°",
+                  onChanged: (v) => setState(() => rotation = v),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+      resizeToAvoidBottomInset: true, // ✅ IMPORTANT
       appBar: CustomAppBar(title: widget.title),
 
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
 
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+              /// ✅ FIXED PREVIEW (NO SCROLL)
+              buildPreview(),
 
-          children: [
-            /// Selected File
-            const SizedBox(height: 20),
+              const SizedBox(height: 10),
 
-            /// Preview
-            buildPreview(),
-
-            const SizedBox(height: 20),
-            buildWatermarkUI(),
-            const SizedBox(height: 30),
-
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: applyWatermark,
-                child: const Text("Apply Watermark"),
-              ),
-            ),
-          ],
+              /// ✅ ONLY THIS PART SCROLLS
+              buildWatermarkUI(),
+            ],
+          ),
         ),
+      ),
+
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(12),
+        height: 80,
+        child: CustomButton(onPressed: applyWatermark, text: "apply_watermark"),
       ),
     );
   }

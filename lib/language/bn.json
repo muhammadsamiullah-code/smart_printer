@@ -122,5 +122,9 @@
     "add_signature": "স্বাক্ষর যোগ করুন",
     "import_signature": "স্বাক্ষর ইম্পোর্ট করুন",
     "draw_your_sign": "আপনার স্বাক্ষর দিন",
-    "sign_pdf": "পিডিএফ স্বাক্ষর করুন"
+    "sign_pdf": "পিডিএফ স্বাক্ষর করুন",
+    "apply_watermark": "জলছাপ প্রয়োগ করুন",
+    "delete_file": "ফাইলটি মুছে ফেলুন",
+    "delete_file_confirmation": "আপনি কি নিশ্চিত যে আপনি এই ফাইলটি মুছে ফেলতে চান?",
+    "watermark_pdf": "পিডিএফ জলছাপ"
 }
