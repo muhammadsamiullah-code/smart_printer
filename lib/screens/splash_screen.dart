@@ -101,13 +101,13 @@ class _SplashScreenState extends State<SplashScreen> {
                 //   borderRadius: BorderRadius.circular(14),
                 // ),
                 child: Image.asset(
-                  'assets/images/splashPrinterIcon.png',
-                  height: 130,
-                  width: 130,
+                  'assets/images/printerImage.png',
+                  height: 170,
+                  width: 170,
                 ),
               ),
 
-              const SizedBox(height: 22),
+              const SizedBox(height: 10),
 
               const TrText(
                 "app_name",

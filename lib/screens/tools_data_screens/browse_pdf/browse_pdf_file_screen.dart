@@ -79,6 +79,7 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
+         backgroundColor: Colors.white,
         title: const TrText("rename_file"),
         content: TextField(controller: controller),
         actions: [
@@ -88,10 +89,16 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
           ),
           TextButton(
             onPressed: () async {
-              final dir = file.parent.path;
-              final newFile = File("$dir/${controller.text}.pdf");
+                final dir = file.parent.path;
+                final newName = controller.text;
 
-              await file.rename(newFile.path);
+                final newFile = File("$dir/browse_$newName.pdf");
+
+                await file.rename(newFile.path);
+              // final dir = file.parent.path;
+              // final newFile = File("$dir/${controller.text}.pdf");
+
+              // await file.rename(newFile.path);
 
               Navigator.pop(context);
               loadFiles();
@@ -126,6 +133,7 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
 
       body: pdfFiles.isEmpty
           ? CenterWidgetForPDF(
+            borderColor: Color.fromRGBO(10, 77, 146, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,

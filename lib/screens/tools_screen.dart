@@ -262,6 +262,10 @@ class _ToolsScreenState extends State<ToolsScreen> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(14),
+               border: Border.all(
+                color: const Color.fromARGB(255, 231, 231, 231),
+                width: 1,
+              ),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

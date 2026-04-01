@@ -139,6 +139,10 @@ class _SettingScreenState extends State<SettingScreen> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
+           border: Border.all(
+                color: const Color.fromARGB(255, 231, 231, 231),
+                width: 1,
+              ),
           // boxShadow: [
           //   BoxShadow(
           //     color: Colors.black.withOpacity(0.04),

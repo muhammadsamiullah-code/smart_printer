@@ -101,6 +101,7 @@ class _DeletePdfHomeState extends State<DeletePdfHome> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
+         backgroundColor: Colors.white,
         title: const TrText("rename_file"),
         content: TextField(controller: controller),
         actions: [
@@ -110,9 +111,15 @@ class _DeletePdfHomeState extends State<DeletePdfHome> {
           ),
           TextButton(
             onPressed: () async {
-              final dir = file.parent.path;
-              final newFile = File("$dir/${controller.text}.pdf");
-              await file.rename(newFile.path);
+                final dir = file.parent.path;
+                final newName = controller.text;
+
+                final newFile = File("$dir/deleted_pages_$newName.pdf");
+
+                await file.rename(newFile.path);
+              // final dir = file.parent.path;
+              // final newFile = File("$dir/${controller.text}.pdf");
+              // await file.rename(newFile.path);
               Navigator.pop(context);
               loadFiles();
             },
@@ -144,6 +151,7 @@ class _DeletePdfHomeState extends State<DeletePdfHome> {
       appBar: CustomAppBar(title: widget.title),
       body: pdfFiles.isEmpty
           ? CenterWidgetForPDF(
+            borderColor: Color.fromRGBO(48, 108, 132, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,

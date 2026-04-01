@@ -550,6 +550,10 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
+           border: Border.all(
+                color: const Color.fromARGB(255, 231, 231, 231),
+                width: 1,
+              ),
         ),
         // color: Colors.white,
         // elevation: 4,

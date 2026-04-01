@@ -91,6 +91,7 @@ class _PdfQrFileScreenState extends State<PdfQrFileScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
+         backgroundColor: Colors.white,
         title: const TrText("rename_file"),
         content: TextField(controller: controller),
         actions: [
@@ -100,10 +101,17 @@ class _PdfQrFileScreenState extends State<PdfQrFileScreen> {
           ),
           TextButton(
             onPressed: () async {
-              final dir = file.parent.path;
-              final newFile = File("$dir/${controller.text}.pdf");
+                final dir = file.parent.path;
+                final newName = controller.text;
 
-              await file.rename(newFile.path);
+                final newFile = File("$dir/qr_pdf_$newName.pdf");
+
+                await file.rename(newFile.path);
+
+              // final dir = file.parent.path;
+              // final newFile = File("$dir/${controller.text}.pdf");
+
+              // await file.rename(newFile.path);
 
               Navigator.pop(context);
               loadFiles();
@@ -137,6 +145,7 @@ class _PdfQrFileScreenState extends State<PdfQrFileScreen> {
 
       body: pdfFiles.isEmpty
           ? CenterWidgetForPDF(
+            borderColor: Color.fromRGBO(52, 119, 147, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,

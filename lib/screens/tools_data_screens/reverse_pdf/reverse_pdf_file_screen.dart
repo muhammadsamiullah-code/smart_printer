@@ -95,6 +95,7 @@ class _ReversePdfFileScreenState extends State<ReversePdfFileScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
+         backgroundColor: Colors.white,
         title: const TrText("rename_file"),
         content: TextField(controller: controller),
         actions: [
@@ -104,10 +105,16 @@ class _ReversePdfFileScreenState extends State<ReversePdfFileScreen> {
           ),
           TextButton(
             onPressed: () async {
-              final dir = file.parent.path;
-              final newFile = File("$dir/${controller.text}.pdf");
+                final dir = file.parent.path;
+                final newName = controller.text;
 
-              await file.rename(newFile.path);
+                final newFile = File("$dir/reversed_$newName.pdf");
+
+                await file.rename(newFile.path);
+              // final dir = file.parent.path;
+              // final newFile = File("$dir/${controller.text}.pdf");
+
+              // await file.rename(newFile.path);
 
               Navigator.pop(context);
               loadFiles();
@@ -141,6 +148,7 @@ class _ReversePdfFileScreenState extends State<ReversePdfFileScreen> {
 
       body: pdfFiles.isEmpty
           ? CenterWidgetForPDF(
+              borderColor: Color.fromRGBO(127, 31, 154, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,

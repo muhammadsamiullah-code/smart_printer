@@ -16,6 +16,7 @@ class FileOptionsMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
+       color: Colors.white,
       onSelected: (value) {
         if (value == "rename") {
           onRename();

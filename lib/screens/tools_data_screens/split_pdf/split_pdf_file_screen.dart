@@ -111,6 +111,7 @@ class _SplitPDFFilesScreenState extends State<SplitPDFFilesScreen> {
       context: context,
       builder: (_) {
         return AlertDialog(
+           backgroundColor: Colors.white,
           title: const TrText("rename_file"),
           content: TextField(
             controller: controller,
@@ -123,9 +124,15 @@ class _SplitPDFFilesScreenState extends State<SplitPDFFilesScreen> {
             TextButton(
               child: const TrText("rename"),
               onPressed: () async {
-                final dir = file.parent.path;
-                final newFile = File("$dir/${controller.text}.pdf");
+                  final dir = file.parent.path;
+                final newName = controller.text;
+
+                final newFile = File("$dir/split_$newName.pdf");
+
                 await file.rename(newFile.path);
+                // final dir = file.parent.path;
+                // final newFile = File("$dir/${controller.text}.pdf");
+                // await file.rename(newFile.path);
                 Navigator.pop(context);
                 loadFiles();
               },
@@ -145,6 +152,7 @@ class _SplitPDFFilesScreenState extends State<SplitPDFFilesScreen> {
         children: [
           reversedList.isEmpty
               ? CenterWidgetForPDF(
+                borderColor: Color.fromRGBO(127, 31, 154, 1),
                   title: widget.title,
                   icon: widget.icon,
                   color: widget.color,

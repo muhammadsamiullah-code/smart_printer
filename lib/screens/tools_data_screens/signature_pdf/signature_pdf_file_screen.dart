@@ -93,6 +93,7 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
+         backgroundColor: Colors.white,
         title: const Text("Rename File"),
         content: TextField(controller: controller),
         actions: [
@@ -102,10 +103,16 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
           ),
           TextButton(
             onPressed: () async {
-              final dir = file.parent.path;
-              final newFile = File("$dir/${controller.text}.pdf");
+                final dir = file.parent.path;
+                final newName = controller.text;
 
-              await file.rename(newFile.path);
+                final newFile = File("$dir/signed_$newName.pdf");
+
+                await file.rename(newFile.path);
+              // final dir = file.parent.path;
+              // final newFile = File("$dir/${controller.text}.pdf");
+
+              // await file.rename(newFile.path);
 
               Navigator.pop(context);
               loadFiles();
@@ -143,6 +150,7 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
 
       body: pdfFiles.isEmpty
           ? CenterWidgetForPDF(
+            borderColor: Color.fromRGBO(182, 93, 63, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,

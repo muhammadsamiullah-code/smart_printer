@@ -96,6 +96,7 @@ class _RotatePdfFileScreenState extends State<RotatePdfFileScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
+         backgroundColor: Colors.white,
         title: const TrText("rename_file"),
         content: TextField(controller: controller),
         actions: [
@@ -105,10 +106,16 @@ class _RotatePdfFileScreenState extends State<RotatePdfFileScreen> {
           ),
           TextButton(
             onPressed: () async {
-              final dir = file.parent.path;
-              final newFile = File("$dir/${controller.text}.pdf");
+                final dir = file.parent.path;
+                final newName = controller.text;
 
-              await file.rename(newFile.path);
+                final newFile = File("$dir/rotated_$newName.pdf");
+
+                await file.rename(newFile.path);
+              // final dir = file.parent.path;
+              // final newFile = File("$dir/${controller.text}.pdf");
+
+              // await file.rename(newFile.path);
 
               Navigator.pop(context);
               loadFiles();
@@ -142,6 +149,7 @@ class _RotatePdfFileScreenState extends State<RotatePdfFileScreen> {
 
       body: pdfFiles.isEmpty
           ? CenterWidgetForPDF(
+            borderColor: Color.fromRGBO(201, 146, 55, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,

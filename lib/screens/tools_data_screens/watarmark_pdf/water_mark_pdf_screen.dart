@@ -12,7 +12,6 @@ import '../../../widgets/pdf_list_card.dart';
 import '../merge_pdf/pdf_preview_screen.dart';
 import 'add_water_mark_screen.dart';
 
-
 class WatermarkPdfScreen extends StatefulWidget {
   final String title;
   final String icon;
@@ -98,9 +97,15 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
           ),
           TextButton(
             onPressed: () async {
-              final dir = await getApplicationDocumentsDirectory();
-              final newFile = File("${dir.path}/${renameController.text}.pdf");
+              final dir = file.parent.path;
+              final newName = renameController.text;
+
+              final newFile = File("$dir/watermark_$newName.pdf");
+
               await file.rename(newFile.path);
+              // final dir = await getApplicationDocumentsDirectory();
+              // final newFile = File("${dir.path}/${renameController.text}.pdf");
+              // await file.rename(newFile.path);
               Navigator.pop(context);
               loadSavedFiles();
             },
@@ -116,6 +121,7 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
     bool? confirm = await showDialog(
       context: context,
       builder: (_) => AlertDialog(
+         backgroundColor: Colors.white,
         title: const TrText("delete_file"),
         content: const TrText("delete_file_confirmation"),
         actions: [
@@ -153,17 +159,19 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
 
   @override
   Widget build(BuildContext context) {
-          final reversedList = savedFiles.reversed.toList();
+    final reversedList = savedFiles.reversed.toList();
 
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
       body: reversedList.isEmpty
           ? CenterWidgetForPDF(
+              borderColor: Color.fromRGBO(241, 86, 66, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,
             )
           : ListView.builder(
+              padding: const EdgeInsets.all(12),
               itemCount: reversedList.length,
               itemBuilder: (_, index) {
                 final file = reversedList[index];

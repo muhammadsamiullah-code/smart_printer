@@ -7,12 +7,14 @@ class CenterWidgetForPDF extends StatelessWidget {
   final String title;
   final String icon;
   final Color color;
+  final Color borderColor;
 
   const CenterWidgetForPDF({
     super.key,
     required this.title,
     required this.icon,
     required this.color,
+    required this.borderColor
   });
 
   @override
@@ -22,18 +24,22 @@ class CenterWidgetForPDF extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            height: 120,
-            width: 120,
+            height: 90,
+            width: 90,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: color,
+              border: Border.all(
+                color: borderColor,
+                width: 1,
+              ),
             ),
             child: Center(
               child: SvgPicture.asset(
                 icon,
-                height: 50,
-                width: 50,
+                height: 40,
+                width: 40,
               ),
             ),
           ),

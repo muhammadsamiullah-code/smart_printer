@@ -91,6 +91,7 @@ class _MergedPDFFilesScreenState extends State<MergedPDFFilesScreen> {
       context: context,
       builder: (_) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: const TrText("rename_file"),
           content: TextField(
             controller: controller,
@@ -107,14 +108,25 @@ class _MergedPDFFilesScreenState extends State<MergedPDFFilesScreen> {
                 final dir = file.parent.path;
                 final newName = controller.text;
 
-                final newFile = File("$dir/$newName.pdf");
+                final newFile = File("$dir/merged_$newName.pdf");
 
                 await file.rename(newFile.path);
 
                 Navigator.pop(context);
-
-                loadFiles(); // refresh
+                loadFiles();
               },
+              // onPressed: () async {
+              //   final dir = file.parent.path;
+              //   final newName = controller.text;
+
+              //   final newFile = File("$dir/$newName.pdf");
+
+              //   await file.rename(newFile.path);
+
+              //   Navigator.pop(context);
+
+              //   loadFiles(); // refresh
+              // },
             ),
           ],
         );
@@ -158,6 +170,7 @@ class _MergedPDFFilesScreenState extends State<MergedPDFFilesScreen> {
 
       body: mergedFiles.isEmpty
           ? CenterWidgetForPDF(
+            borderColor: Color.fromRGBO(10, 77, 146, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,
@@ -171,7 +184,6 @@ class _MergedPDFFilesScreenState extends State<MergedPDFFilesScreen> {
                 final fileSize = formatFileSize(file.lengthSync());
                 final lastModified = file.lastModifiedSync();
                 final formattedDate = formatDateTime(lastModified);
-
 
                 return PdfListCard(
                   title: fileName,
