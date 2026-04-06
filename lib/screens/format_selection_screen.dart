@@ -11,6 +11,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/const/color.dart';
 import 'package:smart_scanner/providers/translator_provider.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
@@ -66,38 +67,6 @@ class _FormatSelectionScreenState extends State<FormatSelectionScreen> {
       MaterialPageRoute(builder: (_) => DisplayScreen(images: finalImages)),
     );
   }
-
-  // Future<void> pickImages() async {
-  //   if (selectedLayout == -1) return;
-
-  //   final List<XFile> picked = await picker.pickMultiImage();
-
-  //   if (picked.length > selectedLayout) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('You can select only $selectedLayout images')),
-  //     );
-  //     return;
-  //   }
-
-  //   if (picked.length < selectedLayout) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('Please select exactly $selectedLayout images')),
-  //     );
-  //     return;
-  //   }
-
-  //   setState(() {
-  //     images = picked;
-  //   });
-
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (_) => DisplayScreen(images: images),
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,7 +174,33 @@ class _DisplayScreenState extends State<DisplayScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.print, size: 24, color: Colors.black),
-            onPressed: _isPrinting ? null : printAllPages,
+          onPressed: _isPrinting
+    ? null
+    : () async {
+        final wifiOn = await isWifiReallyOn();
+        final sameWifi = await isSameWifi();
+
+        if (!wifiOn || !sameWifi) {
+          await printAllPages();
+          return;
+        }
+
+        final adsProvider = context.read<AdsProvider>();
+
+        /// 🔥 Step 1: Show Ad
+        await adsProvider.showAdInterstitial();
+
+        if (!mounted) return;
+
+        /// 🔥 Step 2: START loader BEFORE heavy work
+        setState(() => _isPrinting = true);
+
+        /// 🔥 Step 3: Small delay so UI render ho jaye
+        await Future.delayed(const Duration(milliseconds: 100));
+
+        /// 🔥 Step 4: Start printing
+        await printAllPages();
+      },
           ),
         ],
       ),
@@ -317,7 +312,7 @@ class _DisplayScreenState extends State<DisplayScreen> {
       return;
     }
 
-    setState(() => _isPrinting = true);
+    // setState(() => _isPrinting = true);
 
     try {
       await Future.delayed(const Duration(seconds: 1));

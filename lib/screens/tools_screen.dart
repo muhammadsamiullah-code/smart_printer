@@ -32,205 +32,224 @@ class _ToolsScreenState extends State<ToolsScreen> {
   void initState() {
     super.initState();
 
-   tools = [
-  {
-    "title": "merge_pdf",
-    "icon": "assets/toolsIcon/mergePDF.svg",
-    "color": const Color.fromRGBO(225, 240, 255, 1),
-  },
-  {
-    "title": "split_pdf",
-    "icon": "assets/toolsIcon/splitPDF.svg",
-    "color": const Color.fromRGBO(251, 238, 255, 1),
-  },
-  {
-    "title": "create_pdf",
-    "icon": "assets/toolsIcon/createPDF.svg",
-    "color": const Color.fromRGBO(231, 255, 245, 1),
-  },
-  {
-    "title": "image_to_pdf",
-    "icon": "assets/toolsIcon/imageToPDF.svg",
-    "color": const Color.fromRGBO(255, 243, 224, 1),
-  },
-  {
-    "title": "qr_to_pdf",
-    "icon": "assets/toolsIcon/qrToPDF.svg",
-    "color": const Color.fromRGBO(209, 241, 255, 1),
-  },
-  {
-    "title": "watermark_pdf",
-    "icon": "assets/toolsIcon/watermarkPDF.svg",
-    "color": const Color.fromRGBO(255, 237, 234, 1),
-  },
-  {
-    "title": "page_number",
-    "icon": "assets/toolsIcon/pageNoPDF.svg",
-    "color": const Color.fromRGBO(226, 255, 253, 1),
-  },
-  {
-    "title": "signature_pdf",
-    "icon": "assets/toolsIcon/signaturePDF.svg",
-    "color": const Color.fromRGBO(255, 242, 237, 1),
-  },
-  {
-    "title": "reverse_pages",
-    "icon": "assets/toolsIcon/reversePDF.svg",
-    "color": const Color.fromRGBO(251, 238, 255, 1),
-  },
-  {
-    "title": "browse_pdf",
-    "icon": "assets/toolsIcon/browserPDF.svg",
-    "color": const Color.fromRGBO(225, 240, 255, 1),
-  },
-  {
-    "title": "compress_pdf",
-    "icon": "assets/toolsIcon/compressPDF.svg",
-    "color": const Color.fromRGBO(231, 255, 245, 1),
-  },
-  {
-    "title": "rotate_pdf",
-    "icon": "assets/toolsIcon/rotatePDF.svg",
-    "color": const Color.fromRGBO(255, 243, 224, 1),
-  },
-  {
-    "title": "delete_pdf",
-    "icon": "assets/toolsIcon/deletePDF.svg",
-    "color": const Color.fromRGBO(209, 241, 255, 1),
-  },
-];
+    tools = [
+      {
+        "title": "merge_pdf",
+        "icon": "assets/toolsIcon/mergePDF.svg",
+        "color": const Color.fromRGBO(225, 240, 255, 1),
+      },
+      {
+        "title": "split_pdf",
+        "icon": "assets/toolsIcon/splitPDF.svg",
+        "color": const Color.fromRGBO(251, 238, 255, 1),
+      },
+      {
+        "title": "create_pdf",
+        "icon": "assets/toolsIcon/createPDF.svg",
+        "color": const Color.fromRGBO(231, 255, 245, 1),
+      },
+      {
+        "title": "image_to_pdf",
+        "icon": "assets/toolsIcon/imageToPDF.svg",
+        "color": const Color.fromRGBO(255, 243, 224, 1),
+      },
+      {
+        "title": "qr_to_pdf",
+        "icon": "assets/toolsIcon/qrToPDF.svg",
+        "color": const Color.fromRGBO(209, 241, 255, 1),
+      },
+      {
+        "title": "watermark_pdf",
+        "icon": "assets/toolsIcon/watermarkPDF.svg",
+        "color": const Color.fromRGBO(255, 237, 234, 1),
+      },
+      {
+        "title": "page_number",
+        "icon": "assets/toolsIcon/pageNoPDF.svg",
+        "color": const Color.fromRGBO(226, 255, 253, 1),
+      },
+      {
+        "title": "signature_pdf",
+        "icon": "assets/toolsIcon/signaturePDF.svg",
+        "color": const Color.fromRGBO(255, 242, 237, 1),
+      },
+      {
+        "title": "reverse_pages",
+        "icon": "assets/toolsIcon/reversePDF.svg",
+        "color": const Color.fromRGBO(251, 238, 255, 1),
+      },
+      {
+        "title": "browse_pdf",
+        "icon": "assets/toolsIcon/browserPDF.svg",
+        "color": const Color.fromRGBO(225, 240, 255, 1),
+      },
+      {
+        "title": "compress_pdf",
+        "icon": "assets/toolsIcon/compressPDF.svg",
+        "color": const Color.fromRGBO(231, 255, 245, 1),
+      },
+      {
+        "title": "rotate_pdf",
+        "icon": "assets/toolsIcon/rotatePDF.svg",
+        "color": const Color.fromRGBO(255, 243, 224, 1),
+      },
+      {
+        "title": "delete_pdf",
+        "icon": "assets/toolsIcon/deletePDF.svg",
+        "color": const Color.fromRGBO(209, 241, 255, 1),
+      },
+    ];
   }
 
   Future<void> openTool(Map<String, dynamic> tool) async {
-  Widget screen;
+    Widget screen;
 
-  switch (tool["title"]) {
-    case "merge_pdf":
-      screen = MergedPDFFilesScreen(
-        title: tool["title"],
-        icon: tool["icon"],
-        color: tool["color"],
-      );
-      break;
+    switch (tool["title"]) {
+      case "merge_pdf":
+        screen = MergedPDFFilesScreen(
+          title: tool["title"],
+          icon: tool["icon"],
+          color: tool["color"],
+        );
+        break;
 
-    case "split_pdf":
-      screen = SplitPDFFilesScreen(
-        title: tool["title"],
-        icon: tool["icon"],
-        color: tool["color"],
-      );
-      break;
+      case "split_pdf":
+        screen = SplitPDFFilesScreen(
+          title: tool["title"],
+          icon: tool["icon"],
+          color: tool["color"],
+        );
+        break;
 
-    case "create_pdf":
-      screen = CreatePdfFileScreen(
-        title: tool["title"],
-        icon: tool["icon"],
-        color: tool["color"],
-      );
-      break;
+      case "create_pdf":
+        screen = CreatePdfFileScreen(
+          title: tool["title"],
+          icon: tool["icon"],
+          color: tool["color"],
+        );
+        break;
 
-    case "image_to_pdf":
-      screen = ImageToPdfFileScreen(
-        title: tool["title"],
-        icon: tool["icon"],
-        color: tool["color"],
-      );
-      break;
+      case "image_to_pdf":
+        screen = ImageToPdfFileScreen(
+          title: tool["title"],
+          icon: tool["icon"],
+          color: tool["color"],
+        );
+        break;
 
-    case "qr_to_pdf":
-      screen = PdfQrFileScreen(
-        title: tool["title"],
-        icon: tool["icon"],
-        color: tool["color"],
-      );
-      break;
+      case "qr_to_pdf":
+        screen = PdfQrFileScreen(
+          title: tool["title"],
+          icon: tool["icon"],
+          color: tool["color"],
+        );
+        break;
 
-    case "watermark_pdf":
-      screen = WatermarkPdfScreen(
-        title: tool["title"],
-        icon: tool["icon"],
-        color: tool["color"],
-      );
-      break;
+      case "watermark_pdf":
+        screen = WatermarkPdfScreen(
+          title: tool["title"],
+          icon: tool["icon"],
+          color: tool["color"],
+        );
+        break;
 
-    case "page_number":
-      screen = PageNumberFileScreen(
-        title: tool["title"],
-        icon: tool["icon"],
-        color: tool["color"],
-      );
-      break;
+      case "page_number":
+        screen = PageNumberFileScreen(
+          title: tool["title"],
+          icon: tool["icon"],
+          color: tool["color"],
+        );
+        break;
 
-    case "signature_pdf":
-      screen = SignaturePdfFileScreen(
-        title: tool["title"],
-        icon: tool["icon"],
-        color: tool["color"],
-      );
-      break;
+      case "signature_pdf":
+        screen = SignaturePdfFileScreen(
+          title: tool["title"],
+          icon: tool["icon"],
+          color: tool["color"],
+        );
+        break;
 
-    case "reverse_pages":
-      screen = ReversePdfFileScreen(
-        title: tool["title"],
-        icon: tool["icon"],
-        color: tool["color"],
-      );
-      break;
+      case "reverse_pages":
+        screen = ReversePdfFileScreen(
+          title: tool["title"],
+          icon: tool["icon"],
+          color: tool["color"],
+        );
+        break;
 
-    case "browse_pdf":
-      screen = BrowsePdfFileScreen(
-        title: tool["title"],
-        icon: tool["icon"],
-        color: tool["color"],
-      );
-      break;
+      case "browse_pdf":
+        screen = BrowsePdfFileScreen(
+          title: tool["title"],
+          icon: tool["icon"],
+          color: tool["color"],
+        );
+        break;
 
-    case "compress_pdf":
-      screen = CompressPdfFileScreen(
-        title: tool["title"],
-        icon: tool["icon"],
-        color: tool["color"],
-      );
-      break;
+      case "compress_pdf":
+        screen = CompressPdfFileScreen(
+          title: tool["title"],
+          icon: tool["icon"],
+          color: tool["color"],
+        );
+        break;
 
-    case "rotate_pdf":
-      screen = RotatePdfFileScreen(
-        title: tool["title"],
-        icon: tool["icon"],
-        color: tool["color"],
-      );
-      break;
+      case "rotate_pdf":
+        screen = RotatePdfFileScreen(
+          title: tool["title"],
+          icon: tool["icon"],
+          color: tool["color"],
+        );
+        break;
 
-    case "delete_pdf":
-      screen = DeletePdfHome(
-        title: tool["title"],
-        icon: tool["icon"],
-        color: tool["color"],
-      );
-      break;
+      case "delete_pdf":
+        screen = DeletePdfHome(
+          title: tool["title"],
+          icon: tool["icon"],
+          color: tool["color"],
+        );
+        break;
 
-    default:
-      return;
+      default:
+        return;
+    }
+
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => screen),
+    );
+
+    if (result == true) {
+      setState(() => isLoading = true);
+      await Future.delayed(const Duration(milliseconds: 500));
+      setState(() => isLoading = false);
+    }
   }
-
-  final result = await Navigator.push(
-    context,
-    MaterialPageRoute(builder: (_) => screen),
-  );
-
-  if (result == true) {
-    setState(() => isLoading = true);
-    await Future.delayed(const Duration(milliseconds: 500));
-    setState(() => isLoading = false);
-  }
-}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "pdf_tools", showBackButton: false),
+      // appBar: CustomAppBar(title: "pdf_tools", showBackButton: false),
       body: Column(
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 0,
+                ),
+                child: TrText(
+                  'pdf_tools',
+                  style: TextStyle(
+                    // color: titleColor,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 10),
           Expanded(child: buildTools()),
         ],
@@ -262,7 +281,7 @@ class _ToolsScreenState extends State<ToolsScreen> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(14),
-               border: Border.all(
+              border: Border.all(
                 color: const Color.fromARGB(255, 231, 231, 231),
                 width: 1,
               ),

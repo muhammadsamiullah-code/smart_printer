@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_scanner/providers/labels_provider.dart';
 import 'package:smart_scanner/providers/language_provider.dart';
 import 'package:smart_scanner/providers/translator_provider.dart';
 import 'package:smart_scanner/screens/splash_screen.dart';
 import 'package:get_storage/get_storage.dart';
+import 'ads/ads_provider.dart';
 import 'providers/bottom_nav_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -14,6 +16,7 @@ import 'providers/question_provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'services/notification_service.dart';
+import 'services/remote_config_service.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -23,6 +26,10 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp();
+  await RemoteConfigService.init();
+
+  MobileAds.instance.initialize();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   final quizProvider = QuizProvider();
@@ -39,6 +46,7 @@ void main() async {
         ChangeNotifierProvider.value(value: quizProvider),
         ChangeNotifierProvider(create: (_) => LanguageProvider(savedLang)),
         ChangeNotifierProvider(create: (_) => TranslatorProvider(savedLang)),
+        ChangeNotifierProvider(create: (_) => AdsProvider()..initAds()),
       ],
       child: const MyApp(),
     ),

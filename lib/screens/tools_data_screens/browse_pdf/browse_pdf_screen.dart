@@ -112,39 +112,37 @@ class _BrowswePDFScreenState extends State<BrowswePDFScreen> {
         child: WebViewWidget(controller: _controller),
       ),
       bottomNavigationBar: Container(
-              padding: const EdgeInsets.all(12),
-              // height: 80,
-              child: CustomButton(
-              
-                 onPressed: () async {
-                            /// SHOW LOADER
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (_) =>
-              const Center(child: CircularProgressIndicator()),
-                            );
-              
-                            final file = await _captureWebPageAsPdf();
-              
-                            /// CLOSE LOADER
-                            if (mounted) Navigator.pop(context);
-              
-                            if (file != null) {
-                              /// SMALL DELAY (smooth transition)
-                              await Future.delayed(const Duration(milliseconds: 200));
-              
-                              /// SUCCESS
-                              SuccessDialog.show(context, file);
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: TrText("failed_to_create_pdf")),
-                              );
-                            }
-                          },
-                text: "convert_pdf",
-              ),
-            ),
+        padding: const EdgeInsets.all(12),
+        // height: 80,
+        child: CustomButton(
+          onPressed: () async {
+            /// SHOW LOADER
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => const Center(child: CircularProgressIndicator()),
+            );
+
+            final file = await _captureWebPageAsPdf();
+
+            /// CLOSE LOADER
+            if (mounted) Navigator.pop(context);
+
+            if (file != null) {
+              /// SMALL DELAY (smooth transition)
+              await Future.delayed(const Duration(milliseconds: 200));
+
+              /// SUCCESS
+              SuccessDialog.show(context, file);
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: TrText("failed_to_create_pdf")),
+              );
+            }
+          },
+          text: "convert_pdf",
+        ),
+      ),
     );
   }
 }

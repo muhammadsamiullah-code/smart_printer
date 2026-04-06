@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/screens/bottom_nav_screeen.dart';
 import 'package:smart_scanner/screens/select_language_screen.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
@@ -22,6 +24,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     startLoading();
+    Future.delayed(Duration.zero, () {
+      context.read<AdsProvider>().loadAppOpenAd();
+    });
   }
 
   void startLoading() {

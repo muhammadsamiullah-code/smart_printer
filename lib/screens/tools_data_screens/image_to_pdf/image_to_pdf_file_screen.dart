@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
@@ -67,6 +69,12 @@ class _ImageToPdfFileScreenState extends State<ImageToPdfFileScreen> {
       barrierDismissible: false,
       builder: (_) => const Center(child: CircularProgressIndicator()),
     );
+          if (mounted) Navigator.pop(context);
+
+  final adsProvider = context.read<AdsProvider>();
+
+  /// 🔥 Step 3: Show Ad
+  await adsProvider.showAdInterstitial();
 
     final List<XFile>? pickedImages = await picker.pickMultiImage();
 

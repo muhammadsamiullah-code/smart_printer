@@ -6,10 +6,13 @@ import 'package:smart_scanner/const/color.dart';
 import 'package:smart_scanner/providers/translator_provider.dart';
 import 'package:smart_scanner/screens/pdf_scan_view.dart';
 import 'package:smart_scanner/screens/tools_screen.dart';
+import '../ads/ads_provider.dart';
+import '../ads/ads_widget.dart';
 import '../providers/bottom_nav_provider.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
+import '../services/remote_config_service.dart';
 import 'home_screen.dart';
 import 'setting_screen.dart';
 
@@ -48,7 +51,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     // 👇 Screens ek hi dafa create hongi (important for smoothness)
     screens = [
       const HomeScreen(),
@@ -70,18 +73,51 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           // backgroundColor: const Color.fromRGBO(246, 247, 250, 1),
 
           /// ✅ Smooth Screen Switching
-          body: Stack(
+          body: Column(
             children: [
-              IndexedStack(index: provider.currentIndex, children: screens),
-              if (provider.isLoading)
-                Positioned.fill(
-                  child: Container(
-                    color: Colors.black.withOpacity(0.4),
-                    child: const Center(
-                      child: CircularProgressIndicator(color: Colors.white),
+              Consumer<AdsProvider>(
+                builder: (context, adsProvider, child) {
+                  final ads = adsProvider.ads;
+
+                  final isBannerVisible =
+                      RemoteConfigService.bannerEnabled &&
+                      ads.bannerAd != null &&
+                      ads.isBannerLoaded;
+
+                  if (!isBannerVisible) {
+                    return const SizedBox(height: 30);
+                  }
+
+                  return Column(
+                    children: [
+                      const SizedBox(height: 30),
+                      BannerAdWidget(adsManager: ads),
+                      // const SizedBox(height: 10),
+                    ],
+                  );
+                },
+              ),
+              Expanded(
+                child: Stack(
+                  children: [
+                    IndexedStack(
+                      index: provider.currentIndex,
+                      children: screens,
                     ),
-                  ),
+                    if (provider.isLoading)
+                      Positioned.fill(
+                        child: Container(
+                          color: Colors.black.withOpacity(0.4),
+                          child: const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
+              ),
             ],
           ),
 
@@ -96,9 +132,13 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
               onTap: (index) async {
                 // ✅ Agar Scanner tab press hua
                 if (index == 1) {
+                  final adsProvider = context.read<AdsProvider>();
+
+                  /// 🔥 Step 1: Show Ad FIRST
+                  
                   final result = await FlutterDocScanner()
                       .getScannedDocumentAsPdf();
-
+                    await adsProvider.showAdInterstitial();
                   final uri = result?.pdfUri;
 
                   if (uri == null) return;
@@ -120,9 +160,6 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                 // ✅ Baqi tabs normal kaam karein
                 provider.setIndex(index);
               },
-              // onTap: (index) {
-              //   provider.setIndex(index);
-              // },
               type: BottomNavigationBarType.fixed,
               elevation: 0,
               backgroundColor: Colors.white,

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 import '../../../widgets/build_commeon_fab.dart';
@@ -61,7 +63,13 @@ class _CreatePdfFileScreenState extends State<CreatePdfFileScreen> {
 
     await Future.delayed(const Duration(milliseconds: 300));
 
-    Navigator.pop(context); // remove loader
+    // Navigator.pop(context); // remove loader
+           if (mounted) Navigator.pop(context);
+
+  final adsProvider = context.read<AdsProvider>();
+
+  /// 🔥 Step 3: Show Ad
+  await adsProvider.showAdInterstitial();
 
     final result = await Navigator.push(
       context,

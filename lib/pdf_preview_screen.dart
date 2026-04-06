@@ -7,6 +7,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/const/color.dart';
 import 'package:smart_scanner/providers/translator_provider.dart';
 import 'package:smart_scanner/single_page_view.dart';
@@ -567,7 +568,35 @@ class _PdfPreviewScreenState extends State<PdfPreviewScreen> {
                 actionButton(
                   icon: Icons.print_outlined,
                   label: "print",
-                  onTap: _isPrinting ? null : printAllPages,
+                  onTap: _isPrinting
+    ? null
+    : () async {
+        final wifiOn = await isWifiReallyOn();
+        final sameWifi = await isSameWifi();
+
+        if (!wifiOn || !sameWifi) {
+          printAllPages(); // sirf error show karega
+          return;
+        }
+
+        final adsProvider = context.read<AdsProvider>();
+
+        /// 🔥 Only when valid → show ad
+        await adsProvider.showAdInterstitial();
+
+        await printAllPages();
+      },
+                  // onTap: _isPrinting
+                  //     ? null
+                  //     : () async {
+                  //         final adsProvider = context.read<AdsProvider>();
+
+                  //         /// 🔥 Step 1: Show Ad FIRST
+                  //         await adsProvider.showAdInterstitial();
+
+                  //         /// 🔥 Step 2: Then start printing
+                  //         await printAllPages();
+                  //       },
                 ),
               ],
             ),

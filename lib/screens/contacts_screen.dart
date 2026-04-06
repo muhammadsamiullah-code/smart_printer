@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:pdf/pdf.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/const/color.dart';
 import 'package:smart_scanner/widgets/custom_appbar.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
 import 'dart:typed_data';
 import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
-
 import '../widgets/tr_text.dart';
 
 class ContactsScreen extends StatefulWidget {
@@ -296,108 +297,22 @@ Future<Uint8List> buildContactsPdf() async {
 
   return pdf.save();
 }
-
-// Future<Uint8List> buildContactsPdf() async {
-//   final pdf = pw.Document();
-
-//   const int columns = 3;
-//   final contacts = widget.selectedContacts;
-
-//   pdf.addPage(
-//     pw.MultiPage(
-//       pageFormat: PdfPageFormat.a4,
-//       margin: const pw.EdgeInsets.all(20),
-//       build: (context) {
-//         List<pw.TableRow> rows = [];
-
-//         for (int i = 0; i < contacts.length; i += columns) {
-//           List<pw.Widget> rowChildren = [];
-
-//           for (int j = 0; j < columns; j++) {
-//             if (i + j < contacts.length) {
-//               final contact = contacts[i + j];
-
-//               rowChildren.add(
-//                 pw.Container(
-//                   padding: const pw.EdgeInsets.all(10),
-//                   margin: const pw.EdgeInsets.all(5),
-//                   decoration: pw.BoxDecoration(
-//                     border: pw.Border.all(color: PdfColors.grey300),
-//                     borderRadius: pw.BorderRadius.circular(6),
-//                   ),
-//                   child: pw.Column(
-//                     crossAxisAlignment: pw.CrossAxisAlignment.start,
-//                     children: [
-//                       pw.Text(
-//                         contact.displayName ?? "No Name",
-//                         style: pw.TextStyle(
-//                           fontSize: 14,
-//                           fontWeight: pw.FontWeight.bold,
-//                         ),
-//                       ),
-//                       pw.SizedBox(height: 4),
-//                       if (contact.phones.isNotEmpty)
-//                         pw.Text(
-//                           contact.phones.first.number,
-//                           style: const pw.TextStyle(fontSize: 12),
-//                         )
-//                       else
-//                         pw.Text(
-//                           "No Number",
-//                           style: pw.TextStyle(
-//                             fontSize: 12,
-//                             color: PdfColors.grey,
-//                           ),
-//                         ),
-//                     ],
-//                   ),
-//                 ),
-//               );
-//             } else {
-//               rowChildren.add(pw.Container());
-//             }
-//           }
-
-//           rows.add(pw.TableRow(children: rowChildren));
-//         }
-
-//         return [
-//           pw.Table(
-//             columnWidths: {
-//               0: const pw.FlexColumnWidth(),
-//               1: const pw.FlexColumnWidth(),
-//               2: const pw.FlexColumnWidth(),
-//             },
-//             children: rows,
-//           )
-//         ];
-//       },
-//     ),
-//   );
-
-//   return pdf.save();
-// }
-
   /// Print selected contacts
-  Future<void> printContacts() async {
-    setState(() => _isPrinting = true);
+ Future<void> printContacts() async {
+  try {
+    final pdfBytes = await buildContactsPdf();
 
-    try {
-      final pdfBytes = await buildContactsPdf();
-
-      await Printing.layoutPdf(
-        onLayout: (PdfPageFormat format) async => pdfBytes,
+    await Printing.layoutPdf(
+      onLayout: (PdfPageFormat format) async => pdfBytes,
+    );
+  } catch (e) {
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: TrText("printer_not_available")),
       );
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: TrText("printer_not_available")));
-      }
-    } finally {
-      if (mounted) setState(() => _isPrinting = false);
     }
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -407,7 +322,44 @@ Future<Uint8List> buildContactsPdf() async {
         title: "preview_contacts",
         actions: [
           IconButton(
-            onPressed: _isPrinting ? null : printContacts,
+           onPressed: _isPrinting
+    ? null
+    : () async {
+        final adsProvider = context.read<AdsProvider>();
+
+        /// ✅ 1. Show Ad FIRST
+        await adsProvider.showAdInterstitial();
+
+        if (!mounted) return;
+
+        /// ✅ 2. Show Loader
+        setState(() => _isPrinting = true);
+
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => Container(
+            color: Colors.black.withOpacity(0.3), // 👈 premium feel
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+        );
+
+        /// ✅ 3. Small delay (VERY IMPORTANT)
+        // await Future.delayed(const Duration(milliseconds: 100));
+
+        try {
+          /// ✅ 4. Start Printing
+          await printContacts();
+        } finally {
+          /// ✅ 5. Close Loader
+          if (mounted) {
+            Navigator.pop(context); // close dialog
+            setState(() => _isPrinting = false);
+          }
+        }
+      },
             icon: Icon(Icons.print, size: 28, color: Colors.black),
           ),
         ],

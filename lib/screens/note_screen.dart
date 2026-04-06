@@ -7,6 +7,8 @@ import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/screens/format_selection_screen.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 
@@ -138,28 +140,46 @@ class _NotesScreenState extends State<NotesScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: 'note', 
+      appBar: CustomAppBar(
+        title: 'note',
         actions: [
           IconButton(
             icon: const Icon(Icons.print, size: 28, color: Colors.black),
-            onPressed: printNote,
+            onPressed: () async {
+              final adsProvider = context.read<AdsProvider>();
+
+              /// ✅ 1. Show Ad FIRST
+              await adsProvider.showAdInterstitial();
+
+              if (!mounted) return;
+
+              /// ✅ 2. Show Loader
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => Container(
+                  color: Colors.black.withOpacity(0.3),
+                  child: const Center(child: CircularProgressIndicator()),
+                ),
+              );
+
+              /// ✅ 3. UI ko render hone do
+              // await Future.delayed(const Duration(milliseconds: 100));
+
+              try {
+                /// ✅ 4. Call your function
+                await printNote();
+              } finally {
+                /// ✅ 5. Close Loader safely
+                if (mounted && Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+              }
+            },
           ),
         ],
       ),
 
-      // backgroundColor: const Color(0xffF5F6FA),
-      // appBar: AppBar(
-      //   backgroundColor: Colors.white,
-      //   elevation: 0,
-      //   centerTitle: true,
-      //   title: const Text("Notes", style: TextStyle(color: Colors.black)),
-      //   actions: [
-      // IconButton(
-      //   icon: const Icon(Icons.print, color: Colors.black),
-      //   onPressed: printNote,
-      // ),
-      //   ],
-      // ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),

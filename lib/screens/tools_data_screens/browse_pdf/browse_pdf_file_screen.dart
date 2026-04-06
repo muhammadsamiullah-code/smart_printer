@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
 import '../../../widgets/custom_appbar.dart';
@@ -79,7 +81,7 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-         backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         title: const TrText("rename_file"),
         content: TextField(controller: controller),
         actions: [
@@ -89,12 +91,12 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
           ),
           TextButton(
             onPressed: () async {
-                final dir = file.parent.path;
-                final newName = controller.text;
+              final dir = file.parent.path;
+              final newName = controller.text;
 
-                final newFile = File("$dir/browse_$newName.pdf");
+              final newFile = File("$dir/browse_$newName.pdf");
 
-                await file.rename(newFile.path);
+              await file.rename(newFile.path);
               // final dir = file.parent.path;
               // final newFile = File("$dir/${controller.text}.pdf");
 
@@ -126,14 +128,14 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
 
   @override
   Widget build(BuildContext context) {
-        final reversedList = pdfFiles.reversed.toList();
+    final reversedList = pdfFiles.reversed.toList();
 
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
 
       body: pdfFiles.isEmpty
           ? CenterWidgetForPDF(
-            borderColor: Color.fromRGBO(10, 77, 146, 1),
+              borderColor: Color.fromRGBO(10, 77, 146, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,
@@ -184,6 +186,12 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
 
           /// DELAY (UI ko time dene ke liye - smooth UX)
           await Future.delayed(const Duration(milliseconds: 300));
+            if (mounted) Navigator.pop(context);
+
+  final adsProvider = context.read<AdsProvider>();
+
+  /// 🔥 Step 3: Show Ad
+  await adsProvider.showAdInterstitial();
 
           /// OPEN BROWSER
           final updated = await Navigator.push(
@@ -194,7 +202,7 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
           );
 
           /// CLOSE LOADER
-          if (mounted) Navigator.pop(context);
+          // if (mounted) Navigator.pop(context);
 
           /// REFRESH
           if (updated == true) {

@@ -7,6 +7,8 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 import 'package:network_info_plus/network_info_plus.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/const/color.dart';
 import 'package:smart_scanner/screens/format_selection_screen.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
@@ -45,7 +47,7 @@ class _FrameSelectionScreenState extends State<FrameSelectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffEDEDED),
-      appBar: CustomAppBar(title: 'select_frame', ),
+      appBar: CustomAppBar(title: 'select_frame'),
       body: Column(
         children: [
           const SizedBox(height: 20),
@@ -273,11 +275,42 @@ class _PreviewScreenState extends State<PreviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffEDEDED),
-      appBar: CustomAppBar(title: 'preview', 
+      appBar: CustomAppBar(
+        title: 'preview',
         actions: [
           IconButton(
             icon: const Icon(Icons.print, size: 24, color: Colors.black),
-            onPressed: printImage,
+            onPressed: () async {
+              final adsProvider = context.read<AdsProvider>();
+
+              /// ✅ 1. Show Ad FIRST
+              await adsProvider.showAdInterstitial();
+
+              if (!mounted) return;
+
+              /// ✅ 2. Show Loader
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => Container(
+                  color: Colors.black.withOpacity(0.3),
+                  child: const Center(child: CircularProgressIndicator()),
+                ),
+              );
+
+              /// ✅ 3. UI render delay (IMPORTANT)
+              // await Future.delayed(const Duration(milliseconds: 100));
+
+              try {
+                /// ✅ 4. Call your function
+                await printImage();
+              } finally {
+                /// ✅ 5. Close Loader safely
+                if (mounted && Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+              }
+            },
           ),
         ],
       ),

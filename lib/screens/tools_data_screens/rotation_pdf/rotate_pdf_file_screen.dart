@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
@@ -96,7 +98,7 @@ class _RotatePdfFileScreenState extends State<RotatePdfFileScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-         backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         title: const TrText("rename_file"),
         content: TextField(controller: controller),
         actions: [
@@ -106,12 +108,12 @@ class _RotatePdfFileScreenState extends State<RotatePdfFileScreen> {
           ),
           TextButton(
             onPressed: () async {
-                final dir = file.parent.path;
-                final newName = controller.text;
+              final dir = file.parent.path;
+              final newName = controller.text;
 
-                final newFile = File("$dir/rotated_$newName.pdf");
+              final newFile = File("$dir/rotated_$newName.pdf");
 
-                await file.rename(newFile.path);
+              await file.rename(newFile.path);
               // final dir = file.parent.path;
               // final newFile = File("$dir/${controller.text}.pdf");
 
@@ -149,7 +151,7 @@ class _RotatePdfFileScreenState extends State<RotatePdfFileScreen> {
 
       body: pdfFiles.isEmpty
           ? CenterWidgetForPDF(
-            borderColor: Color.fromRGBO(201, 146, 55, 1),
+              borderColor: Color.fromRGBO(201, 146, 55, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,
@@ -196,10 +198,16 @@ class _RotatePdfFileScreenState extends State<RotatePdfFileScreen> {
             barrierDismissible: false,
             builder: (_) => const Center(child: CircularProgressIndicator()),
           );
+          if (mounted) Navigator.pop(context);
+
+          final adsProvider = context.read<AdsProvider>();
+
+          /// 🔥 Step 3: Show Ad
+          await adsProvider.showAdInterstitial();
 
           await pickFiles();
 
-          if (mounted) Navigator.pop(context);
+          // if (mounted) Navigator.pop(context);
         },
         label: 'select_file',
       ),

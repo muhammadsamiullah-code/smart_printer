@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/widgets/custom_appbar.dart';
 
 import '../../../widgets/build_commeon_fab.dart';
@@ -52,6 +54,18 @@ class _DeletePdfHomeState extends State<DeletePdfHome> {
 
   /// Pick PDF and navigate to DeletePdfPagesScreen
   Future<void> pickPdf() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const Center(child: CircularProgressIndicator()),
+    );
+    if (mounted) Navigator.pop(context);
+
+    final adsProvider = context.read<AdsProvider>();
+
+    /// 🔥 Step 3: Show Ad
+    await adsProvider.showAdInterstitial();
+
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ["pdf"],
@@ -74,7 +88,7 @@ class _DeletePdfHomeState extends State<DeletePdfHome> {
         ),
       );
 
-      if (mounted) Navigator.pop(context); // Close loader
+      // if (mounted) Navigator.pop(context); // Close loader
 
       if (updated == true) {
         loadFiles(); // Refresh home screen with new files
@@ -101,7 +115,7 @@ class _DeletePdfHomeState extends State<DeletePdfHome> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-         backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         title: const TrText("rename_file"),
         content: TextField(controller: controller),
         actions: [
@@ -111,12 +125,12 @@ class _DeletePdfHomeState extends State<DeletePdfHome> {
           ),
           TextButton(
             onPressed: () async {
-                final dir = file.parent.path;
-                final newName = controller.text;
+              final dir = file.parent.path;
+              final newName = controller.text;
 
-                final newFile = File("$dir/deleted_pages_$newName.pdf");
+              final newFile = File("$dir/deleted_pages_$newName.pdf");
 
-                await file.rename(newFile.path);
+              await file.rename(newFile.path);
               // final dir = file.parent.path;
               // final newFile = File("$dir/${controller.text}.pdf");
               // await file.rename(newFile.path);
@@ -146,12 +160,12 @@ class _DeletePdfHomeState extends State<DeletePdfHome> {
 
   @override
   Widget build(BuildContext context) {
-     final reversedList = pdfFiles.reversed.toList();
+    final reversedList = pdfFiles.reversed.toList();
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
       body: pdfFiles.isEmpty
           ? CenterWidgetForPDF(
-            borderColor: Color.fromRGBO(48, 108, 132, 1),
+              borderColor: Color.fromRGBO(48, 108, 132, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,

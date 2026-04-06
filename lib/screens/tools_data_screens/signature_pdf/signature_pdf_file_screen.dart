@@ -4,6 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/widgets/custom_appbar.dart';
 
 import '../../../widgets/build_commeon_fab.dart';
@@ -64,7 +66,8 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
       final updated = await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => NewSignaturePdfScreen(file: file, title: widget.title),
+          builder: (_) =>
+              NewSignaturePdfScreen(file: file, title: widget.title),
         ),
       );
 
@@ -93,7 +96,7 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-         backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         title: const Text("Rename File"),
         content: TextField(controller: controller),
         actions: [
@@ -103,12 +106,12 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
           ),
           TextButton(
             onPressed: () async {
-                final dir = file.parent.path;
-                final newName = controller.text;
+              final dir = file.parent.path;
+              final newName = controller.text;
 
-                final newFile = File("$dir/signed_$newName.pdf");
+              final newFile = File("$dir/signed_$newName.pdf");
 
-                await file.rename(newFile.path);
+              await file.rename(newFile.path);
               // final dir = file.parent.path;
               // final newFile = File("$dir/${controller.text}.pdf");
 
@@ -142,15 +145,13 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
   Widget build(BuildContext context) {
     final reversedList = pdfFiles.reversed.toList();
     return Scaffold(
-      appBar: CustomAppBar(
-        title: widget.title,
-        actions: [
+      appBar: CustomAppBar(title: widget.title, actions: [
         ],
       ),
 
       body: pdfFiles.isEmpty
           ? CenterWidgetForPDF(
-            borderColor: Color.fromRGBO(182, 93, 63, 1),
+              borderColor: Color.fromRGBO(182, 93, 63, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,
@@ -197,10 +198,16 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
             barrierDismissible: false,
             builder: (_) => const Center(child: CircularProgressIndicator()),
           );
+          if (mounted) Navigator.pop(context);
+
+          final adsProvider = context.read<AdsProvider>();
+
+          /// 🔥 Step 3: Show Ad
+          await adsProvider.showAdInterstitial();
 
           await pickFiles();
 
-          if (mounted) Navigator.pop(context);
+          // if (mounted) Navigator.pop(context);
         },
         label: 'select_file',
       ),

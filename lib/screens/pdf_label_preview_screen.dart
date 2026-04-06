@@ -8,6 +8,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:pdfx/pdfx.dart';
 import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/models/labels_shape.dart';
 import 'package:smart_scanner/models/labels_template.dart';
 import 'package:smart_scanner/providers/labels_provider.dart';
@@ -129,7 +130,7 @@ class _PdfLabelPreviewScreenState extends State<PdfLabelPreviewScreen> {
       return;
     }
 
-    setState(() => _isPrinting = true);
+    // setState(() => _isPrinting = true);
 
     try {
       await Future.delayed(const Duration(seconds: 2));
@@ -248,72 +249,82 @@ class _PdfLabelPreviewScreenState extends State<PdfLabelPreviewScreen> {
                     ),
                   )
                 : const Icon(Icons.print, size: 24, color: Colors.black),
-            onPressed: _isPrinting ? null : () => _handlePrint(),
+            onPressed: _isPrinting
+                ? null
+                : () async {
+                    final adsProvider = context.read<AdsProvider>();
+
+                    /// ✅ 1. Show Ad FIRST
+                    await adsProvider.showAdInterstitial();
+
+                    if (!mounted) return;
+
+                    /// ✅ 2. Start Loader
+                    setState(() => _isPrinting = true);
+
+                    /// ✅ 3. Small delay (IMPORTANT)
+                    // await Future.delayed(const Duration(milliseconds: 100));
+
+                    /// ✅ 4. Start printing
+                    await _handlePrint();
+
+                    /// ✅ 5. Stop loader
+                    if (mounted) {
+                      setState(() => _isPrinting = false);
+                    }
+                  },
           ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(0.05)),
-          ],
-        ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8), // same as pdf margin
-            child: GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: template.rows * template.columns,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: template.columns,
-                mainAxisSpacing: 6, // same spacing as pdf
-                crossAxisSpacing: 6,
-                childAspectRatio: ratio,
-              ),
-              itemBuilder: (context, index) {
-                if (index >= template.perSheet) {
-                  return const SizedBox();
-                }
+      body: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(blurRadius: 6, color: Colors.black.withOpacity(0.05)),
+              ],
+            ),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8), // same as pdf margin
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: template.rows * template.columns,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: template.columns,
+                    mainAxisSpacing: 6, // same spacing as pdf
+                    crossAxisSpacing: 6,
+                    childAspectRatio: ratio,
+                  ),
+                  itemBuilder: (context, index) {
+                    if (index >= template.perSheet) {
+                      return const SizedBox();
+                    }
 
-                return Container(
-                  margin: const EdgeInsets.all(
-                    2,
-                  ), // same as pdf container margin
-                  child: _buildPreviewLabel(template, imageFile),
-                );
-              },
+                    return Container(
+                      margin: const EdgeInsets.all(
+                        2,
+                      ), // same as pdf container margin
+                      child: _buildPreviewLabel(template, imageFile),
+                    );
+                  },
+                ),
+              ),
             ),
           ),
-        ),
+          if (_isPrinting)
+            Positioned.fill(
+              child: Container(
+                color: Colors.black.withOpacity(0.4),
+                child: const Center(child: CircularProgressIndicator()),
+              ),
+            ),
+        ],
       ),
     );
-  }
-
-  Widget _buildLabel(LabelTemplate template, File imageFile) {
-    Widget image = Image.file(imageFile, fit: BoxFit.contain);
-
-    // final ratio = template.widthInch! / template.heightInch!;
-    final size = parseSize(template.displaySize);
-    final ratio = size[0] / size[1];
-    switch (template.shape) {
-      case LabelShape.round:
-        return AspectRatio(
-          aspectRatio: ratio,
-          child: ClipOval(child: image),
-        );
-
-      case LabelShape.oval:
-        return AspectRatio(aspectRatio: ratio, child: image);
-
-      case LabelShape.square:
-        return AspectRatio(aspectRatio: ratio, child: image);
-
-      case LabelShape.rectangle:
-        return AspectRatio(aspectRatio: ratio, child: image);
-    }
   }
 }

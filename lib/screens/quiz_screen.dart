@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/const/color.dart';
 import 'package:smart_scanner/widgets/custom_appbar.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
@@ -145,6 +146,20 @@ class _QuizScreenState extends State<QuizScreen>
     return pdf.save();
   }
 
+  // Future<void> previewAndPrint({
+  //   required BuildContext context,
+  //   required List<QuestionModel> questions,
+  //   required int currentTab,
+  // }) async {
+  //   final isAnswerSheet = currentTab == 1;
+
+  //   final pdfBytes = await buildQuizPdf(
+  //     questions: questions,
+  //     isAnswerSheet: isAnswerSheet,
+  //   );
+
+  //   await Printing.layoutPdf(onLayout: (format) async => pdfBytes);
+  // }
   Future<void> previewAndPrint({
     required BuildContext context,
     required List<QuestionModel> questions,
@@ -440,13 +455,49 @@ class _QuizScreenState extends State<QuizScreen>
         padding: const EdgeInsets.all(12),
         child: CustomButton(
           text: 'print',
-          onPressed: () {
-            previewAndPrint(
+          onPressed: () async {
+            final adsProvider = context.read<AdsProvider>();
+
+            /// ✅ 1. Show Ad first
+            await adsProvider.showAdInterstitial();
+
+            if (!context.mounted) return;
+
+            /// ✅ 2. Show Loader (Dialog)
+            showDialog(
               context: context,
-              questions: provider.quizQuestions,
-              currentTab: _tabController.index,
+              barrierDismissible: false,
+              builder: (_) => const Center(child: CircularProgressIndicator()),
             );
+
+            /// ✅ 3. UI ko render hone ka time do
+            // await Future.delayed(const Duration(milliseconds: 100));
+
+            try {
+              /// ✅ 4. Start printing
+              await previewAndPrint(
+                context: context,
+                questions: provider.quizQuestions,
+                currentTab: _tabController.index,
+              );
+            } catch (e) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text("Printing failed")));
+            } finally {
+              /// ✅ 5. Close Loader
+              if (context.mounted) {
+                Navigator.pop(context); // remove dialog
+              }
+            }
           },
+          // onPressed: () {
+          //   previewAndPrint(
+          //     context: context,
+          //     questions: provider.quizQuestions,
+          //     currentTab: _tabController.index,
+          //   );
+          // },
         ),
       ),
     );

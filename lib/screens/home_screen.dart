@@ -379,157 +379,155 @@ class _HomeScreenState extends State<HomeScreen> {
       //  backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       body: Stack(
         children: [
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(14.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // ======= HEADER =======
-                  TrText(
-                    "home_title",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                      color: Color.fromRGBO(30, 30, 30, 1),
-                    ),
+          SingleChildScrollView(
+            padding: const EdgeInsets.all(14.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // ======= HEADER =======
+                TrText(
+                  "home_title",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: Color.fromRGBO(30, 30, 30, 1),
                   ),
-                  TrText(
-                    "home_subtitle",
-                    style: TextStyle(
-                      color: Color.fromRGBO(146, 146, 146, 1),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                ),
+                TrText(
+                  "home_subtitle",
+                  style: TextStyle(
+                    color: Color.fromRGBO(146, 146, 146, 1),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                   ),
-                  SizedBox(height: 16),
-                  // ======= CONNECT CARD =======
-                  GestureDetector(
-                    onTap: () async {
-                      // if (!isScanning) {
-                      //   await discoverPrinters();
-                      // }
-                    },
-                    child: Container(
-                      // height: 200,
-                      // width: double.infinity,
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color.fromRGBO(6, 61, 118, 1),
-                            Color.fromRGBO(60, 106, 180, 1),
-                          ],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                        ),
+                ),
+                SizedBox(height: 16),
+                // ======= CONNECT CARD =======
+                GestureDetector(
+                  onTap: () async {
+                    // if (!isScanning) {
+                    //   await discoverPrinters();
+                    // }
+                  },
+                  child: Container(
+                    // height: 200,
+                    // width: double.infinity,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color.fromRGBO(6, 61, 118, 1),
+                          Color.fromRGBO(60, 106, 180, 1),
+                        ],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                       ),
-
-                      // 👇 MAIN CONDITION START
-                      child: isScanning
-                          ? const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            )
-                          : printers.isEmpty
-                          ? Row(
-                              children: [
-                                Expanded(
-                                  child: const TrText(
-                                    "wifi_instruction",
-                                    style: TextStyle(
-                                      color: Color.fromRGBO(245, 245, 245, 1),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                    ),
+          
+                    // 👇 MAIN CONDITION START
+                    child: isScanning
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                        : printers.isEmpty
+                        ? Row(
+                            children: [
+                              Expanded(
+                                child: const TrText(
+                                  "wifi_instruction",
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(245, 245, 245, 1),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                const SizedBox(width: 10),
-                                Image.asset(
-                                  'assets/images/printerImage.png',
-                                  height: 100,
-                                  width: 100,
-                                ),
-                              ],
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: printers
-                                  .map(
-                                    (printer) => Container(
-                                      margin: const EdgeInsets.symmetric(
-                                        vertical: 6,
-                                      ),
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        color: Colors.green.shade100,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          const Icon(Icons.print),
-                                          const SizedBox(width: 10),
-                                          Expanded(child: Text(printer)),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 16),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     FirebaseCrashlytics.instance.crash();
-                  //   },
-                  //   child: const Text("Test Crash"),
-                  // ),
-                  // ======= GRID MENU =======
-                  Column(
-                    children: List.generate((menuItems.length / 2).ceil(), (
-                      index,
-                    ) {
-                      final firstIndex = index * 2;
-                      final secondIndex = firstIndex + 1;
-
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 4, top: 4),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: buildMenuItem(
-                                svgPath: menuItems[firstIndex].svgPath,
-                                title: menuItems[firstIndex].title,
-                                color: menuItems[firstIndex].color,
-                                onTap: menuItems[firstIndex].onTap,
                               ),
-                            ),
-                            const SizedBox(width: 4),
-                            Expanded(
-                              child: secondIndex < menuItems.length
-                                  ? buildMenuItem(
-                                      svgPath: menuItems[secondIndex].svgPath,
-                                      title: menuItems[secondIndex].title,
-                                      color: menuItems[secondIndex].color,
-                                      onTap: menuItems[secondIndex].onTap,
-                                    )
-                                  : const SizedBox(),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                
+                              const SizedBox(width: 10),
+                              Image.asset(
+                                'assets/images/printerImage.png',
+                                height: 100,
+                                width: 100,
+                              ),
+                            ],
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: printers
+                                .map(
+                                  (printer) => Container(
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 6,
+                                    ),
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green.shade100,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        const Icon(Icons.print),
+                                        const SizedBox(width: 10),
+                                        Expanded(child: Text(printer)),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
                   ),
-                  // TextButton(onPressed: (){
-                  //   Navigator.push(context, MaterialPageRoute(builder: (context) => ImageToPDFConvert()));
-                  // }, child: Text("Go to Image to PDF Convert Screen"))
-                ],
-              ),
+                ),
+          
+                const SizedBox(height: 16),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     FirebaseCrashlytics.instance.crash();
+                //   },
+                //   child: const Text("Test Crash"),
+                // ),
+                // ======= GRID MENU =======
+                Column(
+                  children: List.generate((menuItems.length / 2).ceil(), (
+                    index,
+                  ) {
+                    final firstIndex = index * 2;
+                    final secondIndex = firstIndex + 1;
+          
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 4, top: 4),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: buildMenuItem(
+                              svgPath: menuItems[firstIndex].svgPath,
+                              title: menuItems[firstIndex].title,
+                              color: menuItems[firstIndex].color,
+                              onTap: menuItems[firstIndex].onTap,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: secondIndex < menuItems.length
+                                ? buildMenuItem(
+                                    svgPath: menuItems[secondIndex].svgPath,
+                                    title: menuItems[secondIndex].title,
+                                    color: menuItems[secondIndex].color,
+                                    onTap: menuItems[secondIndex].onTap,
+                                  )
+                                : const SizedBox(),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+              
+                ),
+                // TextButton(onPressed: (){
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) => ImageToPDFConvert()));
+                // }, child: Text("Go to Image to PDF Convert Screen"))
+              ],
             ),
           ),
         ],

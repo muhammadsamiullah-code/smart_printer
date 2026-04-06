@@ -3,6 +3,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
@@ -54,6 +56,12 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
       barrierDismissible: false,
       builder: (_) => const Center(child: CircularProgressIndicator()),
     );
+    if (mounted) Navigator.pop(context);
+
+    final adsProvider = context.read<AdsProvider>();
+
+    /// 🔥 Step 3: Show Ad
+    await adsProvider.showAdInterstitial();
 
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -121,7 +129,7 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
     bool? confirm = await showDialog(
       context: context,
       builder: (_) => AlertDialog(
-         backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         title: const TrText("delete_file"),
         content: const TrText("delete_file_confirmation"),
         actions: [

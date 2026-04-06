@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
 import '../../../widgets/custom_appbar.dart';
@@ -95,7 +97,7 @@ class _ReversePdfFileScreenState extends State<ReversePdfFileScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-         backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         title: const TrText("rename_file"),
         content: TextField(controller: controller),
         actions: [
@@ -105,12 +107,12 @@ class _ReversePdfFileScreenState extends State<ReversePdfFileScreen> {
           ),
           TextButton(
             onPressed: () async {
-                final dir = file.parent.path;
-                final newName = controller.text;
+              final dir = file.parent.path;
+              final newName = controller.text;
 
-                final newFile = File("$dir/reversed_$newName.pdf");
+              final newFile = File("$dir/reversed_$newName.pdf");
 
-                await file.rename(newFile.path);
+              await file.rename(newFile.path);
               // final dir = file.parent.path;
               // final newFile = File("$dir/${controller.text}.pdf");
 
@@ -195,10 +197,16 @@ class _ReversePdfFileScreenState extends State<ReversePdfFileScreen> {
             barrierDismissible: false,
             builder: (_) => const Center(child: CircularProgressIndicator()),
           );
+          if (mounted) Navigator.pop(context);
+
+          final adsProvider = context.read<AdsProvider>();
+
+          /// 🔥 Step 3: Show Ad
+          await adsProvider.showAdInterstitial();
 
           await pickFiles();
 
-          if (mounted) Navigator.pop(context); // CLOSE LOADER
+          // if (mounted) Navigator.pop(context); // CLOSE LOADER
         },
         label: 'select_file',
       ),

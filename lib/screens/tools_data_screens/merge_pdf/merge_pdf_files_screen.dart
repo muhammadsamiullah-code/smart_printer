@@ -3,6 +3,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/widgets/custom_appbar.dart';
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
@@ -217,6 +219,12 @@ class _MergedPDFFilesScreenState extends State<MergedPDFFilesScreen> {
             barrierDismissible: false,
             builder: (_) => const Center(child: CircularProgressIndicator()),
           );
+         if (mounted) Navigator.pop(context);
+
+  final adsProvider = context.read<AdsProvider>();
+
+  /// 🔥 Step 3: Show Ad
+  await adsProvider.showAdInterstitial();
 
           final result = await FilePicker.platform.pickFiles(
             type: FileType.custom,
@@ -224,7 +232,7 @@ class _MergedPDFFilesScreenState extends State<MergedPDFFilesScreen> {
             allowMultiple: true,
           );
 
-          Navigator.pop(context);
+          // Navigator.pop(context);
 
           if (result != null) {
             final files = result.paths.map((path) => File(path!)).toList();

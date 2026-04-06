@@ -40,9 +40,9 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: const Color(0xffF5F6FA),
-    appBar: CustomAppBar(title: 'settings_title', 
-    showBackButton: false,
-    ),
+    // appBar: CustomAppBar(title: 'settings_title', 
+    // showBackButton: false,
+    // ),
       // appBar: AppBar(
       //   elevation: 0,
       //   backgroundColor: Colors.transparent,
@@ -58,6 +58,20 @@ class _SettingScreenState extends State<SettingScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+               Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              TrText(
+                'settings_title',
+                style: TextStyle(
+                  // color: titleColor,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
               _buildTile(
                 svgPath: 'assets/settingIcons/sendFeedback.svg',
                 titleKey: "send_feedback",

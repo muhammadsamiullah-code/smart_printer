@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/ads/ads_provider.dart';
 
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
@@ -59,8 +61,14 @@ class _PdfQrFileScreenState extends State<PdfQrFileScreen> {
     );
 
     await Future.delayed(const Duration(milliseconds: 300));
+         if (mounted) Navigator.pop(context);
 
-    Navigator.pop(context); // remove loader
+  final adsProvider = context.read<AdsProvider>();
+
+  /// 🔥 Step 3: Show Ad
+  await adsProvider.showAdInterstitial();
+
+    // Navigator.pop(context); // remove loader
 
     final result = await Navigator.push(
       context,
