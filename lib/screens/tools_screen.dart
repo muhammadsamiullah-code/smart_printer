@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_scanner/subscription/purchase_provider.dart';
+import 'package:smart_scanner/subscription/subscription_screen.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/tr_text.dart';
 import 'tools_data_screens/browse_pdf/browse_pdf_file_screen.dart';
@@ -231,15 +234,12 @@ class _ToolsScreenState extends State<ToolsScreen> {
       // appBar: CustomAppBar(title: "pdf_tools", showBackButton: false),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 0,
-                ),
-                child: TrText(
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TrText(
                   'pdf_tools',
                   style: TextStyle(
                     // color: titleColor,
@@ -247,8 +247,23 @@ class _ToolsScreenState extends State<ToolsScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-            ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SubscriptionScreen(),
+                      ),
+                    );
+                  },
+                  child: Image.asset(
+                    'assets/images/crown.png',
+                    height: 28,
+                    width: 28,
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 10),
           Expanded(child: buildTools()),
@@ -273,38 +288,82 @@ class _ToolsScreenState extends State<ToolsScreen> {
         bool isLastRow =
             index >= tools.length - (remainingItems == 0 ? 2 : remainingItems);
         return GestureDetector(
-          onTap: () => openTool(tool),
-          child: Container(
-            margin: EdgeInsets.only(
-              bottom: isLastRow ? 12 : 0, // 👈 apply margin
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(
-                color: const Color.fromARGB(255, 231, 231, 231),
-                width: 1,
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: tool["color"], // 🔥 dynamic bg color
-                    borderRadius: BorderRadius.circular(12),
+          // onTap: () => openTool(tool),
+          onTap: () {
+            final isPremiumTool = index >= 4;
+
+            final isPremiumUser = context.read<PurchaseProvider>().isPremium;
+
+            /// 🔒 LOCK CHECK
+            if (isPremiumTool && !isPremiumUser) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const SubscriptionScreen()),
+              );
+              return;
+            }
+
+            /// ✅ OPEN TOOL
+            openTool(tool);
+          },
+          child: Stack(
+            children: [
+              Container(
+                // height: 100,
+                width: double.infinity,
+                margin: EdgeInsets.only(
+                  bottom: isLastRow ? 12 : 0, // 👈 apply margin
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 231, 231, 231),
+                    width: 1,
                   ),
-                  child: SvgPicture.asset(tool["icon"], width: 26, height: 26),
                 ),
-                const SizedBox(height: 10),
-                TrText(
-                  tool["title"],
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 14, color: Colors.black),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: tool["color"], // 🔥 dynamic bg color
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: SvgPicture.asset(
+                        tool["icon"],
+                        width: 26,
+                        height: 26,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    TrText(
+                      tool["title"],
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 14, color: Colors.black),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              if (index >= 4 && !context.watch<PurchaseProvider>().isPremium)
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Icon(
+                      Icons.lock,
+                      color: Colors.white,
+                      size: 14,
+                    ),
+                  ),
+                ),
+            ],
           ),
         );
       },

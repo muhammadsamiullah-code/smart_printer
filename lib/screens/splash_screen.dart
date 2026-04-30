@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/screens/bottom_nav_screeen.dart';
 import 'package:smart_scanner/screens/select_language_screen.dart';
+import 'package:smart_scanner/services/app_open_manager.dart';
+import 'package:smart_scanner/subscription/purchase_provider.dart';
+import 'package:smart_scanner/subscription/subscription_screen.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
-
 import 'onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,6 +19,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Timer? _timer;
+
+  bool isSubscriptionShown = false;
+  bool isLoadingCompleted = false;
   final box = GetStorage();
   int progress = 0;
 
@@ -24,13 +30,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     startLoading();
+
     Future.delayed(Duration.zero, () {
       context.read<AdsProvider>().loadAppOpenAd();
     });
   }
-
   void startLoading() {
-    Timer.periodic(const Duration(milliseconds: 30), (timer) {
+    _timer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
       if (progress < 100) {
         setState(() {
           progress++;
@@ -38,29 +44,66 @@ class _SplashScreenState extends State<SplashScreen> {
       } else {
         timer.cancel();
 
-        final box = GetStorage();
+        isLoadingCompleted = true;
 
-        bool hasSelectedLanguage = box.read('hasSelectedLanguage') ?? false;
-        bool isOnboarded = box.read('onboardingDone') ?? false;
-
-        if (!hasSelectedLanguage) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const SelectLanguageScreen()),
-          );
-        } else if (!isOnboarded) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const OnboardingScreen()),
-          );
-        } else {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const BottomNavScreen()),
-          );
-        }
+        /// ✅ FIRST check subscription AFTER loading complete
+        checkSubscriptionPopup();
       }
     });
+  }
+
+  Future<void> checkSubscriptionPopup() async {
+    final count = await AppOpenManager.incrementAndGetCount();
+    final isPremium = context.read<PurchaseProvider>().isPremium;
+
+    if (isPremium) {
+      proceedNavigation();
+      return;
+    }
+
+    if (count % 3 == 0) {
+      isSubscriptionShown = true;
+
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const SubscriptionScreen()),
+      );
+
+      /// 👇 User back → now continue
+      proceedNavigation();
+    } else {
+      proceedNavigation();
+    }
+  }
+
+  void proceedNavigation() {
+    final box = GetStorage();
+
+    bool hasSelectedLanguage = box.read('hasSelectedLanguage') ?? false;
+    bool isOnboarded = box.read('onboardingDone') ?? false;
+
+    if (!hasSelectedLanguage) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const SelectLanguageScreen()),
+      );
+    } else if (!isOnboarded) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const BottomNavScreen()),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -68,15 +111,6 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          /// Background Image
-          // Positioned.fill(
-          //   child: Image.asset(
-          //     "assets/images/splash_bg.png",
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
-
-          /// Exact Matching Gradient Overlay
           Positioned.fill(
             child: Container(
               width: double.infinity,
@@ -100,11 +134,6 @@ class _SplashScreenState extends State<SplashScreen> {
               /// Icon Container
               SizedBox(
                 width: double.infinity,
-                // padding: const EdgeInsets.all(22),
-                // decoration: BoxDecoration(
-                //   color: const Color(0xFF1565C0),
-                //   borderRadius: BorderRadius.circular(14),
-                // ),
                 child: Image.asset(
                   'assets/images/printerImage.png',
                   height: 170,

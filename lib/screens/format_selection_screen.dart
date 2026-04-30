@@ -14,6 +14,8 @@ import 'package:provider/provider.dart';
 import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/const/color.dart';
 import 'package:smart_scanner/providers/translator_provider.dart';
+import 'package:smart_scanner/subscription/purchase_provider.dart';
+import 'package:smart_scanner/subscription/subscription_screen.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:smart_scanner/widgets/snack_bar_helper.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
@@ -67,11 +69,16 @@ class _FormatSelectionScreenState extends State<FormatSelectionScreen> {
       MaterialPageRoute(builder: (_) => DisplayScreen(images: finalImages)),
     );
   }
+
+  bool isPremiumLayout(int count) {
+    return count != 2; // sirf 2 free hai
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffEDEDED),
-      appBar:  CustomAppBar(title: 'select_photo_layout', ),
+      appBar: CustomAppBar(title: 'select_photo_layout'),
       body: Column(
         children: [
           Expanded(
@@ -108,27 +115,88 @@ class _FormatSelectionScreenState extends State<FormatSelectionScreen> {
   }
 
   Widget _layoutCard(int count) {
+    final isPremiumUser = context.watch<PurchaseProvider>().isPremium;
+    final isLocked = isPremiumLayout(count) && !isPremiumUser;
+
     return GestureDetector(
-      onTap: () => setState(() => selectedLayout = count),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: selectedLayout == count
-                ? AppColors.primaryColor
-                : Colors.grey,
-            width: 2,
+      onTap: () {
+        /// 🔒 LOCK CHECK
+        if (isLocked) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const SubscriptionScreen()),
+          );
+          return;
+        }
+
+        /// ✅ Allowed
+        setState(() => selectedLayout = count);
+      },
+      child: Stack(
+        children: [
+          /// 🔹 MAIN CARD
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: selectedLayout == count
+                    ? AppColors.primaryColor
+                    : Colors.grey,
+                width: 2,
+              ),
+            ),
+            child: Center(
+              child: Text(
+                '$count ${context.watch<TranslatorProvider>().tr("photos")}',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
-        ),
-        child: Center(
-          child: Text(
-            '$count ${context.watch<TranslatorProvider>().tr("photos")}',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-        ),
+
+          /// 🔒 LOCK ICON
+          if (isLocked)
+            Positioned(
+              top: 8,
+              right: 8,
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.6),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Icon(Icons.lock, color: Colors.white, size: 14),
+              ),
+            ),
+        ],
       ),
     );
   }
+
+  // Widget _layoutCard(int count) {
+  //   return GestureDetector(
+  //     onTap: () => setState(() => selectedLayout = count),
+  //     child: Container(
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(12),
+  //         border: Border.all(
+  //           color: selectedLayout == count
+  //               ? AppColors.primaryColor
+  //               : Colors.grey,
+  //           width: 2,
+  //         ),
+  //       ),
+  //       child: Center(
+  //         child: Text(
+  //           '$count ${context.watch<TranslatorProvider>().tr("photos")}',
+  //           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
 
 class DisplayScreen extends StatefulWidget {
@@ -174,33 +242,33 @@ class _DisplayScreenState extends State<DisplayScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.print, size: 24, color: Colors.black),
-          onPressed: _isPrinting
-    ? null
-    : () async {
-        final wifiOn = await isWifiReallyOn();
-        final sameWifi = await isSameWifi();
+            onPressed: _isPrinting
+                ? null
+                : () async {
+                    final wifiOn = await isWifiReallyOn();
+                    final sameWifi = await isSameWifi();
 
-        if (!wifiOn || !sameWifi) {
-          await printAllPages();
-          return;
-        }
+                    if (!wifiOn || !sameWifi) {
+                      await printAllPages();
+                      return;
+                    }
 
-        final adsProvider = context.read<AdsProvider>();
+                    final adsProvider = context.read<AdsProvider>();
 
-        /// 🔥 Step 1: Show Ad
-        await adsProvider.showAdInterstitial();
+                    /// 🔥 Step 1: Show Ad
+                    await adsProvider.showAdInterstitial();
 
-        if (!mounted) return;
+                    if (!mounted) return;
 
-        /// 🔥 Step 2: START loader BEFORE heavy work
-        setState(() => _isPrinting = true);
+                    /// 🔥 Step 2: START loader BEFORE heavy work
+                    setState(() => _isPrinting = true);
 
-        /// 🔥 Step 3: Small delay so UI render ho jaye
-        await Future.delayed(const Duration(milliseconds: 100));
+                    /// 🔥 Step 3: Small delay so UI render ho jaye
+                    await Future.delayed(const Duration(milliseconds: 100));
 
-        /// 🔥 Step 4: Start printing
-        await printAllPages();
-      },
+                    /// 🔥 Step 4: Start printing
+                    await printAllPages();
+                  },
           ),
         ],
       ),

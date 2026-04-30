@@ -12,6 +12,8 @@ import 'package:smart_scanner/providers/bottom_nav_provider.dart';
 import 'package:smart_scanner/screens/gmail_scanner_screen.dart';
 import 'package:smart_scanner/screens/note_screen.dart';
 import 'package:smart_scanner/screens/web_page_scanner_screen.dart';
+import 'package:smart_scanner/subscription/purchase_provider.dart';
+import 'package:smart_scanner/subscription/subscription_screen.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 import '../models/menu_item_model.dart';
 import 'dart:io';
@@ -250,6 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
         svgPath: 'assets/homeIcons/email.svg',
         title: "email",
         color: const Color.fromRGBO(249, 227, 255, 1),
+        isPremium: true,
         onTap: () {
           _openGmailAndScan();
         },
@@ -294,6 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
         svgPath: 'assets/homeIcons/camera.svg',
         title: "camera",
         color: const Color.fromRGBO(213, 234, 255, 1),
+        isPremium: true,
         onTap: openCameraScan,
       ),
 
@@ -313,6 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
         svgPath: 'assets/homeIcons/notes.svg',
         title: "notes",
         color: const Color.fromRGBO(248, 232, 235, 1),
+        isPremium: true,
         onTap: () {
           Navigator.push(
             context,
@@ -324,6 +329,7 @@ class _HomeScreenState extends State<HomeScreen> {
         svgPath: 'assets/homeIcons/quizzes.svg',
         title: "quizzes",
         color: const Color.fromRGBO(224, 252, 247, 1),
+        isPremium: true,
         onTap: () {
           Navigator.push(
             context,
@@ -335,6 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
         svgPath: 'assets/homeIcons/contacts.svg',
         title: "contact",
         color: const Color.fromRGBO(255, 240, 248, 1),
+        isPremium: true,
         onTap: () {
           Navigator.push(
             context,
@@ -385,13 +392,33 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // ======= HEADER =======
-                TrText(
-                  "home_title",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                    color: Color.fromRGBO(30, 30, 30, 1),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TrText(
+                      "home_title",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        color: Color.fromRGBO(30, 30, 30, 1),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SubscriptionScreen(),
+                          ),
+                        );
+                      },
+                      child: Image.asset(
+                        'assets/images/crown.png',
+                        height: 28,
+                        width: 28,
+                      ),
+                    ),
+                  ],
                 ),
                 TrText(
                   "home_subtitle",
@@ -424,7 +451,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         end: Alignment.centerRight,
                       ),
                     ),
-          
+
                     // 👇 MAIN CONDITION START
                     child: isScanning
                         ? const Center(
@@ -479,7 +506,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                   ),
                 ),
-          
+
                 const SizedBox(height: 16),
                 // ElevatedButton(
                 //   onPressed: () {
@@ -494,7 +521,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ) {
                     final firstIndex = index * 2;
                     final secondIndex = firstIndex + 1;
-          
+
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 4, top: 4),
                       child: Row(
@@ -505,6 +532,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               title: menuItems[firstIndex].title,
                               color: menuItems[firstIndex].color,
                               onTap: menuItems[firstIndex].onTap,
+                              isPremium: menuItems[firstIndex].isPremium,
+
                             ),
                           ),
                           const SizedBox(width: 4),
@@ -515,6 +544,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     title: menuItems[secondIndex].title,
                                     color: menuItems[secondIndex].color,
                                     onTap: menuItems[secondIndex].onTap,
+                                    isPremium: menuItems[secondIndex].isPremium,
                                   )
                                 : const SizedBox(),
                           ),
@@ -522,11 +552,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }),
-              
                 ),
-                // TextButton(onPressed: (){
-                //   Navigator.push(context, MaterialPageRoute(builder: (context) => ImageToPDFConvert()));
-                // }, child: Text("Go to Image to PDF Convert Screen"))
               ],
             ),
           ),
@@ -540,39 +566,66 @@ class _HomeScreenState extends State<HomeScreen> {
     required String title,
     required Color color,
     required VoidCallback onTap,
+    required bool isPremium,
   }) {
+    final isPremiumUser = context.watch<PurchaseProvider>().isPremium;
+    final isLocked = isPremium && !isPremiumUser;
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.only(left: 4, right: 4),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
-           border: Border.all(
+      onTap: () {
+        if (isLocked) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const SubscriptionScreen()),
+          );
+          return;
+        }
+
+        onTap();
+      },
+      child: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(left: 4, right: 4),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
                 color: const Color.fromARGB(255, 231, 231, 231),
                 width: 1,
               ),
-        ),
-        // color: Colors.white,
-        // elevation: 4,
-        // shadowColor: Color.fromRGBO(94, 94, 94, 0.25),
-        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 26,
-                backgroundColor: color,
-                child: SvgPicture.asset(svgPath, height: 24, width: 24),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 26,
+                    backgroundColor: color,
+                    child: SvgPicture.asset(svgPath, height: 24, width: 24),
+                  ),
+                  const SizedBox(width: 12), // use width in Row (not height)
+                  Expanded(
+                    child: TrText(title, style: const TextStyle(fontSize: 14)),
+                  ),
+                ],
               ),
-              const SizedBox(width: 12), // use width in Row (not height)
-              Expanded(
-                child: TrText(title, style: const TextStyle(fontSize: 14)),
-              ),
-            ],
+            ),
           ),
-        ),
+          if (isLocked)
+            Positioned(
+              top: 8,
+              right: 8,
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.6),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Icon(Icons.lock, color: Colors.white, size: 12),
+              ),
+            ),
+        ],
       ),
     );
   }

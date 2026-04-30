@@ -2,12 +2,13 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:smart_scanner/subscription/purchase_manager.dart';
 import '../services/remote_config_service.dart';
 
 class AdsManager {
   static final AdsManager _instance = AdsManager._internal();
   factory AdsManager() => _instance;
-
+  bool get isPremiumUser => PurchaseManager().isPremium;
   AdsManager._internal();
   VoidCallback? onAdUpdated;
   BannerAd? bannerAd;
@@ -21,6 +22,7 @@ class AdsManager {
 
   /// 🔹 INIT (NO AD SHOW HERE)
   Future<void> init() async {
+     if (isPremiumUser) return;
     loadBanner();
     loadInterstitial(); // ✅ only preload
     loadNative();
@@ -30,6 +32,7 @@ class AdsManager {
 
   /// ------------------ BANNER ------------------
   Future<void> loadBanner() async {
+      if (isPremiumUser) return; // ❌ NO ADS
     if (!RemoteConfigService.bannerEnabled) return;
 
     bannerAd?.dispose();
@@ -59,6 +62,8 @@ class AdsManager {
 
   /// ------------------ INTERSTITIAL (PRELOAD ONLY) ------------------
   Future<void> loadInterstitial() async {
+      if (isPremiumUser) return; // ❌ NO ADS
+
     if (!RemoteConfigService.interstitialEnabled) return;
 
     InterstitialAd.load(
@@ -77,6 +82,8 @@ class AdsManager {
 
   /// ------------------ INTERSTITIAL (SHOW WHEN NEEDED) ------------------
   Future<void> showInterstitialIfNeeded() async {
+      if (isPremiumUser) return; // ❌ NO ADS
+
     clickCount++;
 
     if (!RemoteConfigService.interstitialEnabled) return;
@@ -111,6 +118,8 @@ class AdsManager {
 
   /// ------------------ FORCE SHOW INTERSTITIAL ------------------
   Future<void> showAdNow() async {
+      if (isPremiumUser) return; // ❌ NO ADS
+
     if (!RemoteConfigService.interstitialEnabled) return;
 
     if (interstitialAd == null || isInterstitialShowing) {
@@ -146,6 +155,7 @@ class AdsManager {
 
   /// ------------------ NATIVE ------------------
   Future<void> loadNative() async {
+      if (isPremiumUser) return; // ❌ NO ADS
     if (!RemoteConfigService.nativeEnabled) return;
 
     nativeAd = NativeAd(
@@ -158,6 +168,8 @@ class AdsManager {
 
   /// ------------------ APP OPEN (ONLY CALL MANUALLY) ------------------
   Future<void> loadAppOpen() async {
+      if (isPremiumUser) return; // ❌ NO ADS
+
     if (!RemoteConfigService.appOpenEnabled) return;
 
     AppOpenAd.load(
@@ -181,6 +193,21 @@ class AdsManager {
     );
   }
 
+void removeAdsForPremium() {
+  bannerAd?.dispose();
+  interstitialAd?.dispose();
+  nativeAd?.dispose();
+  appOpenAd?.dispose();
+
+  bannerAd = null;
+  interstitialAd = null;
+  nativeAd = null;
+  appOpenAd = null;
+
+  isBannerLoaded = false;
+
+  onAdUpdated?.call();
+}
   /// 🔹 DISPOSE
   void dispose() {
     bannerAd?.dispose();

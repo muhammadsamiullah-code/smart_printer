@@ -6,6 +6,8 @@ import 'package:smart_scanner/providers/language_provider.dart';
 import 'package:smart_scanner/providers/translator_provider.dart';
 import 'package:smart_scanner/screens/splash_screen.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:smart_scanner/subscription/purchase_manager.dart';
+import 'package:smart_scanner/subscription/purchase_provider.dart';
 import 'ads/ads_provider.dart';
 import 'providers/bottom_nav_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -26,15 +28,18 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await Firebase.initializeApp();
-  await RemoteConfigService.init();
-
+  //  Firebase.initializeApp();
+   RemoteConfigService.init();
+   PurchaseManager().init(); // direct call
   MobileAds.instance.initialize();
+  // final purchaseProvider = PurchaseProvider();
+  // await purchaseProvider.init();
+  // MobileAds.instance.initialize();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   final quizProvider = QuizProvider();
 
-  await quizProvider.loadQuestions();
+   quizProvider.loadQuestions();
   await GetStorage.init(); // 👈 important
   final box = GetStorage();
   String savedLang = box.read('languageCode') ?? 'en';
@@ -47,6 +52,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => LanguageProvider(savedLang)),
         ChangeNotifierProvider(create: (_) => TranslatorProvider(savedLang)),
         ChangeNotifierProvider(create: (_) => AdsProvider()..initAds()),
+          ChangeNotifierProvider(create: (_) => PurchaseProvider()..init()),
+        // ChangeNotifierProvider(create: (_) => PurchaseProvider()..init()),
       ],
       child: const MyApp(),
     ),
@@ -61,7 +68,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
   @override
   void initState() {
     super.initState();
@@ -92,30 +98,6 @@ class _MyAppState extends State<MyApp> {
       print("Clicked Notification");
     });
   }
-  // This widget is the root of your application.
-  // void initFCM() async {
-  //   await NotificationService.init();
-
-  //   FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-  //   // Permission (IMPORTANT for Android 13+)
-  //   await messaging.requestPermission();
-
-  //   // Get Token (VERY IMPORTANT)
-  //   String? token = await messaging.getToken();
-  //   print("FCM Token: $token");
-
-  //   // Foreground message
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //     print("Foreground Message: ${message.notification?.title}");
-  //     NotificationService.showNotification(message);
-  //   });
-
-  //   // App opened from notification
-  //   FirebaseMessaging.onMessageOpenedApp.listen((message) {
-  //     print("Clicked Notification");
-  //   });
-  // }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

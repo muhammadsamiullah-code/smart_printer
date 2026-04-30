@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:smart_scanner/models/labels_shape.dart';
 import 'package:smart_scanner/providers/labels_provider.dart';
 import 'package:smart_scanner/screens/template_selection_screen.dart';
+import 'package:smart_scanner/subscription/purchase_provider.dart';
+import 'package:smart_scanner/subscription/subscription_screen.dart';
 
 import '../widgets/custom_appbar.dart';
 
@@ -15,6 +17,9 @@ class ShapeSelectionScreen extends StatefulWidget {
 }
 
 class _ShapeSelectionScreenState extends State<ShapeSelectionScreen> {
+  bool isPremiumShape(LabelShape shape) {
+    return shape != LabelShape.rectangle; // rectangle free hai
+  }
 
   @override
   void initState() {
@@ -29,22 +34,39 @@ class _ShapeSelectionScreenState extends State<ShapeSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-
+    final isPremiumUser = context.watch<PurchaseProvider>().isPremium;
     final provider = Provider.of<LabelProvider>(context);
 
     return Scaffold(
       backgroundColor: const Color(0xffEDEDED),
-      appBar: CustomAppBar(title: 'select_label_shape', ),
+      appBar: CustomAppBar(title: 'select_label_shape'),
       body: Column(
         children: [
           Expanded(
             child: GridView.count(
               crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
               padding: const EdgeInsets.all(16),
               children: LabelShape.values.map((shape) {
                 return GestureDetector(
                   onTap: () {
+                    final isPremiumUser = context
+                        .read<PurchaseProvider>()
+                        .isPremium;
 
+                    /// 🔒 LOCK CHECK
+                    if (isPremiumShape(shape) && !isPremiumUser) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const SubscriptionScreen(),
+                        ),
+                      );
+                      return;
+                    }
+
+                    /// ✅ Allowed
                     provider.setShape(shape);
 
                     Navigator.push(
@@ -54,24 +76,50 @@ class _ShapeSelectionScreenState extends State<ShapeSelectionScreen> {
                       ),
                     );
                   },
-                  child: Card(
-                    color: provider.selectedShape == shape
-                        ? Colors.blue.shade100
-                        : Colors.white,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(shape.imagePath, height: 70),
-                        const SizedBox(height: 10),
-                        Text(
-                          shape.name.toUpperCase(),
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: provider.selectedShape == shape
+                              ? Colors.blue.shade100
+                              : Colors.white,
+                        ),
+
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(shape.imagePath, height: 70),
+                            const SizedBox(height: 10),
+                            Text(
+                              shape.name.toUpperCase(),
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (isPremiumShape(shape) && !isPremiumUser)
+                        Positioned(
+                          top: 8,
+                          right: 8,
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: const Icon(
+                              Icons.lock,
+                              color: Colors.white,
+                              size: 14,
+                            ),
                           ),
                         ),
-                      ],
-                    ),
+                    ],
                   ),
                 );
               }).toList(),
@@ -82,86 +130,3 @@ class _ShapeSelectionScreenState extends State<ShapeSelectionScreen> {
     );
   }
 }
-// class ShapeSelectionScreen extends StatelessWidget {
-//   const ShapeSelectionScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final provider = Provider.of<LabelProvider>(context);
-
-//     return Scaffold(
-//       backgroundColor: const Color(0xffEDEDED),
-//       appBar: AppBar(
-//         automaticallyImplyLeading: false,
-//         backgroundColor: Colors.transparent,
-//         surfaceTintColor: Colors.transparent,
-//         systemOverlayStyle: SystemUiOverlayStyle(
-//           statusBarColor: Colors.transparent, // same as appbar
-//           statusBarIconBrightness: Brightness.dark, // dark icons
-//           statusBarBrightness: Brightness.light,
-//         ),
-//         foregroundColor: Colors.transparent,
-//         leading: IconButton(
-//           onPressed: () {
-//             Navigator.pop(context);
-//           },
-//           icon: Icon(Icons.arrow_back_ios_new, size: 24, color: Colors.black),
-//         ),
-//         title: const TrText(
-//           "select_label_shape",
-//           style: TextStyle(
-//             fontSize: 22,
-//             fontWeight: FontWeight.w600,
-//             color: Colors.black,
-//           ),
-//         ),
-//          centerTitle: true,
-//       ),
-//       body: Column(
-//         children: [
-//           Expanded(
-//             child: GridView.count(
-//               crossAxisCount: 2,
-//               padding: const EdgeInsets.all(16),
-//               children: LabelShape.values.map((shape) {
-//                 return GestureDetector(
-//                   onTap: () {
-//                     provider.setShape(shape);
-
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                         builder: (_) => const TemplateSelectionScreen(),
-//                       ),
-//                     );
-//                   },
-//                   // onTap: () => provider.setShape(shape),
-//                   child: Card(
-//                     color: provider.selectedShape == shape
-//                         ? Colors.blue.shade100
-//                         : Colors.white,
-//                     child: Column(
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       children: [
-//                         SvgPicture.asset(shape.imagePath, height: 70),
-//                         const SizedBox(height: 10),
-
-//                         Text(
-//                           shape.name.toUpperCase(),
-//                           style: const TextStyle(
-//                             fontSize: 18,
-//                             fontWeight: FontWeight.w500,
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 );
-//               }).toList(),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

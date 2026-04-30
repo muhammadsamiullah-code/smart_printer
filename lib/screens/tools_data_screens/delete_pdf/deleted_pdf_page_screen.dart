@@ -9,9 +9,6 @@ import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/success_dialoge.dart';
 
-
-
-
 class DeletePdfPagesScreen extends StatefulWidget {
   final File file;
   final String title;

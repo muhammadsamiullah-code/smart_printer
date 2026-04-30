@@ -16,6 +16,7 @@ import firebase_remote_config
 import flutter_contacts
 import flutter_image_compress_macos
 import flutter_local_notifications
+import in_app_purchase_storekit
 import mobile_scanner
 import network_info_plus
 import open_file_mac
@@ -24,6 +25,7 @@ import pdfx
 import printing
 import quill_native_bridge_macos
 import share_plus
+import shared_preferences_foundation
 import syncfusion_pdfviewer_macos
 import url_launcher_macos
 import webview_flutter_wkwebview
@@ -40,6 +42,7 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   FlutterContactsPlugin.register(with: registry.registrar(forPlugin: "FlutterContactsPlugin"))
   FlutterImageCompressMacosPlugin.register(with: registry.registrar(forPlugin: "FlutterImageCompressMacosPlugin"))
   FlutterLocalNotificationsPlugin.register(with: registry.registrar(forPlugin: "FlutterLocalNotificationsPlugin"))
+  InAppPurchasePlugin.register(with: registry.registrar(forPlugin: "InAppPurchasePlugin"))
   MobileScannerPlugin.register(with: registry.registrar(forPlugin: "MobileScannerPlugin"))
   NetworkInfoPlusPlugin.register(with: registry.registrar(forPlugin: "NetworkInfoPlusPlugin"))
   OpenFilePlugin.register(with: registry.registrar(forPlugin: "OpenFilePlugin"))
@@ -48,6 +51,7 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   PrintingPlugin.register(with: registry.registrar(forPlugin: "PrintingPlugin"))
   QuillNativeBridgePlugin.register(with: registry.registrar(forPlugin: "QuillNativeBridgePlugin"))
   SharePlusMacosPlugin.register(with: registry.registrar(forPlugin: "SharePlusMacosPlugin"))
+  SharedPreferencesPlugin.register(with: registry.registrar(forPlugin: "SharedPreferencesPlugin"))
   SyncfusionFlutterPdfViewerPlugin.register(with: registry.registrar(forPlugin: "SyncfusionFlutterPdfViewerPlugin"))
   UrlLauncherPlugin.register(with: registry.registrar(forPlugin: "UrlLauncherPlugin"))
   WebViewFlutterPlugin.register(with: registry.registrar(forPlugin: "WebViewFlutterPlugin"))

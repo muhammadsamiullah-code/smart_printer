@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_scanner/screens/select_language_screen.dart';
-import 'package:smart_scanner/widgets/custom_appbar.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'tools_data_screens/merge_pdf/pdf_results_screen.dart';
+import '../subscription/subscription_screen.dart';
+
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -59,7 +59,7 @@ class _SettingScreenState extends State<SettingScreen> {
           child: Column(
             children: [
                Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TrText(
                 'settings_title',
@@ -69,6 +69,16 @@ class _SettingScreenState extends State<SettingScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+               GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SubscriptionScreen()));
+                      },
+                      child: Image.asset(
+                        'assets/images/crown.png',
+                        height: 28,
+                        width: 28,
+                      ),
+                    ),
             ],
           ),
           SizedBox(height: 10),

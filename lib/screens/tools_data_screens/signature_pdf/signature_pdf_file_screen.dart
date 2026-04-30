@@ -7,7 +7,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/widgets/custom_appbar.dart';
-
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
 import '../../../widgets/file_option_menu.dart';

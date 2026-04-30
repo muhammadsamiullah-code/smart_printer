@@ -33,6 +33,7 @@ class AdsProvider extends ChangeNotifier {
     await _adsManager.loadAppOpen();
   }
 
+
   @override
   void dispose() {
     _adsManager.dispose();
