@@ -89,13 +89,6 @@ Future<void> _getProducts() async {
   }
 }
 
-  /// 🔥 BUY
-  // Future<void> buy(ProductDetails product) async {
-  //   final purchaseParam = PurchaseParam(productDetails: product);
-
-  //   await _iap.buyNonConsumable(purchaseParam: purchaseParam);
-  // }
-
 Future<void> buy(ProductDetails product) async {
   final purchaseParam = PurchaseParam(
     productDetails: product,

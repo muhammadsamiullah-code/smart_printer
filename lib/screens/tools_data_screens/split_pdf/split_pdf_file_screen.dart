@@ -5,8 +5,12 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_scanner/ads/ads_provider.dart';
+import '../../../const/color.dart';
+import '../../../const/enum.dart';
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
+import '../../../widgets/common_delete_dialoge.dart';
+import '../../../widgets/common_input_dialoge.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/file_option_menu.dart';
 import '../../../widgets/pdf_list_card.dart';
@@ -97,53 +101,53 @@ class _SplitPDFFilesScreenState extends State<SplitPDFFilesScreen> {
   }
 
   void deleteFile(File file) async {
-    await file.delete();
-    loadFiles();
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: TrText("file_deleted")));
+    showDialog(
+      context: context,
+      builder: (context) {
+        return CommonDeleteDialog(
+          title: "delete_file",
+          message: "delete_file_confirmation",
+          onConfirm: () async {
+            await file.delete();
+
+            if (mounted) {
+              Navigator.pop(context);
+
+              loadFiles();
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: TrText("file_deleted_successfully")),
+              );
+            }
+          },
+        );
+      },
+    );
   }
 
   void renameFile(File file) {
     final controller = TextEditingController(
       text: file.path.split('/').last.replaceAll(".pdf", ""),
     );
-
-    showDialog(
+    showCommonInputDialog(
       context: context,
-      builder: (_) {
-        return AlertDialog(
-           backgroundColor: Colors.white,
-          title: const TrText("rename_file"),
-          content: TextField(
-            controller: controller,
-          ),
-          actions: [
-            TextButton(
-              child: const TrText("cancel"),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: const TrText("rename"),
-              onPressed: () async {
-                  final dir = file.parent.path;
-                final newName = controller.text;
+      titleKey: "rename_file",
+      buttonKey: "rename",
+      controller: controller,
+      onPressed: () async {
+        final dir = file.parent.path;
+        final newName = controller.text;
 
-                final newFile = File("$dir/split_$newName.pdf");
+        final newFile = File("$dir/split_$newName.pdf");
 
-                await file.rename(newFile.path);
-                // final dir = file.parent.path;
-                // final newFile = File("$dir/${controller.text}.pdf");
-                // await file.rename(newFile.path);
-                Navigator.pop(context);
-                loadFiles();
-              },
-            ),
-          ],
-        );
+        await file.rename(newFile.path);
+
+        Navigator.pop(context);
+        loadFiles();
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +158,7 @@ class _SplitPDFFilesScreenState extends State<SplitPDFFilesScreen> {
         children: [
           reversedList.isEmpty
               ? CenterWidgetForPDF(
-                borderColor: Color.fromRGBO(127, 31, 154, 1),
+                  borderColor: Color.fromRGBO(127, 31, 154, 1),
                   title: widget.title,
                   icon: widget.icon,
                   color: widget.color,
@@ -182,7 +186,10 @@ class _SplitPDFFilesScreenState extends State<SplitPDFFilesScreen> {
                         onRename: () => renameFile(file),
                         onDelete: () => deleteFile(file),
                       ),
-                      onTap: () {
+                      onTap: () async {
+                         await context.read<AdsProvider>().showAdInterstitial(
+                      type: InterstitialType.pdfList,
+                    );
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -201,14 +208,14 @@ class _SplitPDFFilesScreenState extends State<SplitPDFFilesScreen> {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (_) => const Center(child: CircularProgressIndicator()),
+            builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
           );
-                if (mounted) Navigator.pop(context);
+          if (mounted) Navigator.pop(context);
 
-  final adsProvider = context.read<AdsProvider>();
+          final adsProvider = context.read<AdsProvider>();
 
-  /// 🔥 Step 3: Show Ad
-  await adsProvider.showAdInterstitial();
+          /// 🔥 Step 3: Show Ad
+          await adsProvider.showAdInterstitial();
 
           await pickFiles(); // wait for picking
 

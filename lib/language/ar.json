@@ -126,5 +126,7 @@
     "apply_watermark": "إضافة علامة مائية",
     "delete_file": "حذف الملف",
     "delete_file_confirmation": "هل أنت متأكد أنك تريد حذف هذا الملف؟",
-    "watermark_pdf": "علامة مائية لملف PDF"
+    "watermark_pdf": "علامة مائية لملف PDF",
+    "rename_your_file": "إعادة تسمية الملف الخاص بك",
+    "file_deleted_successfully": "تم حذف الملف بنجاح"
 }

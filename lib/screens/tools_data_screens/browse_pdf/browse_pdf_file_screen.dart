@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_scanner/ads/ads_provider.dart';
+import '../../../const/color.dart';
+import '../../../const/enum.dart';
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
+import '../../../widgets/common_delete_dialoge.dart';
+import '../../../widgets/common_input_dialoge.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/file_option_menu.dart';
 import '../../../widgets/pdf_list_card.dart';
@@ -12,6 +16,7 @@ import '../merge_pdf/pdf_preview_screen.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'browse_pdf_screen.dart';
+import 'package:path/path.dart' as p;
 
 class BrowsePdfFileScreen extends StatefulWidget {
   final String title;
@@ -42,13 +47,27 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
     final dir = await getApplicationDocumentsDirectory();
 
     final files = dir.listSync().where((file) {
-      return file.path.contains("web_") && file.path.endsWith(".pdf");
+      return file.path.contains("web_") &&
+          file.path.toLowerCase().endsWith(".pdf");
     }).toList();
+
+    if (!mounted) return;
 
     setState(() {
       pdfFiles = files.map((e) => File(e.path)).toList();
     });
   }
+  // Future<void> loadFiles() async {
+  //   final dir = await getApplicationDocumentsDirectory();
+
+  //   final files = dir.listSync().where((file) {
+  //     return file.path.contains("web_") && file.path.endsWith(".pdf");
+  //   }).toList();
+
+  //   setState(() {
+  //     pdfFiles = files.map((e) => File(e.path)).toList();
+  //   });
+  // }
 
   /// OPEN BROWSER
   Future<void> openBrowser() async {
@@ -62,55 +81,56 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
     }
   }
 
-  /// DELETE
   void deleteFile(File file) async {
-    await file.delete();
-    loadFiles();
-
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: TrText("file_deleted")));
-  }
-
-  /// RENAME
-  void renameFile(File file) {
-    final controller = TextEditingController(
-      text: file.path.split('/').last.replaceAll(".pdf", ""),
-    );
-
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: const TrText("rename_file"),
-        content: TextField(controller: controller),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const TrText("cancel"),
-          ),
-          TextButton(
-            onPressed: () async {
-              final dir = file.parent.path;
-              final newName = controller.text;
-
-              final newFile = File("$dir/browse_$newName.pdf");
-
-              await file.rename(newFile.path);
-              // final dir = file.parent.path;
-              // final newFile = File("$dir/${controller.text}.pdf");
-
-              // await file.rename(newFile.path);
-
+      builder: (context) {
+        return CommonDeleteDialog(
+          title: "delete_file",
+          message: "delete_file_confirmation",
+          onConfirm: () async {
+            await file.delete();
+            if (mounted) {
               Navigator.pop(context);
               loadFiles();
-            },
-            child: const TrText("rename"),
-          ),
-        ],
-      ),
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: TrText("file_deleted_successfully")),
+              );
+            }
+          },
+        );
+      },
     );
   }
+
+ void renameFile(File file) {
+  final currentName = p.basenameWithoutExtension(file.path)
+      .replaceFirst('web_', '');
+
+  final controller = TextEditingController(text: currentName);
+
+  showCommonInputDialog(
+    context: context,
+    titleKey: "rename_file",
+    buttonKey: "rename",
+    controller: controller,
+    onPressed: () async {
+      final dir = file.parent.path;
+      final newName = controller.text.trim();
+
+      if (newName.isEmpty) return;
+
+      final newFile = File("$dir/web_$newName.pdf");
+
+      await file.rename(newFile.path);
+
+      if (mounted) {
+        Navigator.pop(context);
+        loadFiles();
+      }
+    },
+  );
+}
 
   String formatFileSize(int bytes) {
     if (bytes >= 1024 * 1024) {
@@ -162,7 +182,10 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
                     onRename: () => renameFile(file),
                     onDelete: () => deleteFile(file),
                   ),
-                  onTap: () {
+                  onTap: () async {
+                    await context.read<AdsProvider>().showAdInterstitial(
+                    type: InterstitialType.pdfList,
+                  );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -181,17 +204,17 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (_) => const Center(child: CircularProgressIndicator()),
+            builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
           );
 
           /// DELAY (UI ko time dene ke liye - smooth UX)
           await Future.delayed(const Duration(milliseconds: 300));
-            if (mounted) Navigator.pop(context);
+          if (mounted) Navigator.pop(context);
 
-  final adsProvider = context.read<AdsProvider>();
+          final adsProvider = context.read<AdsProvider>();
 
-  /// 🔥 Step 3: Show Ad
-  await adsProvider.showAdInterstitial();
+          /// 🔥 Step 3: Show Ad
+          await adsProvider.showAdInterstitial();
 
           /// OPEN BROWSER
           final updated = await Navigator.push(
@@ -200,11 +223,6 @@ class _BrowsePdfFileScreenState extends State<BrowsePdfFileScreen> {
               builder: (_) => BrowswePDFScreen(title: widget.title),
             ),
           );
-
-          /// CLOSE LOADER
-          // if (mounted) Navigator.pop(context);
-
-          /// REFRESH
           if (updated == true) {
             loadFiles();
           }

@@ -6,8 +6,8 @@ class RemoteConfigService {
     try {
       await _remoteConfig.setConfigSettings(
         RemoteConfigSettings(
-          fetchTimeout: const Duration(seconds: 5),
-          minimumFetchInterval: const Duration(minutes: 30),
+          fetchTimeout: const Duration(seconds: 10),
+          minimumFetchInterval: const Duration(hours: 1),
         ),
       );
 
@@ -33,6 +33,14 @@ class RemoteConfigService {
 
   static bool get interstitialEnabled =>
       _remoteConfig.getBool('ads_interstitial_enabled');
+  static bool get interstitialBackButtonEnabled =>
+      _remoteConfig.getBool('interstitial_back_button_ads_show');
+  static bool get interstitialHomeToolsEnabled =>
+      _remoteConfig.getBool('interstitial_home_tools_ads_show');
+  static bool get interstitialPDFToolsEnabled =>
+      _remoteConfig.getBool('interstitial_pdf_tools_ads_show');
+  static bool get interstitialPDFListEnabled =>
+      _remoteConfig.getBool('interstitial_pdf_list_ads_show');
   static String get interstitialAdId =>
       _remoteConfig.getString('ads_interstitial_id');
   static int get clickGap => _remoteConfig.getInt('ads_interstitial_click_gap');

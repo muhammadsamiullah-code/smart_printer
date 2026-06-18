@@ -75,7 +75,7 @@ class _DeletePdfPagesScreenState extends State<DeletePdfPagesScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => const Center(child: CircularProgressIndicator()),
+      builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
     );
 
     final bytes = await widget.file.readAsBytes();
@@ -105,14 +105,14 @@ class _DeletePdfPagesScreenState extends State<DeletePdfPagesScreen> {
 
     return thumbnails.containsKey(index)
         ? Image.memory(thumbnails[index]!, fit: BoxFit.cover)
-        : const Center(child: CircularProgressIndicator());
+        : const Center(child: CircularProgressIndicator(color: AppColors.primaryColor));
   }
 
   @override
   Widget build(BuildContext context) {
     if (document == null) {
       return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
+        body: Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
       );
     }
 

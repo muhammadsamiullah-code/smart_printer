@@ -610,7 +610,7 @@ class _PdfPreviewScreenState extends State<PdfPreviewScreen> {
               color: Colors.black.withOpacity(0.4),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [CircularProgressIndicator()],
+                children: const [CircularProgressIndicator(color: AppColors.primaryColor)],
               ),
             ),
           ),

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import '../const/enum.dart';
 import 'ads_manager.dart';
 
 class AdsProvider extends ChangeNotifier {
@@ -14,18 +15,19 @@ class AdsProvider extends ChangeNotifier {
     await _adsManager.init();
     notifyListeners();
   }
-  // Future<void> initAds() async {
-  //   await _adsManager.init();
-  //   notifyListeners();
-  // }
 
   Future<void> showInterstitial() async {
     await _adsManager.showInterstitialIfNeeded();
   }
 
   /// 🔥 Force show
-  Future<void> showAdInterstitial() async {
-    await _adsManager.showAdNow();
+  // Future<void> showAdInterstitial() async {
+  //   await _adsManager.showAdNow();
+  // }
+    Future<void> showAdInterstitial({
+    InterstitialType type = InterstitialType.normal,
+  }) async {
+    await _adsManager.showAdNow(type: type);
   }
 
   /// ✅ App Open Separate

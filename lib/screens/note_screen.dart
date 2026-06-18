@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/screens/format_selection_screen.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
-
+import '../const/color.dart';
 import '../widgets/custom_appbar.dart';
 
 class NotesScreen extends StatefulWidget {
@@ -159,7 +159,7 @@ class _NotesScreenState extends State<NotesScreen> {
                 barrierDismissible: false,
                 builder: (_) => Container(
                   color: Colors.black.withOpacity(0.3),
-                  child: const Center(child: CircularProgressIndicator()),
+                  child: const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
                 ),
               );
 

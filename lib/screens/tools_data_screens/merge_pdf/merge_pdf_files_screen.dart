@@ -6,8 +6,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/widgets/custom_appbar.dart';
+import '../../../const/color.dart';
+import '../../../const/enum.dart';
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
+import '../../../widgets/common_delete_dialoge.dart';
+import '../../../widgets/common_input_dialoge.dart';
 import '../../../widgets/file_option_menu.dart';
 import '../../../widgets/pdf_list_card.dart';
 import '../../../widgets/tr_text.dart';
@@ -75,63 +79,49 @@ class _MergedPDFFilesScreenState extends State<MergedPDFFilesScreen> {
   }
 
   void deleteFile(File file) async {
-    await file.delete();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return CommonDeleteDialog(
+          title: "delete_file",
+          message: "delete_file_confirmation",
+          onConfirm: () async {
+            await file.delete();
 
-    loadFiles(); // refresh list
+            if (mounted) {
+              Navigator.pop(context);
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: TrText("file_deleted")));
+              loadFiles();
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: TrText("file_deleted_successfully")),
+              );
+            }
+          },
+        );
+      },
+    );
   }
 
   void renameFile(File file) {
     final controller = TextEditingController(
       text: file.path.split('/').last.replaceAll(".pdf", ""),
     );
-
-    showDialog(
+    showCommonInputDialog(
       context: context,
-      builder: (_) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: const TrText("rename_file"),
-          content: TextField(
-            controller: controller,
-            // decoration: const InputDecoration(hintText: "Enter new file name"),
-          ),
-          actions: [
-            TextButton(
-              child: const TrText("cancel"),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: const TrText("rename"),
-              onPressed: () async {
-                final dir = file.parent.path;
-                final newName = controller.text;
+      titleKey: "rename_file",
+      buttonKey: "rename",
+      controller: controller,
+      onPressed: () async {
+        final dir = file.parent.path;
+        final newName = controller.text;
 
-                final newFile = File("$dir/merged_$newName.pdf");
+        final newFile = File("$dir/merged_$newName.pdf");
 
-                await file.rename(newFile.path);
+        await file.rename(newFile.path);
 
-                Navigator.pop(context);
-                loadFiles();
-              },
-              // onPressed: () async {
-              //   final dir = file.parent.path;
-              //   final newName = controller.text;
-
-              //   final newFile = File("$dir/$newName.pdf");
-
-              //   await file.rename(newFile.path);
-
-              //   Navigator.pop(context);
-
-              //   loadFiles(); // refresh
-              // },
-            ),
-          ],
-        );
+        Navigator.pop(context);
+        loadFiles();
       },
     );
   }
@@ -172,7 +162,7 @@ class _MergedPDFFilesScreenState extends State<MergedPDFFilesScreen> {
 
       body: mergedFiles.isEmpty
           ? CenterWidgetForPDF(
-            borderColor: Color.fromRGBO(10, 77, 146, 1),
+              borderColor: Color.fromRGBO(10, 77, 146, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,
@@ -200,7 +190,10 @@ class _MergedPDFFilesScreenState extends State<MergedPDFFilesScreen> {
                     onRename: () => renameFile(file),
                     onDelete: () => deleteFile(file),
                   ),
-                  onTap: () {
+                  onTap: () async {
+                     await context.read<AdsProvider>().showAdInterstitial(
+                      type: InterstitialType.pdfList,
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -217,14 +210,14 @@ class _MergedPDFFilesScreenState extends State<MergedPDFFilesScreen> {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (_) => const Center(child: CircularProgressIndicator()),
+            builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
           );
-         if (mounted) Navigator.pop(context);
+          if (mounted) Navigator.pop(context);
 
-  final adsProvider = context.read<AdsProvider>();
+          final adsProvider = context.read<AdsProvider>();
 
-  /// 🔥 Step 3: Show Ad
-  await adsProvider.showAdInterstitial();
+          /// 🔥 Step 3: Show Ad
+          await adsProvider.showAdInterstitial();
 
           final result = await FilePicker.platform.pickFiles(
             type: FileType.custom,

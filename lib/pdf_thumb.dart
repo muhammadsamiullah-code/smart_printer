@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:pdfx/pdfx.dart';
 
+import 'const/color.dart';
+
 class PdfPageThumbnail extends StatefulWidget {
   final PdfDocument document;
   final int pageNumber;
@@ -45,7 +47,7 @@ class _PdfPageThumbnailState extends State<PdfPageThumbnail> {
     return bytes == null
         ? const SizedBox(
             height: 200,
-            child: Center(child: CircularProgressIndicator()),
+            child: Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
           )
         : Image.memory(bytes!);
   }

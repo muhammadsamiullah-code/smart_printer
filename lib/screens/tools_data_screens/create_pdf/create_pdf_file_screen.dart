@@ -7,8 +7,12 @@ import 'package:provider/provider.dart';
 import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
+import '../../../const/color.dart';
+import '../../../const/enum.dart';
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
+import '../../../widgets/common_delete_dialoge.dart';
+import '../../../widgets/common_input_dialoge.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/file_option_menu.dart';
 import '../../../widgets/pdf_list_card.dart';
@@ -58,18 +62,18 @@ class _CreatePdfFileScreenState extends State<CreatePdfFileScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => const Center(child: CircularProgressIndicator()),
+      builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
     );
 
     await Future.delayed(const Duration(milliseconds: 300));
 
     // Navigator.pop(context); // remove loader
-           if (mounted) Navigator.pop(context);
+    if (mounted) Navigator.pop(context);
 
-  final adsProvider = context.read<AdsProvider>();
+    final adsProvider = context.read<AdsProvider>();
 
-  /// 🔥 Step 3: Show Ad
-  await adsProvider.showAdInterstitial();
+    /// 🔥 Step 3: Show Ad
+    await adsProvider.showAdInterstitial();
 
     final result = await Navigator.push(
       context,
@@ -90,52 +94,47 @@ class _CreatePdfFileScreenState extends State<CreatePdfFileScreen> {
   }
 
   void deleteFile(File file) async {
-    await file.delete();
-    loadFiles();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return CommonDeleteDialog(
+          title: "delete_file",
+          message: "delete_file_confirmation",
+          onConfirm: () async {
+            await file.delete();
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: TrText("file_deleted")));
+            if (mounted) {
+              Navigator.pop(context);
+
+              loadFiles();
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: TrText("file_deleted_successfully")),
+              );
+            }
+          },
+        );
+      },
+    );
   }
 
   void renameFile(File file) {
     final controller = TextEditingController(
       text: file.path.split('/').last.replaceAll(".pdf", ""),
     );
-
-    showDialog(
+    showCommonInputDialog(
       context: context,
-      builder: (_) => AlertDialog(
-         backgroundColor: Colors.white,
-        title: const TrText("rename_file"),
-        content: TextField(
-          controller: controller,
-        ),
-        actions: [
-          TextButton(
-            child: const  TrText("cancel"),
-            onPressed: () => Navigator.pop(context),
-          ),
-          TextButton(
-            child: const TrText("rename"),
-            onPressed: () async {
-                final dir = file.parent.path;
-                final newName = controller.text;
-
-                final newFile = File("$dir/create_pdf_$newName.pdf");
-
-                await file.rename(newFile.path);
-              // final dir = file.parent.path;
-              // final newFile = File("$dir/${controller.text}.pdf");
-
-              // await file.rename(newFile.path);
-
-              Navigator.pop(context);
-              loadFiles();
-            },
-          ),
-        ],
-      ),
+      titleKey: "rename_file",
+      buttonKey: "rename",
+      controller: controller,
+      onPressed: () async {
+        final dir = file.parent.path;
+        final newName = controller.text;
+        final newFile = File("$dir/create_pdf_$newName.pdf");
+        await file.rename(newFile.path);
+         Navigator.pop(context);
+        loadFiles();
+      },
     );
   }
 
@@ -155,13 +154,13 @@ class _CreatePdfFileScreenState extends State<CreatePdfFileScreen> {
 
   @override
   Widget build(BuildContext context) {
-     final reversedList = createdFiles.reversed.toList();
+    final reversedList = createdFiles.reversed.toList();
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
 
       body: createdFiles.isEmpty
           ? CenterWidgetForPDF(
-            borderColor: Color.fromRGBO(19, 180, 113, 1),
+              borderColor: Color.fromRGBO(19, 180, 113, 1),
               title: widget.title,
               icon: widget.icon,
               color: widget.color,
@@ -188,7 +187,10 @@ class _CreatePdfFileScreenState extends State<CreatePdfFileScreen> {
                     onRename: () => renameFile(file),
                     onDelete: () => deleteFile(file),
                   ),
-                  onTap: () {
+                  onTap: () async {
+                     await context.read<AdsProvider>().showAdInterstitial(
+                      type: InterstitialType.pdfList,
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(

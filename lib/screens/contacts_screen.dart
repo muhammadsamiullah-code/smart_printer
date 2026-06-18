@@ -159,7 +159,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
             /// CONTACT LIST
             Expanded(
               child: isLoading
-                  ? const Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator(color: AppColors.primaryColor))
                   : filteredContacts.isEmpty
                   ? const Center(child: Text("No contacts found"))
                   : ListView.builder(
@@ -341,7 +341,7 @@ Future<Uint8List> buildContactsPdf() async {
           builder: (_) => Container(
             color: Colors.black.withOpacity(0.3), // 👈 premium feel
             child: const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color: AppColors.primaryColor),
             ),
           ),
         );

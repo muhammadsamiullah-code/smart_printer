@@ -148,7 +148,7 @@ class _PageNumberPdfScreenState extends State<PageNumberPdfScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => const Center(child: CircularProgressIndicator()),
+      builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
     );
 
     for (final file in selectedFiles) {
@@ -484,7 +484,7 @@ Widget buildDropdownRow({
           Expanded(
             child: Center(
               child: firstPageImage == null
-                  ? const CircularProgressIndicator()
+                  ? const CircularProgressIndicator(color: AppColors.primaryColor)
                   : Stack(
                       alignment: Alignment.center,
                       children: [

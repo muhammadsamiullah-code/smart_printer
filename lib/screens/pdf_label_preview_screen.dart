@@ -13,6 +13,7 @@ import 'package:smart_scanner/models/labels_shape.dart';
 import 'package:smart_scanner/models/labels_template.dart';
 import 'package:smart_scanner/providers/labels_provider.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
+import '../const/color.dart';
 import '../widgets/custom_appbar.dart';
 import 'format_selection_screen.dart';
 import '../pdf_preview_screen.dart';
@@ -245,7 +246,7 @@ class _PdfLabelPreviewScreenState extends State<PdfLabelPreviewScreen> {
                     width: 20,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      color: Colors.white,
+                     color: AppColors.primaryColor
                     ),
                   )
                 : const Icon(Icons.print, size: 24, color: Colors.black),
@@ -320,7 +321,7 @@ class _PdfLabelPreviewScreenState extends State<PdfLabelPreviewScreen> {
             Positioned.fill(
               child: Container(
                 color: Colors.black.withOpacity(0.4),
-                child: const Center(child: CircularProgressIndicator()),
+                child: const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
               ),
             ),
         ],

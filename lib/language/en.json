@@ -126,5 +126,7 @@
   "apply_watermark":"Apply Watermark",
   "delete_file":"Delete File",
   "delete_file_confirmation":"Are you sure you want to delete this file?",
-  "watermark_pdf":"Watermark PDF"
+  "watermark_pdf":"Watermark PDF",
+  "rename_your_file":"Rename Your File",
+  "file_deleted_successfully": "File deleted successfully"
   }

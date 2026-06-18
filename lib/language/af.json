@@ -126,5 +126,7 @@
     "apply_watermark": "Pas watermerk toe",
     "delete_file": "Skrap lêer",
     "delete_file_confirmation": "Is u seker u wil hierdie lêer skrap?",
-    "watermark_pdf": "Watermerk PDF"
+    "watermark_pdf": "Watermerk PDF",
+    "rename_your_file": "Hernoem jou lêer",
+    "file_deleted_successfully": "Lêer suksesvol verwyder"
 }

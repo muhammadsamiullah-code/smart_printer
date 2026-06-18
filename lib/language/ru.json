@@ -126,5 +126,7 @@
     "apply_watermark": "Применить водяной знак",
     "delete_file": "Удалить файл",
     "delete_file_confirmation": "Вы уверены, что хотите удалить этот файл?",
-    "watermark_pdf": "Водяной знак для PDF"
+    "watermark_pdf": "Водяной знак для PDF",
+    "rename_your_file": "Переименовать ваш файл",
+    "file_deleted_successfully": "Файл успешно удален"
 }

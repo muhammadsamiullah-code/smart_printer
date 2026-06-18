@@ -126,5 +126,7 @@
     "apply_watermark": "套用水印",
     "delete_file": "刪除檔案",
     "delete_file_confirmation": "您確定要刪除此檔案嗎？",
-    "watermark_pdf": "PDF 水印"
+    "watermark_pdf": "PDF 水印",
+    "rename_your_file": "重新命名您的檔案",
+    "file_deleted_successfully": "檔案刪除成功"
 }

@@ -65,7 +65,7 @@ Future<void> convertPdf() async {
   showDialog(
     context: context,
     barrierDismissible: false,
-    builder: (_) => const Center(child: CircularProgressIndicator()),
+    builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
   );
 
   try {
@@ -96,108 +96,33 @@ Future<void> convertPdf() async {
       "${dir.path}/image_pdf_${DateTime.now().millisecondsSinceEpoch}.pdf",
     );
 
+    // await file.writeAsBytes(await pdf.save());
+
+    // Navigator.pop(context); // remove loader
+    // SuccessDialog.show(context, file);
     await file.writeAsBytes(await pdf.save());
 
-    Navigator.pop(context); // remove loader
+    if (mounted) {
+      Navigator.pop(context); // loader close
+    }
+
+    await Future.delayed(const Duration(milliseconds: 200));
+
     SuccessDialog.show(context, file);
   } catch (e) {
-    Navigator.pop(context); // remove loader
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("Error: $e")));
+    if (mounted) {
+      Navigator.pop(context);
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Error: $e")),
+    );
   }
-}
-  // Future<void> convertPdf() async {
-  //   if (images.isEmpty) {
-  //     ScaffoldMessenger.of(
-  //       context,
-  //     ).showSnackBar(const SnackBar(content: Text("Please select images")));
-  //     return;
-  //   }
-
-  //   showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (_) => const Center(child: CircularProgressIndicator()),
-  //   );
-
-  //   try {
-  //      final pdf = pw.Document();
-
-  //   for (var file in widget.images) {
-  //     final bytes = await file.readAsBytes();
-  //     final image = pw.MemoryImage(bytes);
-
-  //     final decoded = await decodeImageFromList(bytes);
-
-  //     pdf.addPage(
-  //       pw.Page(
-  //         pageFormat: PdfPageFormat(decoded.width.toDouble(), decoded.height.toDouble()),
-  //         build: (context) => pw.Image(image),
-  //       ),
-  //     );
-  //   }
-  //     // final PdfDocument document = PdfDocument();
-
-  //     // for (var file in images) {
-  //     //   final bytes = await file.readAsBytes();
-
-  //     //   /// 🔥 DECODE IMAGE (fix unsupported issue)
-  //     //   final decodedImage = img.decodeImage(bytes);
-  //     //   if (decodedImage == null) continue;
-
-  //     //   final jpgBytes = img.encodeJpg(decodedImage);
-  //     //   final PdfBitmap bitmap = PdfBitmap(jpgBytes);
-
-  //     //   /// ✅ USE ORIGINAL WIDTH & HEIGHT
-  //     //   final page = document.pages.add();
-
-  //     //   final pageSize = page.getClientSize();
-
-  //     //   double imgWidth = decodedImage.width.toDouble();
-  //     //   double imgHeight = decodedImage.height.toDouble();
-
-  //     //   double ratio = imgWidth / imgHeight;
-  //     //   double pageRatio = pageSize.width / pageSize.height;
-
-  //     //   double drawWidth, drawHeight;
-
-  //     //   if (ratio > pageRatio) {
-  //     //     drawWidth = pageSize.width;
-  //     //     drawHeight = pageSize.width / ratio;
-  //     //   } else {
-  //     //     drawHeight = pageSize.height;
-  //     //     drawWidth = pageSize.height * ratio;
-  //     //   }
-
-  //     //   page.graphics.drawImage(
-  //     //     bitmap,
-  //     //     Rect.fromLTWH(
-  //     //       (pageSize.width - drawWidth) / 2,
-  //     //       0, // 🔥 FIX: no extra top padding
-  //     //       drawWidth,
-  //     //       drawHeight,
-  //     //     ),
-  //     //   );
-  //     // }
-
-  //     final dir = await getApplicationDocumentsDirectory();
-
-  //     final file = File(
-  //       "${dir.path}/image_pdf_${DateTime.now().millisecondsSinceEpoch}.pdf",
-  //     );
-
-  //     await file.writeAsBytes(await pdf.save());
-  //     Navigator.pop(context); // remove loader
-
-  //     SuccessDialog.show(context, file);
-  //   } catch (e) {
-  //     Navigator.pop(context);
-
-  //     ScaffoldMessenger.of(
-  //       context,
-  //     ).showSnackBar(SnackBar(content: Text("Error: $e")));
-  //   }
+  //   Navigator.pop(context); // remove loader
+  //   ScaffoldMessenger.of(context)
+  //       .showSnackBar(SnackBar(content: Text("Error: $e")));
   // }
+}
 
   @override
   Widget build(BuildContext context) {

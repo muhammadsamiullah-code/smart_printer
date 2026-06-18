@@ -126,5 +126,7 @@
     "apply_watermark": "Appliquer le filigrane",
     "delete_file": "Supprimer le fichier",
     "delete_file_confirmation": "Êtes-vous sûr de vouloir supprimer ce fichier ?",
-    "watermark_pdf": "Filigraner le PDF"
+    "watermark_pdf": "Filigraner le PDF",
+    "rename_your_file": "Renommer votre fichier",
+    "file_deleted_successfully": "Fichier supprimé avec succès"
 }

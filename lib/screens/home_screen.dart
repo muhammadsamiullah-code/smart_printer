@@ -15,6 +15,9 @@ import 'package:smart_scanner/screens/web_page_scanner_screen.dart';
 import 'package:smart_scanner/subscription/purchase_provider.dart';
 import 'package:smart_scanner/subscription/subscription_screen.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
+import '../ads/ads_provider.dart';
+import '../const/color.dart';
+import '../const/enum.dart';
 import '../models/menu_item_model.dart';
 import 'dart:io';
 import 'dart:async';
@@ -252,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
         svgPath: 'assets/homeIcons/email.svg',
         title: "email",
         color: const Color.fromRGBO(249, 227, 255, 1),
-        isPremium: true,
+        // isPremium: true,
         onTap: () {
           _openGmailAndScan();
         },
@@ -297,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
         svgPath: 'assets/homeIcons/camera.svg',
         title: "camera",
         color: const Color.fromRGBO(213, 234, 255, 1),
-        isPremium: true,
+        // isPremium: true,
         onTap: openCameraScan,
       ),
 
@@ -317,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
         svgPath: 'assets/homeIcons/notes.svg',
         title: "notes",
         color: const Color.fromRGBO(248, 232, 235, 1),
-        isPremium: true,
+        // isPremium: true,
         onTap: () {
           Navigator.push(
             context,
@@ -329,7 +332,7 @@ class _HomeScreenState extends State<HomeScreen> {
         svgPath: 'assets/homeIcons/quizzes.svg',
         title: "quizzes",
         color: const Color.fromRGBO(224, 252, 247, 1),
-        isPremium: true,
+        // isPremium: true,
         onTap: () {
           Navigator.push(
             context,
@@ -341,7 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
         svgPath: 'assets/homeIcons/contacts.svg',
         title: "contact",
         color: const Color.fromRGBO(255, 240, 248, 1),
-        isPremium: true,
+        // isPremium: true,
         onTap: () {
           Navigator.push(
             context,
@@ -456,7 +459,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: isScanning
                         ? const Center(
                             child: CircularProgressIndicator(
-                              color: Colors.white,
+                              color: AppColors.primaryColor,
                             ),
                           )
                         : printers.isEmpty
@@ -533,7 +536,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: menuItems[firstIndex].color,
                               onTap: menuItems[firstIndex].onTap,
                               isPremium: menuItems[firstIndex].isPremium,
-
                             ),
                           ),
                           const SizedBox(width: 4),
@@ -571,7 +573,10 @@ class _HomeScreenState extends State<HomeScreen> {
     final isPremiumUser = context.watch<PurchaseProvider>().isPremium;
     final isLocked = isPremium && !isPremiumUser;
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        await context.read<AdsProvider>().showAdInterstitial(
+          type: InterstitialType.homeTools,
+        );
         if (isLocked) {
           Navigator.push(
             context,

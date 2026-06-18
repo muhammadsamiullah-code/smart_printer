@@ -126,5 +126,7 @@
     "apply_watermark": "Zastosuj znak wodny",
     "delete_file": "Usuń plik",
     "delete_file_confirmation": "Czy na pewno chcesz usunąć ten plik?",
-    "watermark_pdf": "Znak wodny PDF"
+    "watermark_pdf": "Znak wodny PDF",
+    "rename_your_file": "Zmień nazwę pliku",
+    "file_deleted_successfully": "Plik został pomyślnie usunięty"
 }

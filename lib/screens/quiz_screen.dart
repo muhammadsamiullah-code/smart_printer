@@ -467,7 +467,7 @@ class _QuizScreenState extends State<QuizScreen>
             showDialog(
               context: context,
               barrierDismissible: false,
-              builder: (_) => const Center(child: CircularProgressIndicator()),
+              builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
             );
 
             /// ✅ 3. UI ko render hone ka time do

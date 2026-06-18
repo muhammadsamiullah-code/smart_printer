@@ -1,8 +1,8 @@
-
 import 'dart:async';
 import 'dart:ui';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:smart_scanner/subscription/purchase_manager.dart';
+import '../const/enum.dart';
 import '../services/remote_config_service.dart';
 
 class AdsManager {
@@ -22,7 +22,7 @@ class AdsManager {
 
   /// 🔹 INIT (NO AD SHOW HERE)
   Future<void> init() async {
-     if (isPremiumUser) return;
+    if (isPremiumUser) return;
     loadBanner();
     loadInterstitial(); // ✅ only preload
     loadNative();
@@ -30,9 +30,26 @@ class AdsManager {
     // ❌ DO NOT show interstitial here
   }
 
+  bool _isInterstitialEnabled(InterstitialType type) {
+    switch (type) {
+      case InterstitialType.normal:
+        return RemoteConfigService.interstitialEnabled;
+      case InterstitialType.backButton:
+        return RemoteConfigService.interstitialBackButtonEnabled;
+
+      case InterstitialType.homeTools:
+        return RemoteConfigService.interstitialHomeToolsEnabled;
+
+      case InterstitialType.pdfTools:
+        return RemoteConfigService.interstitialPDFToolsEnabled;
+      case InterstitialType.pdfList:
+        return RemoteConfigService.interstitialPDFListEnabled;
+    }
+  }
+
   /// ------------------ BANNER ------------------
   Future<void> loadBanner() async {
-      if (isPremiumUser) return; // ❌ NO ADS
+    if (isPremiumUser) return; // ❌ NO ADS
     if (!RemoteConfigService.bannerEnabled) return;
 
     bannerAd?.dispose();
@@ -45,13 +62,13 @@ class AdsManager {
       listener: BannerAdListener(
         onAdLoaded: (ad) {
           isBannerLoaded = true; // ✅ ad actually visible
-           onAdUpdated?.call();
+          onAdUpdated?.call();
         },
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
           bannerAd = null;
           isBannerLoaded = false; // ❌ no space
-           onAdUpdated?.call();
+          onAdUpdated?.call();
         },
       ),
       // listener: BannerAdListener(
@@ -61,10 +78,15 @@ class AdsManager {
   }
 
   /// ------------------ INTERSTITIAL (PRELOAD ONLY) ------------------
-  Future<void> loadInterstitial() async {
-      if (isPremiumUser) return; // ❌ NO ADS
+  Future<void> loadInterstitial({
+    InterstitialType type = InterstitialType.normal,
+  }) async {
+    if (isPremiumUser) return;
 
-    if (!RemoteConfigService.interstitialEnabled) return;
+    if (!_isInterstitialEnabled(type)) return;
+    // if (isPremiumUser) return; // ❌ NO ADS
+
+    // if (!RemoteConfigService.interstitialEnabled) return;
 
     InterstitialAd.load(
       adUnitId: RemoteConfigService.interstitialAdId,
@@ -82,7 +104,7 @@ class AdsManager {
 
   /// ------------------ INTERSTITIAL (SHOW WHEN NEEDED) ------------------
   Future<void> showInterstitialIfNeeded() async {
-      if (isPremiumUser) return; // ❌ NO ADS
+    if (isPremiumUser) return; // ❌ NO ADS
 
     clickCount++;
 
@@ -117,15 +139,64 @@ class AdsManager {
   }
 
   /// ------------------ FORCE SHOW INTERSTITIAL ------------------
-  Future<void> showAdNow() async {
-      if (isPremiumUser) return; // ❌ NO ADS
+  // Future<void> showAdNow() async {
+  //   if (isPremiumUser) return; // ❌ NO ADS
 
-    if (!RemoteConfigService.interstitialEnabled) return;
+  //   if (!RemoteConfigService.interstitialEnabled) return;
 
-    if (interstitialAd == null || isInterstitialShowing) {
-      await loadInterstitial();
+  //   if (interstitialAd == null || isInterstitialShowing) {
+  //     await loadInterstitial();
+  //     return;
+  //   }
+
+  //   isInterstitialShowing = true;
+
+  //   final completer = Completer<void>();
+
+  //   interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+  //     onAdDismissedFullScreenContent: (ad) {
+  //       ad.dispose();
+  //       isInterstitialShowing = false;
+  //       interstitialAd = null;
+  //       loadInterstitial();
+  //       completer.complete();
+  //     },
+  //     onAdFailedToShowFullScreenContent: (ad, error) {
+  //       ad.dispose();
+  //       isInterstitialShowing = false;
+  //       interstitialAd = null;
+  //       loadInterstitial();
+  //       completer.complete();
+  //     },
+  //   );
+
+  //   interstitialAd!.show();
+
+  //   return completer.future;
+  // }
+   Future<void> showAdNow({
+    InterstitialType type = InterstitialType.normal,
+  }) async {
+       if (isPremiumUser) return;
+
+    // ✅ CHECK REMOTE CONFIG
+    if (!_isInterstitialEnabled(type)) {
       return;
     }
+
+    // ✅ LOAD ONLY WHEN NEEDED
+    if (interstitialAd == null) {
+      await loadInterstitial(type: type);
+
+      // little wait for load
+      await Future.delayed(const Duration(milliseconds: 800));
+
+      if (interstitialAd == null) {
+        return;
+      }
+    }
+
+    if (isInterstitialShowing) return;
 
     isInterstitialShowing = true;
 
@@ -134,16 +205,18 @@ class AdsManager {
     interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdDismissedFullScreenContent: (ad) {
         ad.dispose();
+
         isInterstitialShowing = false;
         interstitialAd = null;
-        loadInterstitial();
+
         completer.complete();
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
         ad.dispose();
+
         isInterstitialShowing = false;
         interstitialAd = null;
-        loadInterstitial();
+
         completer.complete();
       },
     );
@@ -155,7 +228,7 @@ class AdsManager {
 
   /// ------------------ NATIVE ------------------
   Future<void> loadNative() async {
-      if (isPremiumUser) return; // ❌ NO ADS
+    if (isPremiumUser) return; // ❌ NO ADS
     if (!RemoteConfigService.nativeEnabled) return;
 
     nativeAd = NativeAd(
@@ -168,7 +241,7 @@ class AdsManager {
 
   /// ------------------ APP OPEN (ONLY CALL MANUALLY) ------------------
   Future<void> loadAppOpen() async {
-      if (isPremiumUser) return; // ❌ NO ADS
+    if (isPremiumUser) return; // ❌ NO ADS
 
     if (!RemoteConfigService.appOpenEnabled) return;
 
@@ -193,21 +266,22 @@ class AdsManager {
     );
   }
 
-void removeAdsForPremium() {
-  bannerAd?.dispose();
-  interstitialAd?.dispose();
-  nativeAd?.dispose();
-  appOpenAd?.dispose();
+  void removeAdsForPremium() {
+    bannerAd?.dispose();
+    interstitialAd?.dispose();
+    nativeAd?.dispose();
+    appOpenAd?.dispose();
 
-  bannerAd = null;
-  interstitialAd = null;
-  nativeAd = null;
-  appOpenAd = null;
+    bannerAd = null;
+    interstitialAd = null;
+    nativeAd = null;
+    appOpenAd = null;
 
-  isBannerLoaded = false;
+    isBannerLoaded = false;
 
-  onAdUpdated?.call();
-}
+    onAdUpdated?.call();
+  }
+
   /// 🔹 DISPOSE
   void dispose() {
     bannerAd?.dispose();

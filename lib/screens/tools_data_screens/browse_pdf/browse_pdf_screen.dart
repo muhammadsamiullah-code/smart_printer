@@ -4,6 +4,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
+import '../../../const/color.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/success_dialoge.dart';
@@ -120,7 +121,7 @@ class _BrowswePDFScreenState extends State<BrowswePDFScreen> {
             showDialog(
               context: context,
               barrierDismissible: false,
-              builder: (_) => const Center(child: CircularProgressIndicator()),
+              builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
             );
 
             final file = await _captureWebPageAsPdf();

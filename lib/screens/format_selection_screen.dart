@@ -121,15 +121,15 @@ class _FormatSelectionScreenState extends State<FormatSelectionScreen> {
     return GestureDetector(
       onTap: () {
         /// 🔒 LOCK CHECK
-        if (isLocked) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const SubscriptionScreen()),
-          );
-          return;
-        }
+        // if (isLocked) {
+        //   Navigator.push(
+        //     context,
+        //     MaterialPageRoute(builder: (_) => const SubscriptionScreen()),
+        //   );
+        //   return;
+        // }
 
-        /// ✅ Allowed
+        // /// ✅ Allowed
         setState(() => selectedLayout = count);
       },
       child: Stack(
@@ -157,19 +157,19 @@ class _FormatSelectionScreenState extends State<FormatSelectionScreen> {
           ),
 
           /// 🔒 LOCK ICON
-          if (isLocked)
-            Positioned(
-              top: 8,
-              right: 8,
-              child: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.6),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Icon(Icons.lock, color: Colors.white, size: 14),
-              ),
-            ),
+          // if (isLocked)
+          //   Positioned(
+          //     top: 8,
+          //     right: 8,
+          //     child: Container(
+          //       padding: const EdgeInsets.all(4),
+          //       decoration: BoxDecoration(
+          //         color: Colors.black.withOpacity(0.6),
+          //         borderRadius: BorderRadius.circular(20),
+          //       ),
+          //       child: const Icon(Icons.lock, color: Colors.white, size: 14),
+          //     ),
+          //   ),
         ],
       ),
     );
@@ -314,7 +314,7 @@ class _DisplayScreenState extends State<DisplayScreen> {
               );
             },
           ),
-          if (_isPrinting) const Center(child: CircularProgressIndicator()),
+          if (_isPrinting) const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
         ],
       ),
     );

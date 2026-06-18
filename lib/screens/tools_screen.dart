@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_scanner/subscription/purchase_provider.dart';
 import 'package:smart_scanner/subscription/subscription_screen.dart';
+import '../ads/ads_provider.dart';
+import '../const/enum.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/tr_text.dart';
 import 'tools_data_screens/browse_pdf/browse_pdf_file_screen.dart';
@@ -289,19 +291,22 @@ class _ToolsScreenState extends State<ToolsScreen> {
             index >= tools.length - (remainingItems == 0 ? 2 : remainingItems);
         return GestureDetector(
           // onTap: () => openTool(tool),
-          onTap: () {
-            final isPremiumTool = index >= 4;
+          onTap: () async {
+            await context.read<AdsProvider>().showAdInterstitial(
+                    type: InterstitialType.pdfTools,
+                  );
+            // final isPremiumTool = index >= 4;
 
-            final isPremiumUser = context.read<PurchaseProvider>().isPremium;
+            // final isPremiumUser = context.read<PurchaseProvider>().isPremium;
 
-            /// 🔒 LOCK CHECK
-            if (isPremiumTool && !isPremiumUser) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const SubscriptionScreen()),
-              );
-              return;
-            }
+            // /// 🔒 LOCK CHECK
+            // if (isPremiumTool && !isPremiumUser) {
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (_) => const SubscriptionScreen()),
+            //   );
+            //   return;
+            // }
 
             /// ✅ OPEN TOOL
             openTool(tool);
@@ -346,23 +351,23 @@ class _ToolsScreenState extends State<ToolsScreen> {
                   ],
                 ),
               ),
-              if (index >= 4 && !context.watch<PurchaseProvider>().isPremium)
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Icon(
-                      Icons.lock,
-                      color: Colors.white,
-                      size: 14,
-                    ),
-                  ),
-                ),
+              // if (index >= 4 && !context.watch<PurchaseProvider>().isPremium)
+              //   Positioned(
+              //     top: 8,
+              //     right: 8,
+              //     child: Container(
+              //       padding: const EdgeInsets.all(4),
+              //       decoration: BoxDecoration(
+              //         color: Colors.black.withOpacity(0.6),
+              //         borderRadius: BorderRadius.circular(20),
+              //       ),
+              //       child: const Icon(
+              //         Icons.lock,
+              //         color: Colors.white,
+              //         size: 14,
+              //       ),
+              //     ),
+              //   ),
             ],
           ),
         );

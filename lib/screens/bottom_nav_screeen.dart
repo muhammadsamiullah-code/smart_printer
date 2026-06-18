@@ -6,12 +6,14 @@ import 'package:smart_scanner/const/color.dart';
 import 'package:smart_scanner/providers/translator_provider.dart';
 import 'package:smart_scanner/screens/pdf_scan_view.dart';
 import 'package:smart_scanner/screens/tools_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../ads/ads_provider.dart';
 import '../ads/ads_widget.dart';
 import '../providers/bottom_nav_provider.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
+import '../services/rating_manager.dart';
 import '../services/remote_config_service.dart';
 import 'home_screen.dart';
 import 'setting_screen.dart';
@@ -60,11 +62,172 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
       const SettingScreen(),
     ];
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       context.read<BottomNavProvider>().setIndex(widget.initialIndex);
+       final shouldShow = await RatingManager.shouldShowRatingDialog();
+
+      if (shouldShow && mounted) {
+        showRatingDialog(context);
+      }
     });
+
   }
 
+Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.inAppBrowserView)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  Future<void> _sendEmail() async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: 'help.bintahir@aol.com',
+      queryParameters: {'subject': 'Smart Printer Feedback', 'body': ''},
+    );
+    await launchUrl(emailUri, mode: LaunchMode.externalApplication);
+    if (await canLaunchUrl(emailUri)) {
+      await launchUrl(emailUri, mode: LaunchMode.externalApplication);
+    } else {
+      throw Exception('Could not launch $emailUri');
+    }
+  }
+
+  void showRatingDialog(BuildContext context) {
+    double selectedRating = 0;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return PopScope(
+              canPop: false,
+
+              child: AlertDialog(
+                insetPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                contentPadding: const EdgeInsets.all(20),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 84,
+                      height: 84,
+                      alignment: Alignment.center,
+                      child: const Text("😃", style: TextStyle(fontSize: 66)),
+                    ),
+                    SizedBox(height: 6),
+                    const Text(
+                      "We are working hard for a better user experience.",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w500,
+                        // height: 1.1,
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    const Text(
+                      "We’d greatly appreciate if you can rate us.",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        // height: 1.1,
+                      ),
+                    ),
+
+                    const SizedBox(height: 25),
+
+                    const Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                        "The best we can get :)",
+                        style: TextStyle(color: Colors.blue, fontSize: 18),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(5, (index) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedRating = index + 1;
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: Icon(
+                              index < selectedRating
+                                  ? Icons.star_rounded
+                                  : Icons.star_border_rounded,
+                              color: Colors.amber,
+                              size: 42,
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                    const SizedBox(height: 25),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 52,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xff79A8ED),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        onPressed: selectedRating == 0
+                            ? null
+                            : () async {
+                                Navigator.pop(context);
+
+                                if (selectedRating == 5) {
+                                  await RatingManager.saveFiveStarRating();
+
+                                  _launchURL(
+                                    "https://play.google.com/store/apps/details?id=smartprinter.mobileprint.wirelessprinter.printdocuments",
+                                  );
+                                } else {
+                                  _sendEmail();
+                                }
+                              },
+                        child: const Text(
+                          "RATE",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return Consumer<BottomNavProvider>(
@@ -110,7 +273,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                           color: Colors.black.withOpacity(0.4),
                           child: const Center(
                             child: CircularProgressIndicator(
-                              color: Colors.white,
+                              color: AppColors.primaryColor,
                             ),
                           ),
                         ),

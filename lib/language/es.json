@@ -126,5 +126,7 @@
     "apply_watermark": "Aplicar marca de agua",
     "delete_file": "Eliminar archivo",
     "delete_file_confirmation": "¿Está seguro de que desea eliminar este archivo?",
-    "watermark_pdf": "Marca de agua en PDF"
+    "watermark_pdf": "Marca de agua en PDF",
+    "rename_your_file": "Renombrar tu archivo",
+    "file_deleted_successfully": "Archivo eliminado con éxito"
 }

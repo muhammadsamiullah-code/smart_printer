@@ -87,7 +87,7 @@ class _MergePdfScreenState extends State<MergePdfScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => const Center(child: CircularProgressIndicator()),
+      builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
     );
 
     try {

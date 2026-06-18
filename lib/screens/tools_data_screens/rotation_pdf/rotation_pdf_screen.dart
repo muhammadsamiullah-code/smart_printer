@@ -69,7 +69,7 @@ class _RotatePdfScreenState extends State<RotatePdfScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => const Center(child: CircularProgressIndicator()),
+      builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
     );
 
     final bytes = await selectedFile!.readAsBytes();

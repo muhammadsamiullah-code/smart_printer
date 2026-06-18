@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
+
+import '../ads/ads_provider.dart';
+import '../const/enum.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -40,7 +44,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       foregroundColor: Colors.transparent,
       leading: showBackButton
           ? IconButton(
-              onPressed: () {
+              onPressed: () async {
+                await context.read<AdsProvider>().showAdInterstitial(
+                    type: InterstitialType.backButton,
+                  );
                 Navigator.pop(context);
               },
               icon: Icon(

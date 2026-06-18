@@ -126,5 +126,7 @@
     "apply_watermark": "워터마크 적용",
     "delete_file": "파일 삭제",
     "delete_file_confirmation": "이 파일을 삭제하시겠습니까?",
-    "watermark_pdf": "PDF 워터마크"
+    "watermark_pdf": "PDF 워터마크",
+    "rename_your_file": "파일 이름 바꾸기",
+    "file_deleted_successfully": "파일이 성공적으로 삭제되었습니다"
 }

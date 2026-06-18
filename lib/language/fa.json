@@ -126,5 +126,7 @@
     "apply_watermark": "اعمال واترمارک",
     "delete_file": "حذف فایل",
     "delete_file_confirmation": "آیا از حذف این فایل اطمینان دارید؟",
-    "watermark_pdf": "واترمارک کردن PDF"
+    "watermark_pdf": "واترمارک کردن PDF",
+    "rename_your_file": "تغییر نام فایل شما",
+    "file_deleted_successfully": "فایل با موفقیت حذف شد"
 }

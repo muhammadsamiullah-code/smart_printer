@@ -7,10 +7,15 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/widgets/custom_appbar.dart';
+import '../../../const/color.dart';
+import '../../../const/enum.dart';
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
+import '../../../widgets/common_delete_dialoge.dart';
+import '../../../widgets/common_input_dialoge.dart';
 import '../../../widgets/file_option_menu.dart';
 import '../../../widgets/pdf_list_card.dart';
+import '../../../widgets/tr_text.dart';
 import '../merge_pdf/pdf_preview_screen.dart';
 import 'newcode.dart';
 import 'signature_pdf_screen.dart';
@@ -75,56 +80,91 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
       }
     }
   }
-
-  /// DELETE
+  
   void deleteFile(File file) async {
-    await file.delete();
-    loadFiles();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return CommonDeleteDialog(
+          title: "delete_file",
+          message: "delete_file_confirmation",
+          onConfirm: () async {
+            await file.delete();
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text("File deleted")));
+            if (mounted) {
+              Navigator.pop(context);
+
+              loadFiles();
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: TrText("file_deleted_successfully")),
+              );
+            }
+          },
+        );
+      },
+    );
   }
 
-  /// RENAME
   void renameFile(File file) {
     final controller = TextEditingController(
       text: file.path.split('/').last.replaceAll(".pdf", ""),
     );
-
-    showDialog(
+    showCommonInputDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: const Text("Rename File"),
-        content: TextField(controller: controller),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
-          ),
-          TextButton(
-            onPressed: () async {
-              final dir = file.parent.path;
+      titleKey: "rename_file",
+      buttonKey: "rename",
+      controller: controller,
+      onPressed: () async {
+        final dir = file.parent.path;
               final newName = controller.text;
-
               final newFile = File("$dir/signed_$newName.pdf");
-
               await file.rename(newFile.path);
-              // final dir = file.parent.path;
-              // final newFile = File("$dir/${controller.text}.pdf");
-
-              // await file.rename(newFile.path);
-
               Navigator.pop(context);
               loadFiles();
-            },
-            child: const Text("Rename"),
-          ),
-        ],
-      ),
+      },
     );
   }
+
+  /// RENAME
+  // void renameFile(File file) {
+  //   final controller = TextEditingController(
+  //     text: file.path.split('/').last.replaceAll(".pdf", ""),
+  //   );
+
+  //   showDialog(
+  //     context: context,
+  //     builder: (_) => AlertDialog(
+  //       backgroundColor: Colors.white,
+  //       title: const Text("Rename File"),
+  //       content: TextField(controller: controller),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () => Navigator.pop(context),
+  //           child: const Text("Cancel"),
+  //         ),
+  //         TextButton(
+  //           onPressed: () async {
+  //             final dir = file.parent.path;
+  //             final newName = controller.text;
+
+  //             final newFile = File("$dir/signed_$newName.pdf");
+
+  //             await file.rename(newFile.path);
+  //             // final dir = file.parent.path;
+  //             // final newFile = File("$dir/${controller.text}.pdf");
+
+  //             // await file.rename(newFile.path);
+
+  //             Navigator.pop(context);
+  //             loadFiles();
+  //           },
+  //           child: const Text("Rename"),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   String formatFileSize(int bytes) {
     if (bytes >= 1024 * 1024) {
@@ -177,7 +217,10 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
                     onRename: () => renameFile(file),
                     onDelete: () => deleteFile(file),
                   ),
-                  onTap: () {
+                  onTap: () async {
+                     await context.read<AdsProvider>().showAdInterstitial(
+                      type: InterstitialType.pdfList,
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -195,7 +238,7 @@ class _SignaturePdfFileScreenState extends State<SignaturePdfFileScreen> {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (_) => const Center(child: CircularProgressIndicator()),
+            builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
           );
           if (mounted) Navigator.pop(context);
 

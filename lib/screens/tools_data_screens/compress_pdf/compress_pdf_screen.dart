@@ -58,7 +58,7 @@ class _CompressPdfScreenState extends State<CompressPdfScreen> {
       context: context,
       barrierDismissible: false,
       builder: (_) =>
-          const Center(child: CircularProgressIndicator()),
+          const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
     );
 
     File? lastFile;

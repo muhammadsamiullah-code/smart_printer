@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:smart_scanner/screens/select_language_screen.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../subscription/subscription_screen.dart';
-
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -26,7 +26,7 @@ class _SettingScreenState extends State<SettingScreen> {
     final Uri emailUri = Uri(
       scheme: 'mailto',
       path: 'help.bintahir@aol.com',
-      queryParameters: {'subject': 'Smart Printer', 'body': ''},
+      queryParameters: {'subject': 'Smart Printer Feedback', 'body': ''},
     );
     await launchUrl(emailUri, mode: LaunchMode.externalApplication);
     if (await canLaunchUrl(emailUri)) {
@@ -36,13 +36,23 @@ class _SettingScreenState extends State<SettingScreen> {
     }
   }
 
+  void shareApp() {
+    SharePlus.instance.share(
+      ShareParams(
+        text:
+            'https://play.google.com/store/apps/details?id=smartprinter.mobileprint.wirelessprinter.printdocuments',
+        subject: 'Check out this amazing PDF Maker app!',
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: const Color(0xffF5F6FA),
-    // appBar: CustomAppBar(title: 'settings_title', 
-    // showBackButton: false,
-    // ),
+      // appBar: CustomAppBar(title: 'settings_title',
+      // showBackButton: false,
+      // ),
       // appBar: AppBar(
       //   elevation: 0,
       //   backgroundColor: Colors.transparent,
@@ -58,30 +68,35 @@ class _SettingScreenState extends State<SettingScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-               Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TrText(
-                'settings_title',
-                style: TextStyle(
-                  // color: titleColor,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-               GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => SubscriptionScreen()));
-                      },
-                      child: Image.asset(
-                        'assets/images/crown.png',
-                        height: 28,
-                        width: 28,
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TrText(
+                    'settings_title',
+                    style: TextStyle(
+                      // color: titleColor,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
-            ],
-          ),
-          SizedBox(height: 10),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SubscriptionScreen(),
+                        ),
+                      );
+                    },
+                    child: Image.asset(
+                      'assets/images/crown.png',
+                      height: 28,
+                      width: 28,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
               _buildTile(
                 svgPath: 'assets/settingIcons/sendFeedback.svg',
                 titleKey: "send_feedback",
@@ -107,7 +122,9 @@ class _SettingScreenState extends State<SettingScreen> {
               _buildTile(
                 svgPath: 'assets/settingIcons/shareApp.svg',
                 titleKey: "share_app",
-                onTap: () {},
+                onTap: () {
+                  shareApp();
+                },
               ),
               const SizedBox(height: 14),
               _buildTile(
@@ -129,7 +146,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   );
                 },
               ),
-               const SizedBox(height: 14),
+              const SizedBox(height: 14),
               // _buildTile(
               //   svgPath: 'assets/settingIcons/language.svg',
               //   titleKey: "tools",
@@ -163,10 +180,10 @@ class _SettingScreenState extends State<SettingScreen> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
-           border: Border.all(
-                color: const Color.fromARGB(255, 231, 231, 231),
-                width: 1,
-              ),
+          border: Border.all(
+            color: const Color.fromARGB(255, 231, 231, 231),
+            width: 1,
+          ),
           // boxShadow: [
           //   BoxShadow(
           //     color: Colors.black.withOpacity(0.04),

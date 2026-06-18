@@ -126,5 +126,7 @@
     "apply_watermark": "Wasserzeichen anwenden",
     "delete_file": "Datei löschen",
     "delete_file_confirmation": "Sind Sie sicher, dass Sie diese Datei löschen möchten?",
-    "watermark_pdf": "PDF mit Wasserzeichen versehen"
+    "watermark_pdf": "PDF mit Wasserzeichen versehen",
+    "rename_your_file": "Benennen Sie Ihre Datei um",
+    "file_deleted_successfully": "Datei erfolgreich gelöscht"
 }

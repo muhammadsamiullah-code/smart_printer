@@ -9,6 +9,7 @@ import 'package:smart_scanner/widgets/custom_appbar.dart';
 import 'dart:io';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
+import '../../../const/color.dart';
 import '../../../widgets/custom_button.dart';
 
 class PdfPreviewPrintScreen extends StatefulWidget {
@@ -143,7 +144,7 @@ class _PdfPreviewPrintScreenState extends State<PdfPreviewPrintScreen> {
         if (_isPrinting)
           Container(
             color: Colors.black.withOpacity(0.4),
-            child: const Center(child: CircularProgressIndicator()),
+            child: const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
           ),
       ],
     );

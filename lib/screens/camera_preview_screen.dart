@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
+import '../const/color.dart';
 import '../widgets/custom_appbar.dart';
 
 class CameraPreviewScreen extends StatelessWidget {
@@ -29,7 +30,7 @@ class CameraPreviewScreen extends StatelessWidget {
                   if (wasSynchronouslyLoaded || frame != null) {
                     return child;
                   }
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator(color: AppColors.primaryColor));
                 },
               ),
             ),

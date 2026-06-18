@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
+import '../../../const/color.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/pdf_list_card.dart';
 import '../../../widgets/success_dialoge.dart';
@@ -116,7 +117,7 @@ class _SplitPdfScreenState extends State<SplitPdfScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => const Center(child: CircularProgressIndicator()),
+      builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
     );
     int start = int.tryParse(startController.text) ?? 1;
     int end = int.tryParse(endController.text) ?? 0;

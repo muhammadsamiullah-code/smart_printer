@@ -6,8 +6,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
+import '../../../const/color.dart';
+import '../../../const/enum.dart';
 import '../../../widgets/build_commeon_fab.dart';
 import '../../../widgets/center_widget_for_pdf.dart';
+import '../../../widgets/common_delete_dialoge.dart';
+import '../../../widgets/common_input_dialoge.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/file_option_menu.dart';
 import '../../../widgets/pdf_list_card.dart';
@@ -38,25 +42,41 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
     loadSavedFiles();
   }
 
-  /// Load all saved watermarked PDFs from app documents directory
   Future<void> loadSavedFiles() async {
     final dir = await getApplicationDocumentsDirectory();
+
     final files = dir
         .listSync()
         .whereType<File>()
         .where((f) => f.path.endsWith(".pdf") && f.path.contains("watermark_"))
         .toList();
-    setState(() => savedFiles = files);
+
+    if (!mounted) return;
+
+    setState(() {
+      savedFiles = files;
+    });
   }
+
+  /// Load all saved watermarked PDFs from app documents directory
+  // Future<void> loadSavedFiles() async {
+  //   final dir = await getApplicationDocumentsDirectory();
+  //   final files = dir
+  //       .listSync()
+  //       .whereType<File>()
+  //       .where((f) => f.path.endsWith(".pdf") && f.path.contains("watermark_"))
+  //       .toList();
+  //   setState(() => savedFiles = files);
+  // }
 
   /// Pick PDF and navigate to AddWatermarkScreen
   Future<void> pickPdf(BuildContext context) async {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => const Center(child: CircularProgressIndicator()),
+      builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
     );
-    if (mounted) Navigator.pop(context);
+    // if (mounted) Navigator.pop(context);
 
     final adsProvider = context.read<AdsProvider>();
 
@@ -72,7 +92,6 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
 
     if (result != null) {
       File file = File(result.files.single.path!);
-
       final resultFromWatermark = await Navigator.push(
         context,
         MaterialPageRoute(
@@ -80,74 +99,82 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
         ),
       );
 
-      // Reload saved files if watermark was applied
+      if (!mounted) return;
+
       if (resultFromWatermark == true) {
-        loadSavedFiles();
+        await loadSavedFiles();
       }
     }
   }
 
-  /// Rename a PDF file
-  Future<void> renameFile(File file) async {
+  void renameFile(File file) {
     TextEditingController renameController = TextEditingController(
       text: file.path.split('/').last.replaceAll(".pdf", ""),
     );
-
-    await showDialog(
+    showCommonInputDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: const TrText("rename_file"),
-        content: TextField(controller: renameController),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const TrText("cancel"),
-          ),
-          TextButton(
-            onPressed: () async {
-              final dir = file.parent.path;
-              final newName = renameController.text;
-
-              final newFile = File("$dir/watermark_$newName.pdf");
-
-              await file.rename(newFile.path);
-              // final dir = await getApplicationDocumentsDirectory();
-              // final newFile = File("${dir.path}/${renameController.text}.pdf");
-              // await file.rename(newFile.path);
-              Navigator.pop(context);
-              loadSavedFiles();
-            },
-            child: const TrText("rename"),
-          ),
-        ],
-      ),
+      titleKey: "rename_file",
+      buttonKey: "rename",
+      controller: renameController,
+      onPressed: () async {
+        final dir = file.parent.path;
+        final newName = renameController.text;
+        final newFile = File("$dir/watermark_$newName.pdf");
+        await file.rename(newFile.path);
+        if (!mounted) return;
+        Navigator.pop(context);
+        await loadSavedFiles();
+      },
     );
   }
 
-  /// Delete a PDF file
+  // / Delete a PDF file
   Future<void> deleteFile(File file) async {
     bool? confirm = await showDialog(
       context: context,
       builder: (_) => AlertDialog(
         backgroundColor: Colors.white,
-        title: const TrText("delete_file"),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: TrText(
+          "delete_file",
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         content: const TrText("delete_file_confirmation"),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const TrText("cancel"),
+            child: const TrText("cancel", style: TextStyle(color: Colors.grey)),
           ),
-          TextButton(
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primaryColor,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
             onPressed: () => Navigator.pop(context, true),
-            child: const TrText("delete"),
+            child: const TrText("confirm"),
           ),
+          // TextButton(
+          //   onPressed: () => Navigator.pop(context, true),
+          //   child: const TrText("delete"),
+          // ),
         ],
       ),
     );
 
     if (confirm == true) {
+      // await file.delete();
+      // loadSavedFiles();
       await file.delete();
-      loadSavedFiles();
+
+      if (!mounted) return;
+
+      await loadSavedFiles();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: TrText("file_deleted_successfully")));
     }
   }
 
@@ -200,7 +227,10 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
                     onRename: () => renameFile(file),
                     onDelete: () => deleteFile(file),
                   ),
-                  onTap: () {
+                  onTap: () async {
+                     await context.read<AdsProvider>().showAdInterstitial(
+                      type: InterstitialType.pdfList,
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(

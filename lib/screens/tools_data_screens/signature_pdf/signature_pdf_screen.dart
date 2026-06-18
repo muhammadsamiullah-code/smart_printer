@@ -270,7 +270,7 @@ class _SignaturePdfScreenState extends State<SignaturePdfScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => const Center(child: CircularProgressIndicator()),
+      builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
     );
 
     final pdf = sfpdf.PdfDocument();
@@ -375,7 +375,7 @@ class _SignaturePdfScreenState extends State<SignaturePdfScreen> {
       ),
 
       body: selectedFile == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator(color: AppColors.primaryColor))
           : LayoutBuilder(
               builder: (context, constraints) {
                 double viewWidth = constraints.maxWidth;

@@ -294,7 +294,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
                 barrierDismissible: false,
                 builder: (_) => Container(
                   color: Colors.black.withOpacity(0.3),
-                  child: const Center(child: CircularProgressIndicator()),
+                  child: const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
                 ),
               );
 

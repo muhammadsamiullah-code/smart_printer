@@ -126,5 +126,7 @@
     "apply_watermark": "জলছাপ প্রয়োগ করুন",
     "delete_file": "ফাইলটি মুছে ফেলুন",
     "delete_file_confirmation": "আপনি কি নিশ্চিত যে আপনি এই ফাইলটি মুছে ফেলতে চান?",
-    "watermark_pdf": "পিডিএফ জলছাপ"
+    "watermark_pdf": "পিডিএফ জলছাপ",
+    "rename_your_file": "আপনার ফাইলের নাম পরিবর্তন করুন",
+    "file_deleted_successfully": "ফাইলটি সফলভাবে মুছে ফেলা হয়েছে"
 }

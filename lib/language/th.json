@@ -126,5 +126,7 @@
     "apply_watermark": "ใส่ลายน้ำ",
     "delete_file": "ลบไฟล์",
     "delete_file_confirmation": "คุณแน่ใจหรือไม่ว่าต้องการลบไฟล์นี้?",
-    "watermark_pdf": "ลายน้ำ PDF"
+    "watermark_pdf": "ลายน้ำ PDF",
+    "rename_your_file": "เปลี่ยนชื่อไฟล์ของคุณ",
+    "file_deleted_successfully": "ลบไฟล์สำเร็จแล้ว"
 }

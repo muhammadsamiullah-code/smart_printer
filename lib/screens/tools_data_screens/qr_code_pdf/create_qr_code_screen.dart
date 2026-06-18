@@ -25,7 +25,7 @@ class _CreateQRPdfScreenState extends State<CreateQRPdfScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => const Center(child: CircularProgressIndicator()),
+      builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
     );
 
     final pdf = pw.Document();

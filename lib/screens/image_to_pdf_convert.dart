@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../const/color.dart';
 import 'tools_data_screens/merge_pdf/pdf_preview_screen.dart';
 
 /// ---------------- HOME SCREEN ----------------
@@ -156,7 +157,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
             child: ElevatedButton(
               onPressed: isLoading ? null : convertToPdf,
               child: isLoading
-                  ? const CircularProgressIndicator(color: Colors.white)
+                  ? const CircularProgressIndicator(color: AppColors.primaryColor)
                   : const Text("Convert to PDF"),
             ),
           )

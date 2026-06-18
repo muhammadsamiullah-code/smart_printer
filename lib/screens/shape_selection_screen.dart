@@ -51,20 +51,20 @@ class _ShapeSelectionScreenState extends State<ShapeSelectionScreen> {
               children: LabelShape.values.map((shape) {
                 return GestureDetector(
                   onTap: () {
-                    final isPremiumUser = context
-                        .read<PurchaseProvider>()
-                        .isPremium;
+                    // final isPremiumUser = context
+                    //     .read<PurchaseProvider>()
+                    //     .isPremium;
 
-                    /// 🔒 LOCK CHECK
-                    if (isPremiumShape(shape) && !isPremiumUser) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const SubscriptionScreen(),
-                        ),
-                      );
-                      return;
-                    }
+                    // /// 🔒 LOCK CHECK
+                    // if (isPremiumShape(shape) && !isPremiumUser) {
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (_) => const SubscriptionScreen(),
+                    //     ),
+                    //   );
+                    //   return;
+                    // }
 
                     /// ✅ Allowed
                     provider.setShape(shape);
@@ -102,23 +102,23 @@ class _ShapeSelectionScreenState extends State<ShapeSelectionScreen> {
                           ],
                         ),
                       ),
-                      if (isPremiumShape(shape) && !isPremiumUser)
-                        Positioned(
-                          top: 8,
-                          right: 8,
-                          child: Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.6),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const Icon(
-                              Icons.lock,
-                              color: Colors.white,
-                              size: 14,
-                            ),
-                          ),
-                        ),
+                      // if (isPremiumShape(shape) && !isPremiumUser)
+                      //   Positioned(
+                      //     top: 8,
+                      //     right: 8,
+                      //     child: Container(
+                      //       padding: const EdgeInsets.all(4),
+                      //       decoration: BoxDecoration(
+                      //         color: Colors.black.withOpacity(0.6),
+                      //         borderRadius: BorderRadius.circular(20),
+                      //       ),
+                      //       child: const Icon(
+                      //         Icons.lock,
+                      //         color: Colors.white,
+                      //         size: 14,
+                      //       ),
+                      //     ),
+                      //   ),
                     ],
                   ),
                 );

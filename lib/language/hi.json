@@ -126,5 +126,7 @@
     "apply_watermark": "वॉटरमार्क लगाएं",
     "delete_file": "फ़ाइल हटाएं",
     "delete_file_confirmation": "क्या आप वाकई इस फ़ाइल को हटाना चाहते हैं?",
-    "watermark_pdf": "PDF वॉटरमार्क"
+    "watermark_pdf": "PDF वॉटरमार्क",
+    "rename_your_file": "अपनी फ़ाइल का नाम बदलें",
+    "file_deleted_successfully": "फ़ाइल सफलतापूर्वक हटा दी गई"
 }

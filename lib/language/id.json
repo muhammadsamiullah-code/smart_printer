@@ -126,5 +126,7 @@
     "apply_watermark": "Terapkan Tanda Air",
     "delete_file": "Hapus File",
     "delete_file_confirmation": "Apakah Anda yakin ingin menghapus file ini?",
-    "watermark_pdf": "Tanda Air PDF"
+    "watermark_pdf": "Tanda Air PDF",
+    "rename_your_file": "Ubah nama file Anda",
+    "file_deleted_successfully": "File berhasil dihapus"
 }

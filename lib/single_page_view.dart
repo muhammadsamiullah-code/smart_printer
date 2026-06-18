@@ -248,7 +248,7 @@ class _SinglePageViewerScreenState extends State<SinglePageViewerScreen> {
       ),
 
       body: pageBytes == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator(color: AppColors.primaryColor))
           : Center(
               child: Container(
                 margin: const EdgeInsets.all(14),
@@ -345,21 +345,7 @@ class _SinglePageViewerScreenState extends State<SinglePageViewerScreen> {
                       },
                     ),
 
-                    // DropdownButton<String>(
-                    //   value: selectedText!.fontFamily,
-                    //   items: ['Roboto', 'Poppins', 'Montserrat', 'Lobster']
-                    //       .map(
-                    //         (f) => DropdownMenuItem(
-                    //           value: f,
-                    //           child: Text(f, style: GoogleFonts.getFont(f)),
-                    //         ),
-                    //       )
-                    //       .toList(),
-                    //   onChanged: (v) {
-                    //     setState(() => selectedText!.fontFamily = v!);
-                    //   },
-                    // ),
-                    IconButton(
+                                       IconButton(
                       icon: const Icon(Icons.format_bold),
                       onPressed: () {
                         setState(
@@ -441,42 +427,7 @@ class _SinglePageViewerScreenState extends State<SinglePageViewerScreen> {
                         }
                       },
                     ),
-                    // IconButton(
-                    //   icon: const Icon(Icons.color_lens),
-                    //   onPressed: () async {
-                    //     final color = await showDialog<Color>(
-                    //       context: context,
-                    //       builder: (_) => AlertDialog(
-                    //         title: const Text('Pick Color'),
-                    //         content: Wrap(
-                    //           spacing: 10,
-                    //           children:
-                    //               [
-                    //                     Colors.black,
-                    //                     Colors.red,
-                    //                     Colors.blue,
-                    //                     Colors.green,
-                    //                     Colors.orange,
-                    //                   ]
-                    //                   .map(
-                    //                     (c) => GestureDetector(
-                    //                       onTap: () =>
-                    //                           Navigator.pop(context, c),
-                    //                       child: CircleAvatar(
-                    //                         backgroundColor: c,
-                    //                       ),
-                    //                     ),
-                    //                   )
-                    //                   .toList(),
-                    //         ),
-                    //       ),
-                    //     );
-
-                    //     if (color != null) {
-                    //       setState(() => selectedText!.color = color);
-                    //     }
-                    //   },
-                    // ),
+                    
 
                     /// OK
                     IconButton(
