@@ -15,6 +15,7 @@ import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:smart_scanner/widgets/snack_bar_helper.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 
+import '../ads/native_ads_widget.dart';
 import '../widgets/custom_appbar.dart';
 // ---------------- FRAME SELECTION SCREEN ----------------
 
@@ -50,14 +51,15 @@ class _FrameSelectionScreenState extends State<FrameSelectionScreen> {
       appBar: CustomAppBar(title: 'select_frame'),
       body: Column(
         children: [
-          const SizedBox(height: 20),
-          Expanded(
+          Flexible(
             child: GridView.builder(
+              shrinkWrap: true,
               padding: const EdgeInsets.all(16),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
+                childAspectRatio: 1.3,
               ),
               itemCount: 4,
               itemBuilder: (context, index) {
@@ -124,35 +126,37 @@ class _FrameSelectionScreenState extends State<FrameSelectionScreen> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: CustomButton(
-              text: 'next',
-              onPressed: () async {
-                if (selectedFrame == -1) {
-                  SnackbarHelper.show(context, "Please Select Frame");
-                  return;
-                }
-                final picker = ImagePicker();
-                final image = await picker.pickImage(
-                  source: ImageSource.gallery,
-                );
-
-                if (image == null) return;
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => PreviewScreen(
-                      frame: selectedFrame,
-                      imageFile: File(image.path),
-                    ),
-                  ),
-                );
-              },
-            ),
+           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16,),
+            child: const SquareNativeAdWidget(),
           ),
         ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16),
+        child: CustomButton(
+          text: 'next',
+          onPressed: () async {
+            if (selectedFrame == -1) {
+              SnackbarHelper.show(context, "Please Select Frame");
+              return;
+            }
+            final picker = ImagePicker();
+            final image = await picker.pickImage(source: ImageSource.gallery);
+
+            if (image == null) return;
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => PreviewScreen(
+                  frame: selectedFrame,
+                  imageFile: File(image.path),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -294,7 +298,11 @@ class _PreviewScreenState extends State<PreviewScreen> {
                 barrierDismissible: false,
                 builder: (_) => Container(
                   color: Colors.black.withOpacity(0.3),
-                  child: const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
                 ),
               );
 

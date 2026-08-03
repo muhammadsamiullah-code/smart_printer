@@ -20,6 +20,7 @@ import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:smart_scanner/widgets/snack_bar_helper.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 
+import '../ads/native_ads_widget.dart';
 import '../widgets/custom_appbar.dart';
 
 class FormatSelectionScreen extends StatefulWidget {
@@ -81,12 +82,14 @@ class _FormatSelectionScreenState extends State<FormatSelectionScreen> {
       appBar: CustomAppBar(title: 'select_photo_layout'),
       body: Column(
         children: [
-          Expanded(
+          Flexible(
             child: GridView.count(
-              padding: const EdgeInsets.all(16),
+              shrinkWrap: true,
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 16),
               crossAxisCount: 2,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
+              childAspectRatio: 1.3,
               children: [
                 _layoutCard(2),
                 _layoutCard(4),
@@ -95,7 +98,29 @@ class _FormatSelectionScreenState extends State<FormatSelectionScreen> {
               ],
             ),
           ),
+
           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16,),
+            child: const SquareNativeAdWidget(),
+          ),
+         
+          // Padding(
+          //   padding: const EdgeInsets.all(16),
+          //   child: CustomButton(
+          //     text: 'next',
+          //     onPressed: () {
+          //       if (selectedLayout == -1) {
+          //         SnackbarHelper.show(context, "please_seleect_photo_layout");
+          //         return;
+          //       }
+
+          //       pickImages();
+          //     },
+          //   ),
+          // ),
+        ],
+      ),
+      bottomNavigationBar: Padding(
             padding: const EdgeInsets.all(16),
             child: CustomButton(
               text: 'next',
@@ -109,8 +134,6 @@ class _FormatSelectionScreenState extends State<FormatSelectionScreen> {
               },
             ),
           ),
-        ],
-      ),
     );
   }
 
@@ -136,6 +159,8 @@ class _FormatSelectionScreenState extends State<FormatSelectionScreen> {
         children: [
           /// 🔹 MAIN CARD
           Container(
+            // height: 200,
+            // width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               border: Border.all(

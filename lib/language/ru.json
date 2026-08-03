@@ -128,5 +128,9 @@
     "delete_file_confirmation": "Вы уверены, что хотите удалить этот файл?",
     "watermark_pdf": "Водяной знак для PDF",
     "rename_your_file": "Переименовать ваш файл",
-    "file_deleted_successfully": "Файл успешно удален"
+    "file_deleted_successfully": "Файл успешно удален",
+    "smart_printer": "Мобильный смарт-принтер",
+    "mobile_print_scanner": "Сканер и принтер фото и документов",
+    "file_saved_successfully": "Файл успешно сохранен",
+    "smart_printer_mobile_documents": "Смарт-принтер и мобильные документы"
 }

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
+import '../../../ads/native_ads_widget.dart';
 import '../../../const/color.dart';
 import '../../../const/enum.dart';
 import '../../../widgets/build_commeon_fab.dart';
@@ -165,42 +166,54 @@ class _CreatePdfFileScreenState extends State<CreatePdfFileScreen> {
               icon: widget.icon,
               color: widget.color,
             )
-          : ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: reversedList.length,
-              itemBuilder: (context, index) {
-                final file = reversedList[index];
-                final fileName = file.path.split('/').last;
-                final fileSize = formatFileSize(file.lengthSync());
-                final lastModified = file.lastModifiedSync();
-                final formattedDate = formatDateTime(lastModified);
-                return PdfListCard(
-                  title: fileName,
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(fileSize, style: TextStyle(fontSize: 12)),
-                      Text(formattedDate, style: TextStyle(fontSize: 12)),
-                    ],
+          : SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, ),
+                      child: RectangleNativeAdWidget(),
+                    ),
+                ListView.builder(
+                   shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(12),
+                    itemCount: reversedList.length,
+                    itemBuilder: (context, index) {
+                      final file = reversedList[index];
+                      final fileName = file.path.split('/').last;
+                      final fileSize = formatFileSize(file.lengthSync());
+                      final lastModified = file.lastModifiedSync();
+                      final formattedDate = formatDateTime(lastModified);
+                      return PdfListCard(
+                        title: fileName,
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(fileSize, style: TextStyle(fontSize: 12)),
+                            Text(formattedDate, style: TextStyle(fontSize: 12)),
+                          ],
+                        ),
+                        trailing: FileOptionsMenu(
+                          onRename: () => renameFile(file),
+                          onDelete: () => deleteFile(file),
+                        ),
+                        onTap: () async {
+                           await context.read<AdsProvider>().showAdInterstitial(
+                            type: InterstitialType.pdfList,
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => PdfPreviewPrintScreen(file: file),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
-                  trailing: FileOptionsMenu(
-                    onRename: () => renameFile(file),
-                    onDelete: () => deleteFile(file),
-                  ),
-                  onTap: () async {
-                     await context.read<AdsProvider>().showAdInterstitial(
-                      type: InterstitialType.pdfList,
-                    );
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => PdfPreviewPrintScreen(file: file),
-                      ),
-                    );
-                  },
-                );
-              },
+              ],
             ),
+          ),
 
       floatingActionButton: buildCommonFAB(
         onPressed: openCreateScreen,

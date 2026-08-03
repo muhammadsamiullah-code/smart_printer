@@ -7,6 +7,7 @@ import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart' as sfpdf;
 import 'package:pdfx/pdfx.dart';
 
+import '../../../ads/native_ads_widget.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/pdf_list_card.dart';
 import '../../../widgets/success_dialoge.dart';
@@ -234,7 +235,12 @@ class _CompressPdfScreenState extends State<CompressPdfScreen> {
                 buildLevelButton("High"),
               ],
             ),
+          
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, ),
+            child: SquareNativeAdWidget(),
+          )
         ],
       ),
 

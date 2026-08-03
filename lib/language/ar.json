@@ -128,5 +128,9 @@
     "delete_file_confirmation": "هل أنت متأكد أنك تريد حذف هذا الملف؟",
     "watermark_pdf": "علامة مائية لملف PDF",
     "rename_your_file": "إعادة تسمية الملف الخاص بك",
-    "file_deleted_successfully": "تم حذف الملف بنجاح"
+    "file_deleted_successfully": "تم حذف الملف بنجاح",
+    "smart_printer": "طابعة ذكية للمحمول",
+    "mobile_print_scanner": "ماسح وضوئية وطابعة للصور والمستندات",
+    "file_saved_successfully": "تم حفظ الملف بنجاح",
+    "smart_printer_mobile_documents": "طابعة ذكية ومستندات المحمول"
 }

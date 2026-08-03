@@ -15,6 +15,10 @@ class AdsProvider extends ChangeNotifier {
     await _adsManager.init();
     notifyListeners();
   }
+  // Future<void> initAds() async {
+  //   await _adsManager.init();
+  //   notifyListeners();
+  // }
 
   Future<void> showInterstitial() async {
     await _adsManager.showInterstitialIfNeeded();
@@ -24,17 +28,20 @@ class AdsProvider extends ChangeNotifier {
   // Future<void> showAdInterstitial() async {
   //   await _adsManager.showAdNow();
   // }
-    Future<void> showAdInterstitial({
+  Future<void> showAdInterstitial({
     InterstitialType type = InterstitialType.normal,
   }) async {
     await _adsManager.showAdNow(type: type);
+  }
+
+   Future<void> showInterstitialIfNeeded() async {
+    await _adsManager.showInterstitialIfNeeded();
   }
 
   /// ✅ App Open Separate
   Future<void> loadAppOpenAd() async {
     await _adsManager.loadAppOpen();
   }
-
 
   @override
   void dispose() {

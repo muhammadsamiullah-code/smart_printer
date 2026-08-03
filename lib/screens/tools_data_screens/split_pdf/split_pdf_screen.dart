@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
+import '../../../ads/native_ads_widget.dart';
 import '../../../const/color.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/pdf_list_card.dart';
@@ -282,48 +283,54 @@ for (int i = start - 1; i < end; i++) {
       ),
 
       /// Bottom Buttons
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(12),
-        height: 80,
-        child: Row(
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(width: 12),
-            Expanded(
-              child: CustomButton(
-                onPressed: isSplitting
-                    ? null
-                    : () async {
-                        final startText = startController.text.trim();
-                        final endText = endController.text.trim();
-
-                        // 🔴 Empty check
-                        if (startText.isEmpty || endText.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: TrText("please_enter_pages")),
-                          );
-                          return;
-                        }
-
-                        // 🔴 Number check
-                        final start = int.tryParse(startText);
-                        final end = int.tryParse(endText);
-
-                        if (start == null || end == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: TrText("Enter valid numbers"),
-                            ),
-                          );
-                          return;
-                        }
-
-                        for (final file in selectedFiles) {
-                          await splitPdf(file);
-                        }
-                      },
-                text: widget.title,
-              ),
+            Row(
+              children: [
+                const SizedBox(width: 12),
+                Expanded(
+                  child: CustomButton(
+                    onPressed: isSplitting
+                        ? null
+                        : () async {
+                            final startText = startController.text.trim();
+                            final endText = endController.text.trim();
+            
+                            // 🔴 Empty check
+                            if (startText.isEmpty || endText.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: TrText("please_enter_pages")),
+                              );
+                              return;
+                            }
+            
+                            // 🔴 Number check
+                            final start = int.tryParse(startText);
+                            final end = int.tryParse(endText);
+            
+                            if (start == null || end == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: TrText("Enter valid numbers"),
+                                ),
+                              );
+                              return;
+                            }
+            
+                            for (final file in selectedFiles) {
+                              await splitPdf(file);
+                            }
+                          },
+                    text: widget.title,
+                  ),
+                ),
+              ],
             ),
+            const SizedBox(height: 10),
+            SquareNativeAdWidget()
           ],
         ),
       ),

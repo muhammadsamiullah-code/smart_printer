@@ -5,6 +5,7 @@ import 'package:smart_scanner/screens/select_language_screen.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../ads/native_ads_widget.dart';
 import '../subscription/subscription_screen.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -75,7 +76,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     'settings_title',
                     style: TextStyle(
                       // color: titleColor,
-                      fontSize: 24,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -88,14 +89,18 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
                       );
                     },
-                    child: Image.asset(
-                      'assets/images/crown.png',
-                      height: 28,
-                      width: 28,
-                    ),
+                    child:  SvgPicture.asset(
+                          'assets/imageIcons/crown.svg',
+                          height: 28,
+                          width: 28,
+                        ),
                   ),
                 ],
               ),
+              Padding(
+              padding: const EdgeInsets.only( top: 10,),
+            child: const SquareNativeAdWidget(),
+          ),
               SizedBox(height: 10),
               _buildTile(
                 svgPath: 'assets/settingIcons/sendFeedback.svg',

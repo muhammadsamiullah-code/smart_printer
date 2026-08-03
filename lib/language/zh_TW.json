@@ -128,5 +128,9 @@
     "delete_file_confirmation": "您確定要刪除此檔案嗎？",
     "watermark_pdf": "PDF 水印",
     "rename_your_file": "重新命名您的檔案",
-    "file_deleted_successfully": "檔案刪除成功"
+    "file_deleted_successfully": "檔案刪除成功",
+    "smart_printer": "行動智能印表機",
+    "mobile_print_scanner": "照片、文件掃描器與印表機",
+    "file_saved_successfully": "檔案儲存成功",
+    "smart_printer_mobile_documents": "智能印表機與行動文件"
 }

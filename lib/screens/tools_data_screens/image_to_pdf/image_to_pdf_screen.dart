@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import '../../../ads/native_ads_widget.dart';
 import '../../../const/color.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/custom_button.dart';
@@ -132,20 +133,22 @@ Future<void> convertPdf() async {
       body: Padding(
         padding: const EdgeInsets.all(12),
 
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-
-            /// Image Preview Grid
-            Expanded(
-              child: GridView.builder(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              RectangleNativeAdWidget(),
+              SizedBox(height: 10),
+              /// Image Preview Grid
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: images.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
-
+                        
                 itemBuilder: (context, index) {
                   return Stack(
                     children: [
@@ -155,20 +158,20 @@ Future<void> convertPdf() async {
                           child: Image.file(images[index], fit: BoxFit.cover),
                         ),
                       ),
-
+                        
                       /// Remove Button
                       Positioned(
                         right: 0,
                         top: 0,
                         child: GestureDetector(
                           onTap: () => removeImage(index),
-
+                        
                           child: Container(
                             decoration: const BoxDecoration(
                               color: Colors.red,
                               shape: BoxShape.circle,
                             ),
-
+                        
                             child: const Icon(
                               Icons.close,
                               color: Colors.white,
@@ -181,15 +184,14 @@ Future<void> convertPdf() async {
                   );
                 },
               ),
-            ),
-
-            const SizedBox(height: 10),
-          ],
+          
+              // const SizedBox(height: 10),
+            ],
+          ),
         ),
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(12),
-        height: 80,
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
         child: Row(
           children: [
             Expanded(

@@ -128,5 +128,9 @@
     "delete_file_confirmation": "Bu dosyayı silmek istediğinizden emin misiniz?",
     "watermark_pdf": "PDF Filigran",
     "rename_your_file": "Dosyanızı yeniden adlandırın",
-    "file_deleted_successfully": "Dosya başarıyla silindi"
+    "file_deleted_successfully": "Dosya başarıyla silindi",
+    "smart_printer": "Mobil Akıllı Yazıcı",
+    "mobile_print_scanner": "Fotoğraf, Belge Tarayıcı ve Yazıcı",
+    "file_saved_successfully": "Dosya Başarıyla Kaydedildi",
+    "smart_printer_mobile_documents": "Akıllı Yazıcı ve Mobil Belgeler"
 }

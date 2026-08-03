@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_scanner/subscription/purchase_provider.dart';
 import 'package:smart_scanner/subscription/subscription_screen.dart';
 import '../ads/ads_provider.dart';
+import '../ads/native_ads_widget.dart';
 import '../const/enum.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/tr_text.dart';
@@ -234,48 +235,56 @@ class _ToolsScreenState extends State<ToolsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: CustomAppBar(title: "pdf_tools", showBackButton: false),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TrText(
-                  'pdf_tools',
-                  style: TextStyle(
-                    // color: titleColor,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 12, right: 12, top: 12,),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TrText(
+                    'pdf_tools',
+                    style: TextStyle(
+                      // color: titleColor,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SubscriptionScreen(),
-                      ),
-                    );
-                  },
-                  child: Image.asset(
-                    'assets/images/crown.png',
-                    height: 28,
-                    width: 28,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SubscriptionScreen(),
+                        ),
+                      );
+                    },
+                    child: SvgPicture.asset(
+                          'assets/imageIcons/crown.svg',
+                          height: 28,
+                          width: 28,
+                        ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          Expanded(child: buildTools()),
-        ],
+            Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 12,),
+              child: const SquareNativeAdWidget(),
+            ),
+            const SizedBox(height: 10),
+            buildTools(),
+          ],
+        ),
       ),
     );
   }
 
   Widget buildTools() {
     return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 16),
       itemCount: tools.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

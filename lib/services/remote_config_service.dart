@@ -51,7 +51,9 @@ class RemoteConfigService {
   static String get appOpenAdId => _remoteConfig.getString('ads_app_open_id');
   static int get appOpenDelay =>
       _remoteConfig.getInt('ads_app_open_delay_seconds');
-  static bool get nativeEnabled => _remoteConfig.getBool('ads_native_enabled');
+   static bool get nativeEnabled =>
+      _remoteConfig.getBool('ads_native_enabled');
 
-  static String get nativeAdId => _remoteConfig.getString('ads_native_ad_id');
+  static String get nativeAdId =>
+      _remoteConfig.getString('ads_native_ad_id');
 }

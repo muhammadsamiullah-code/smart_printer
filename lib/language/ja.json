@@ -128,5 +128,9 @@
     "delete_file_confirmation": "このファイルを削除してもよろしいですか？",
     "watermark_pdf": "PDFに透かしを入れる",
     "rename_your_file": "ファイルを名前変更",
-    "file_deleted_successfully": "ファイルが正常に削除されました"
+    "file_deleted_successfully": "ファイルが正常に削除されました",
+    "smart_printer": "モバイルスマートプリンター",
+    "mobile_print_scanner": "写真・文書スキャナー＆プリンター",
+    "file_saved_successfully": "ファイルを正常に保存しました",
+    "smart_printer_mobile_documents": "スマートプリンターとモバイルドキュメント"
 }

@@ -128,5 +128,9 @@
     "delete_file_confirmation": "Apakah Anda yakin ingin menghapus file ini?",
     "watermark_pdf": "Tanda Air PDF",
     "rename_your_file": "Ubah nama file Anda",
-    "file_deleted_successfully": "File berhasil dihapus"
+    "file_deleted_successfully": "File berhasil dihapus",
+    "smart_printer": "Printer Pintar Seluler",
+    "mobile_print_scanner": "Pemindai & Printer Foto, Dokumen",
+    "file_saved_successfully": "Berkas Berhasil Disimpan",
+    "smart_printer_mobile_documents": "Printer Pintar & Dokumen Seluler"
 }

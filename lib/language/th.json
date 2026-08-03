@@ -128,5 +128,9 @@
     "delete_file_confirmation": "คุณแน่ใจหรือไม่ว่าต้องการลบไฟล์นี้?",
     "watermark_pdf": "ลายน้ำ PDF",
     "rename_your_file": "เปลี่ยนชื่อไฟล์ของคุณ",
-    "file_deleted_successfully": "ลบไฟล์สำเร็จแล้ว"
+    "file_deleted_successfully": "ลบไฟล์สำเร็จแล้ว",
+    "smart_printer": "เครื่องพิมพ์อัจฉริยะมือถือ",
+    "mobile_print_scanner": "เครื่องสแกนและเครื่องพิมพ์ภาพถ่าย, เอกสาร",
+    "file_saved_successfully": "บันทึกไฟล์สำเร็จแล้ว",
+    "smart_printer_mobile_documents": "เครื่องพิมพ์อัจฉริยะและเอกสารมือถือ"
 }

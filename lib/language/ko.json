@@ -128,5 +128,9 @@
     "delete_file_confirmation": "이 파일을 삭제하시겠습니까?",
     "watermark_pdf": "PDF 워터마크",
     "rename_your_file": "파일 이름 바꾸기",
-    "file_deleted_successfully": "파일이 성공적으로 삭제되었습니다"
+    "file_deleted_successfully": "파일이 성공적으로 삭제되었습니다",
+    "smart_printer": "모바일 스마트 프린터",
+    "mobile_print_scanner": "사진, 문서 스캐너 및 프린터",
+    "file_saved_successfully": "파일이 성공적으로 저장되었습니다",
+    "smart_printer_mobile_documents": "스마트 프린터 및 모바일 문서"
 }

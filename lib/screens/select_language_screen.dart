@@ -8,6 +8,8 @@ import 'package:smart_scanner/screens/onboarding_screen.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 
+import '../ads/native_ads_widget.dart';
+
 class SelectLanguageScreen extends StatefulWidget {
   final bool fromSettings;
   const SelectLanguageScreen({super.key, this.fromSettings = false});
@@ -127,20 +129,29 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                         ),
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: CustomButton(
-                    onPressed: isLoading ? null : _applyLanguage,
-                    text: translator.tr(
-                      widget.fromSettings ? "change" : "done",
-                    ),
-                  ),
-                ),
+               
               ],
             ),
           ),
         ],
       ),
+      bottomNavigationBar:  Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CustomButton(
+                        onPressed: isLoading ? null : _applyLanguage,
+                        text: translator.tr(
+                          widget.fromSettings ? "change" : "done",
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      // if (!widget.fromSettings)
+                        const SquareNativeAdWidget(),
+                    ],
+                  ),
+                ),
     );
   }
 }

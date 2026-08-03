@@ -128,5 +128,9 @@
     "delete_file_confirmation": "क्या आप वाकई इस फ़ाइल को हटाना चाहते हैं?",
     "watermark_pdf": "PDF वॉटरमार्क",
     "rename_your_file": "अपनी फ़ाइल का नाम बदलें",
-    "file_deleted_successfully": "फ़ाइल सफलतापूर्वक हटा दी गई"
+    "file_deleted_successfully": "फ़ाइल सफलतापूर्वक हटा दी गई",
+    "smart_printer": "मोबाइल स्मार्ट प्रिंटर",
+    "mobile_print_scanner": "फोटो, दस्तावेज़ स्कैनर और प्रिंटर",
+    "file_saved_successfully": "फ़ाइल सफलतापूर्वक सहेजी गई",
+    "smart_printer_mobile_documents": "स्मार्ट प्रिंटर और मोबाइल दस्तावेज़"
 }

@@ -128,5 +128,9 @@
   "delete_file_confirmation":"Are you sure you want to delete this file?",
   "watermark_pdf":"Watermark PDF",
   "rename_your_file":"Rename Your File",
-  "file_deleted_successfully": "File deleted successfully"
+  "file_deleted_successfully": "File deleted successfully",
+  "smart_printer":"Mobile Smart Printer",
+  "mobile_print_scanner":"Photo, Document Scanner & Printer",
+  "file_saved_successfully":"File Saved Successfully",
+  "smart_printer_mobile_documents":"Smart Printer & Mobile Documents"
   }

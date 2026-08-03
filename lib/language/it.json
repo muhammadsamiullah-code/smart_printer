@@ -128,5 +128,9 @@
     "delete_file_confirmation": "Sei sicuro di voler eliminare questo file?",
     "watermark_pdf": "Filigrana PDF",
     "rename_your_file": "Rinomina il tuo file",
-    "file_deleted_successfully": "File eliminato con successo"
+    "file_deleted_successfully": "File eliminato con successo",
+    "smart_printer": "Stampante Intelligente Portatile",
+    "mobile_print_scanner": "Scanner e Stampante per Foto e Documenti",
+    "file_saved_successfully": "File salvato con successo",
+    "smart_printer_mobile_documents": "Stampante Intelligente e Documenti Portatili"
 }

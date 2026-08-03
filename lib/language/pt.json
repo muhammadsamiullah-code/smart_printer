@@ -128,5 +128,9 @@
     "delete_file_confirmation": "Tem certeza de que deseja excluir este arquivo?",
     "watermark_pdf": "PDF com Marca d'água",
     "rename_your_file": "Renomear seu arquivo",
-    "file_deleted_successfully": "Arquivo excluído com sucesso"
+    "file_deleted_successfully": "Arquivo excluído com sucesso",
+    "smart_printer": "Impressora Inteligente Móvel",
+    "mobile_print_scanner": "Scanner e Impressora de Fotos e Documentos",
+    "file_saved_successfully": "Arquivo salvo com sucesso",
+    "smart_printer_mobile_documents": "Impressora Inteligente e Documentos Móveis"
 }

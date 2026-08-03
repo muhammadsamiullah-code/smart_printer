@@ -35,6 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
       context.read<AdsProvider>().loadAppOpenAd();
     });
   }
+
   void startLoading() {
     _timer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
       if (progress < 100) {
@@ -135,7 +136,7 @@ class _SplashScreenState extends State<SplashScreen> {
               SizedBox(
                 width: double.infinity,
                 child: Image.asset(
-                  'assets/images/printerImage.png',
+                  'assets/images/splashImage.png',
                   height: 170,
                   width: 170,
                 ),
@@ -144,7 +145,7 @@ class _SplashScreenState extends State<SplashScreen> {
               const SizedBox(height: 10),
 
               const TrText(
-                "app_name",
+                "smart_printer_mobile_documents",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -156,17 +157,48 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
 
           /// Animated Loading Text
+          /// Loading Text + Progress Bar
           Positioned(
             bottom: 50,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: TrText(
-                "Loading ($progress%).....",
-                style: const TextStyle(color: Colors.white70, fontSize: 14),
-              ),
+            left: 90,
+            right: 90,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: TrText(
+                    "Loading ($progress%).....",
+                    style: const TextStyle(color: Colors.white70, fontSize: 14),
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: LinearProgressIndicator(
+                    value: progress / 100,
+                    minHeight: 8,
+                    backgroundColor: Colors.white24,
+                    valueColor: const AlwaysStoppedAnimation<Color>(
+                      Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
+          // Positioned(
+          //   bottom: 50,
+          //   left: 0,
+          //   right: 0,
+          //   child: Center(
+          //     child: TrText(
+          //       "Loading ($progress%).....",
+          //       style: const TextStyle(color: Colors.white70, fontSize: 14),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

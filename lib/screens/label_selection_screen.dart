@@ -7,16 +7,17 @@ import 'package:smart_scanner/screens/template_selection_screen.dart';
 import 'package:smart_scanner/subscription/purchase_provider.dart';
 import 'package:smart_scanner/subscription/subscription_screen.dart';
 
+import '../ads/native_ads_widget.dart';
 import '../widgets/custom_appbar.dart';
 
-class ShapeSelectionScreen extends StatefulWidget {
-  const ShapeSelectionScreen({super.key});
+class LabelSelectionScreen extends StatefulWidget {
+  const LabelSelectionScreen({super.key});
 
   @override
-  State<ShapeSelectionScreen> createState() => _ShapeSelectionScreenState();
+  State<LabelSelectionScreen> createState() => _LabelSelectionScreenState();
 }
 
-class _ShapeSelectionScreenState extends State<ShapeSelectionScreen> {
+class _LabelSelectionScreenState extends State<LabelSelectionScreen> {
   bool isPremiumShape(LabelShape shape) {
     return shape != LabelShape.rectangle; // rectangle free hai
   }
@@ -42,11 +43,13 @@ class _ShapeSelectionScreenState extends State<ShapeSelectionScreen> {
       appBar: CustomAppBar(title: 'select_label_shape'),
       body: Column(
         children: [
-          Expanded(
+          Flexible(
             child: GridView.count(
+               shrinkWrap: true,
               crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
+              mainAxisSpacing: 12,
+              crossAxisSpacing: 12,
+              childAspectRatio: 1.3,
               padding: const EdgeInsets.all(16),
               children: LabelShape.values.map((shape) {
                 return GestureDetector(
@@ -124,6 +127,10 @@ class _ShapeSelectionScreenState extends State<ShapeSelectionScreen> {
                 );
               }).toList(),
             ),
+          ),
+           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16,),
+            child: const SquareNativeAdWidget(),
           ),
         ],
       ),

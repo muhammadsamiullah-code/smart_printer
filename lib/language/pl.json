@@ -128,5 +128,9 @@
     "delete_file_confirmation": "Czy na pewno chcesz usunąć ten plik?",
     "watermark_pdf": "Znak wodny PDF",
     "rename_your_file": "Zmień nazwę pliku",
-    "file_deleted_successfully": "Plik został pomyślnie usunięty"
+    "file_deleted_successfully": "Plik został pomyślnie usunięty",
+    "smart_printer": "Mobilna Drukarka Smart",
+    "mobile_print_scanner": "Skaner i Drukarka do Zdjęć i Dokumentów",
+    "file_saved_successfully": "Plik został pomyślnie zapisany",
+    "smart_printer_mobile_documents": "Drukarka Smart i Dokumenty Mobilne"
 }

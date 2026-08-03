@@ -128,5 +128,9 @@
   "delete_file_confirmation": "Bạn có chắc chắn muốn xóa tệp này không?",
   "watermark_pdf": "Đóng dấu chìm PDF",
   "rename_your_file": "Đổi tên tệp của bạn",
-  "file_deleted_successfully": "Xóa tệp thành công"
+  "file_deleted_successfully": "Xóa tệp thành công",
+  "smart_printer": "Máy In Thông Minh Di Động",
+    "mobile_print_scanner": "Máy Quét & In Ảnh, Tài Liệu",
+    "file_saved_successfully": "Lưu Tệp Thành Công",
+    "smart_printer_mobile_documents": "Máy In Thông Minh & Tài Liệu Di Động"
 }

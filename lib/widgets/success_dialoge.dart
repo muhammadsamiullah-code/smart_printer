@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,6 +5,7 @@ import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
 
+import '../ads/native_ads_widget.dart';
 import '../screens/tools_data_screens/merge_pdf/pdf_preview_screen.dart';
 import 'tr_text.dart';
 
@@ -16,21 +16,24 @@ class SuccessDialog {
       barrierDismissible: false,
       builder: (context) => Dialog(
         backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SvgPicture.asset('assets/imageIcons/checkBox.svg', height: 60, width: 60,),
+               const SizedBox(height: 10),
+              SvgPicture.asset(
+                'assets/imageIcons/checkBox.svg',
+                height: 40,
+                width: 40,
+              ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
 
-              const Text(
-                "File Saved Successfully",
-                style: TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.bold),
+              const TrText(
+                "file_saved_successfully",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
 
               const SizedBox(height: 10),
@@ -44,11 +47,11 @@ class SuccessDialog {
                 ),
               ),
 
-              const SizedBox(height: 20),
-
+              const SizedBox(height: 10),
+              RectangleNativeAdWidget(),
+              const SizedBox(height: 10),
               Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _buildOption(
                     icon: 'assets/imageIcons/file.svg',
@@ -57,8 +60,7 @@ class SuccessDialog {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) =>
-                              PdfPreviewPrintScreen(file: file),
+                          builder: (_) => PdfPreviewPrintScreen(file: file),
                         ),
                       );
                     },
@@ -68,9 +70,7 @@ class SuccessDialog {
                     label: "share",
                     onTap: () {
                       SharePlus.instance.share(
-                        ShareParams(
-                          files: [XFile(file.path)],
-                        ),
+                        ShareParams(files: [XFile(file.path)]),
                       );
                     },
                   ),
@@ -79,8 +79,7 @@ class SuccessDialog {
                     label: "print",
                     onTap: () async {
                       await Printing.layoutPdf(
-                        onLayout: (_) async =>
-                            file.readAsBytes(),
+                        onLayout: (_) async => file.readAsBytes(),
                       );
                     },
                   ),
@@ -90,12 +89,14 @@ class SuccessDialog {
               const SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: CustomButton(text: "done", onPressed: (){
-                   Navigator.pop(context);
-                      Navigator.pop(context, true);
-                }),
+                child: CustomButton(
+                  text: "done",
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context, true);
+                  },
+                ),
               ),
-             
             ],
           ),
         ),
@@ -112,10 +113,17 @@ class SuccessDialog {
       onTap: onTap,
       child: Column(
         children: [
-         SvgPicture.asset(icon, height: 30, width: 30,),
-         
+          SvgPicture.asset(icon, height: 30, width: 30),
+
           const SizedBox(height: 5),
-          TrText(label, style: TextStyle(fontSize: 14, color: Colors.black54, fontWeight: FontWeight.w500),),
+          TrText(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.black54,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ],
       ),
     );

@@ -5,6 +5,7 @@ import 'package:pdfx/pdfx.dart' as pdfx;
 import 'package:path_provider/path_provider.dart';
 import 'package:smart_scanner/const/color.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart' as sfpdf;
+import '../../../ads/native_ads_widget.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/success_dialoge.dart';
@@ -12,7 +13,11 @@ import '../../../widgets/success_dialoge.dart';
 class DeletePdfPagesScreen extends StatefulWidget {
   final File file;
   final String title;
-  const DeletePdfPagesScreen({super.key, required this.file, required this.title});
+  const DeletePdfPagesScreen({
+    super.key,
+    required this.file,
+    required this.title,
+  });
 
   @override
   State<DeletePdfPagesScreen> createState() => _DeletePdfPagesScreenState();
@@ -75,7 +80,9 @@ class _DeletePdfPagesScreenState extends State<DeletePdfPagesScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
+      builder: (_) => const Center(
+        child: CircularProgressIndicator(color: AppColors.primaryColor),
+      ),
     );
 
     final bytes = await widget.file.readAsBytes();
@@ -105,21 +112,23 @@ class _DeletePdfPagesScreenState extends State<DeletePdfPagesScreen> {
 
     return thumbnails.containsKey(index)
         ? Image.memory(thumbnails[index]!, fit: BoxFit.cover)
-        : const Center(child: CircularProgressIndicator(color: AppColors.primaryColor));
+        : const Center(
+            child: CircularProgressIndicator(color: AppColors.primaryColor),
+          );
   }
 
   @override
   Widget build(BuildContext context) {
     if (document == null) {
       return const Scaffold(
-        body: Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
+        body: Center(
+          child: CircularProgressIndicator(color: AppColors.primaryColor),
+        ),
       );
     }
 
     return Scaffold(
-    appBar: CustomAppBar(
-  title: widget.title,
-  actions: [
+      appBar: CustomAppBar(title: widget.title, actions: [
 
   ],
       ),
@@ -158,12 +167,18 @@ class _DeletePdfPagesScreenState extends State<DeletePdfPagesScreen> {
           );
         },
       ),
-         bottomNavigationBar: Container(
+      bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(12),
-        height: 80,
-        child: CustomButton(
-         onPressed: selectedPages.isNotEmpty ? deletePages : null,
-          text: "delete",
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomButton(
+              onPressed: selectedPages.isNotEmpty ? deletePages : null,
+              text: "delete",
+            ),
+            SizedBox(height: 10),
+            SquareNativeAdWidget(),
+          ],
         ),
       ),
     );

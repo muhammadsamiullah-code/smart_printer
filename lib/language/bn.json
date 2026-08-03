@@ -128,5 +128,9 @@
     "delete_file_confirmation": "আপনি কি নিশ্চিত যে আপনি এই ফাইলটি মুছে ফেলতে চান?",
     "watermark_pdf": "পিডিএফ জলছাপ",
     "rename_your_file": "আপনার ফাইলের নাম পরিবর্তন করুন",
-    "file_deleted_successfully": "ফাইলটি সফলভাবে মুছে ফেলা হয়েছে"
+    "file_deleted_successfully": "ফাইলটি সফলভাবে মুছে ফেলা হয়েছে",
+    "smart_printer": "মোবাইল স্মার্ট প্রিন্টার",
+    "mobile_print_scanner": "ফটো, ডকুমেন্ট স্ক্যানার এবং প্রিন্টার",
+    "file_saved_successfully": "ফাইল সফলভাবে সংরক্ষিত হয়েছে",
+    "smart_printer_mobile_documents": "স্মার্ট প্রিন্টার এবং মোবাইল নথি"
 }

@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_scanner/ads/ads_provider.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
+import '../../../ads/native_ads_widget.dart';
 import '../../../const/color.dart';
 import '../../../const/enum.dart';
 import '../../../widgets/build_commeon_fab.dart';
@@ -205,42 +206,54 @@ class _WatermarkPdfScreenState extends State<WatermarkPdfScreen> {
               icon: widget.icon,
               color: widget.color,
             )
-          : ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: reversedList.length,
-              itemBuilder: (_, index) {
-                final file = reversedList[index];
-                final fileName = file.path.split('/').last;
-                final fileSize = formatFileSize(file.lengthSync());
-                final lastModified = file.lastModifiedSync();
-                final formattedDate = formatDateTime(lastModified);
-                return PdfListCard(
-                  title: fileName,
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(fileSize, style: TextStyle(fontSize: 12)),
-                      Text(formattedDate, style: TextStyle(fontSize: 12)),
-                    ],
+          : SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, ),
+                    child: RectangleNativeAdWidget(),
                   ),
-                  trailing: FileOptionsMenu(
-                    onRename: () => renameFile(file),
-                    onDelete: () => deleteFile(file),
+                ListView.builder(
+                   shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(12),
+                    itemCount: reversedList.length,
+                    itemBuilder: (_, index) {
+                      final file = reversedList[index];
+                      final fileName = file.path.split('/').last;
+                      final fileSize = formatFileSize(file.lengthSync());
+                      final lastModified = file.lastModifiedSync();
+                      final formattedDate = formatDateTime(lastModified);
+                      return PdfListCard(
+                        title: fileName,
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(fileSize, style: TextStyle(fontSize: 12)),
+                            Text(formattedDate, style: TextStyle(fontSize: 12)),
+                          ],
+                        ),
+                        trailing: FileOptionsMenu(
+                          onRename: () => renameFile(file),
+                          onDelete: () => deleteFile(file),
+                        ),
+                        onTap: () async {
+                           await context.read<AdsProvider>().showAdInterstitial(
+                            type: InterstitialType.pdfList,
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => PdfPreviewPrintScreen(file: file),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
-                  onTap: () async {
-                     await context.read<AdsProvider>().showAdInterstitial(
-                      type: InterstitialType.pdfList,
-                    );
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => PdfPreviewPrintScreen(file: file),
-                      ),
-                    );
-                  },
-                );
-              },
+              ],
             ),
+          ),
       floatingActionButton: buildCommonFAB(
         onPressed: () => pickPdf(context),
         label: 'select_file',

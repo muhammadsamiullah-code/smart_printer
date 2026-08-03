@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
+import '../../../ads/native_ads_widget.dart';
 import '../../../const/color.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/custom_button.dart';
@@ -73,9 +74,11 @@ class _CreateQRPdfScreenState extends State<CreateQRPdfScreen> {
       appBar: CustomAppBar(title: widget.title),
 
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.only(left: 16, right: 16,),
         child: Column(
           children: [
+            RectangleNativeAdWidget(),
+            SizedBox(height: 10),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(

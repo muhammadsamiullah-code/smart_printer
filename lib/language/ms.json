@@ -128,5 +128,9 @@
     "delete_file_confirmation": "Adakah anda pasti mahu memadam fail ini?",
     "watermark_pdf": "Tanda Air PDF",
     "rename_your_file": "Naman semula fail anda",
-    "file_deleted_successfully": "Fail berjaya dipadamkan"
+    "file_deleted_successfully": "Fail berjaya dipadamkan",
+    "smart_printer": "Pencetak Pintar Mudah Alih",
+    "mobile_print_scanner": "Pengimbas & Pencetak Foto, Dokumen",
+    "file_saved_successfully": "Fail Berjaya Disimpan",
+    "smart_printer_mobile_documents": "Pencetak Pintar & Dokumen Mudah Alih"
 }

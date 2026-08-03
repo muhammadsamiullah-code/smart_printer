@@ -128,5 +128,9 @@
     "delete_file_confirmation": "Is u seker u wil hierdie lêer skrap?",
     "watermark_pdf": "Watermerk PDF",
     "rename_your_file": "Hernoem jou lêer",
-    "file_deleted_successfully": "Lêer suksesvol verwyder"
+    "file_deleted_successfully": "Lêer suksesvol verwyder",
+    "smart_printer": "Mobiele Slim Drukker",
+    "mobile_print_scanner": "Foto, Dokument Skandeerder & Drukker",
+    "file_saved_successfully": "Lêer Suksesvol Stoor",
+    "smart_printer_mobile_documents": "Slim Drukker & Mobiele Dokumente"
 }

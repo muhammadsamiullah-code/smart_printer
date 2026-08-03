@@ -139,6 +139,7 @@ class _MyAppState extends State<MyApp> {
         //   Color.fromRGBO(255, 255, 255, 1),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
+      // home: SelectLanguageScreen()
       home: const SplashScreen(),
     );
   }

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.gms.ads.nativead.NativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_native_card"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Top row: Ad badge + Icon + info icon -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/ad_attribution"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ad"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:textColor="#6C63FF"
+                    android:background="@drawable/bg_ad_badge"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:layout_marginEnd="8dp" />
+
+                <ImageView
+                    android:id="@+id/ad_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentEnd="true"
+                android:text="i"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:textColor="#9E9E9E"
+                android:background="@drawable/bg_ad_badge" />
+
+        </RelativeLayout>
+
+        <!-- Middle row: text (left) + media image (right) -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/ad_headline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textColor="#1A1A1A" />
+
+                <TextView
+                    android:id="@+id/ad_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="11sp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textColor="#8A8A8A" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:background="@drawable/bg_media_rounded"
+                android:clipToOutline="true">
+
+                <com.google.android.gms.ads.nativead.MediaView
+                    android:id="@+id/ad_media"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <!-- Full width CTA button -->
+        <Button
+            android:id="@+id/ad_call_to_action"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="10dp"
+            android:text="FLY NOW"
+            android:textSize="13sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:background="@drawable/bg_fly_button" />
+
+    </LinearLayout>
+
+</com.google.android.gms.ads.nativead.NativeAdView>

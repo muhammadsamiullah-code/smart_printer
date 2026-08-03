@@ -15,6 +15,9 @@ class AdsManager {
   bool isBannerLoaded = false; // 👈 ADD THIS
   InterstitialAd? interstitialAd;
   NativeAd? nativeAd;
+  bool isNativeLoaded = false;
+  NativeAd? rectangleNativeAd; // rectangle design
+  bool isRectangleNativeLoaded = false;
   AppOpenAd? appOpenAd;
 
   int clickCount = 0;
@@ -25,7 +28,8 @@ class AdsManager {
     if (isPremiumUser) return;
     loadBanner();
     loadInterstitial(); // ✅ only preload
-    loadNative();
+     loadNative();
+    loadRectangleNative();
     // ❌ DO NOT load/show AppOpen here
     // ❌ DO NOT show interstitial here
   }
@@ -228,15 +232,64 @@ class AdsManager {
 
   /// ------------------ NATIVE ------------------
   Future<void> loadNative() async {
-    if (isPremiumUser) return; // ❌ NO ADS
+    if (isPremiumUser) return;
     if (!RemoteConfigService.nativeEnabled) return;
+
+    nativeAd?.dispose();
+    nativeAd = null;
+    isNativeLoaded = false;
 
     nativeAd = NativeAd(
       adUnitId: RemoteConfigService.nativeAdId,
-      factoryId: 'listTile',
+      factoryId: "listTile",
       request: const AdRequest(),
-      listener: NativeAdListener(),
-    )..load();
+      listener: NativeAdListener(
+        onAdLoaded: (ad) {
+          nativeAd = ad as NativeAd;
+          isNativeLoaded = true;
+          onAdUpdated?.call();
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          nativeAd = null;
+          isNativeLoaded = false;
+          onAdUpdated?.call();
+        },
+      ),
+    );
+
+    await nativeAd!.load();
+  }
+
+  /// Rectangle/landscape native ad
+  Future<void> loadRectangleNative() async {
+    if (isPremiumUser) return;
+    if (!RemoteConfigService.nativeEnabled) return;
+
+    rectangleNativeAd?.dispose();
+    rectangleNativeAd = null;
+    isRectangleNativeLoaded = false;
+
+    rectangleNativeAd = NativeAd(
+      adUnitId: RemoteConfigService.nativeAdId,
+      factoryId: "rectangle",
+      request: const AdRequest(),
+      listener: NativeAdListener(
+        onAdLoaded: (ad) {
+          rectangleNativeAd = ad as NativeAd;
+          isRectangleNativeLoaded = true;
+          onAdUpdated?.call();
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          rectangleNativeAd = null;
+          isRectangleNativeLoaded = false;
+          onAdUpdated?.call();
+        },
+      ),
+    );
+
+    await rectangleNativeAd!.load();
   }
 
   /// ------------------ APP OPEN (ONLY CALL MANUALLY) ------------------
@@ -266,19 +319,19 @@ class AdsManager {
     );
   }
 
-  void removeAdsForPremium() {
+ void removeAdsForPremium() {
     bannerAd?.dispose();
     interstitialAd?.dispose();
     nativeAd?.dispose();
     appOpenAd?.dispose();
-
+    nativeAd?.dispose();
+    rectangleNativeAd?.dispose();
     bannerAd = null;
     interstitialAd = null;
     nativeAd = null;
     appOpenAd = null;
-
+    rectangleNativeAd = null;
     isBannerLoaded = false;
-
     onAdUpdated?.call();
   }
 
@@ -287,6 +340,7 @@ class AdsManager {
     bannerAd?.dispose();
     interstitialAd?.dispose();
     nativeAd?.dispose();
+    rectangleNativeAd?.dispose();
     appOpenAd?.dispose();
   }
 }

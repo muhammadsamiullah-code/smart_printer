@@ -16,6 +16,7 @@ import 'package:smart_scanner/subscription/purchase_provider.dart';
 import 'package:smart_scanner/subscription/subscription_screen.dart';
 import 'package:smart_scanner/widgets/tr_text.dart';
 import '../ads/ads_provider.dart';
+import '../ads/native_ads_widget.dart';
 import '../const/color.dart';
 import '../const/enum.dart';
 import '../models/menu_item_model.dart';
@@ -24,7 +25,7 @@ import 'dart:async';
 import 'package:multicast_dns/multicast_dns.dart';
 import 'contacts_screen.dart';
 import 'image_to_pdf_convert.dart';
-import 'shape_selection_screen.dart';
+import 'label_selection_screen.dart';
 import 'topic_selection_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,6 +38,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<String> printers = [];
   bool isScanning = false;
+  bool isAdVisible = false; // ad load hone par true set hoga
+
   Future<void> discoverPrinters() async {
     setState(() {
       isScanning = true;
@@ -280,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const ShapeSelectionScreen()),
+            MaterialPageRoute(builder: (_) => const LabelSelectionScreen()),
           );
         },
       ),
@@ -385,6 +388,8 @@ class _HomeScreenState extends State<HomeScreen> {
       //   onTap: () {},
       // ),
     ];
+    bool isAdVisible = false;
+
     return Scaffold(
       //  backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       body: Stack(
@@ -399,7 +404,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TrText(
-                      "home_title",
+                      "smart_printer",
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
@@ -415,102 +420,215 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
-                      child: Image.asset(
-                        'assets/images/crown.png',
+                      child: SvgPicture.asset(
+                        'assets/imageIcons/crown.svg',
                         height: 28,
                         width: 28,
                       ),
+                      // child: Image.asset(
+                      //   'assets/images/crown.png',
+                      //   height: 28,
+                      //   width: 28,
+                      // ),
                     ),
                   ],
                 ),
                 TrText(
-                  "home_subtitle",
+                  "mobile_print_scanner",
                   style: TextStyle(
                     color: Color.fromRGBO(146, 146, 146, 1),
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(height: 16),
-                // ======= CONNECT CARD =======
-                GestureDetector(
-                  onTap: () async {
-                    // if (!isScanning) {
-                    //   await discoverPrinters();
-                    // }
-                  },
-                  child: Container(
-                    // height: 200,
-                    // width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      gradient: const LinearGradient(
-                        colors: [
-                          Color.fromRGBO(6, 61, 118, 1),
-                          Color.fromRGBO(60, 106, 180, 1),
-                        ],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                    ),
-
-                    // 👇 MAIN CONDITION START
-                    child: isScanning
-                        ? const Center(
-                            child: CircularProgressIndicator(
-                              color: AppColors.primaryColor,
+                SizedBox(height: 8),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // 👇 Sirf tab dikhega jab ad NAHI hai
+                    if (!isAdVisible)
+                      GestureDetector(
+                        onTap: () async {
+                          // if (!isScanning) {
+                          //   await discoverPrinters();
+                          // }
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color.fromRGBO(6, 61, 118, 1),
+                                Color.fromRGBO(60, 106, 180, 1),
+                              ],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
                             ),
-                          )
-                        : printers.isEmpty
-                        ? Row(
-                            children: [
-                              Expanded(
-                                child: const TrText(
-                                  "wifi_instruction",
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(245, 245, 245, 1),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Image.asset(
-                                'assets/images/printerImage.png',
-                                height: 100,
-                                width: 100,
-                              ),
-                            ],
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: printers
-                                .map(
-                                  (printer) => Container(
-                                    margin: const EdgeInsets.symmetric(
-                                      vertical: 6,
-                                    ),
-                                    padding: const EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      color: Colors.green.shade100,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        const Icon(Icons.print),
-                                        const SizedBox(width: 10),
-                                        Expanded(child: Text(printer)),
-                                      ],
-                                    ),
+                          ),
+                          child: isScanning
+                              ? const Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.primaryColor,
                                   ),
                                 )
-                                .toList(),
-                          ),
-                  ),
+                              : printers.isEmpty
+                              ? Row(
+                                  children: [
+                                    Expanded(
+                                      child: const TrText(
+                                        "wifi_instruction",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(
+                                            245,
+                                            245,
+                                            245,
+                                            1,
+                                          ),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Image.asset(
+                                      'assets/images/printerImage.png',
+                                      height: 100,
+                                      width: 100,
+                                    ),
+                                  ],
+                                )
+                              : Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: printers
+                                      .map(
+                                        (printer) => Container(
+                                          margin: const EdgeInsets.symmetric(
+                                            vertical: 6,
+                                          ),
+                                          padding: const EdgeInsets.all(12),
+                                          decoration: BoxDecoration(
+                                            color: Colors.green.shade100,
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              const Icon(Icons.print),
+                                              const SizedBox(width: 10),
+                                              Expanded(child: Text(printer)),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                        ),
+                      ),
+                
+                    // 👇 Ad widget hamesha tree mein rehta hai (taake load ho sake),
+                    // lekin sirf tab UI mein "effectively" dikhta hai jab load ho jaye
+                    SquareNativeAdWidget(
+                      onAdLoaded: () {
+                        if (mounted) setState(() => isAdVisible = true);
+                      },
+                      onAdFailedToLoad: () {
+                        if (mounted) setState(() => isAdVisible = false);
+                      },
+                    ),
+                  ],
                 ),
+                // const SizedBox(height: 8),
 
-                const SizedBox(height: 16),
+                //    SizedBox(
+                //   height: 280,
+                //   child: Stack(
+                //     alignment: Alignment.center,
+                //     children: [
+                //       GestureDetector(
+                //     onTap: () async {
+                //       // if (!isScanning) {
+                //       //   await discoverPrinters();
+                //       // }
+                //     },
+                //     child: Container(
+                //       // height: 200,
+                //       // width: double.infinity,
+                //       padding: const EdgeInsets.all(16),
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(20),
+                //         gradient: const LinearGradient(
+                //           colors: [
+                //             Color.fromRGBO(6, 61, 118, 1),
+                //             Color.fromRGBO(60, 106, 180, 1),
+                //           ],
+                //           begin: Alignment.centerLeft,
+                //           end: Alignment.centerRight,
+                //         ),
+                //       ),
+
+                //       // 👇 MAIN CONDITION START
+                //       child: isScanning
+                //           ? const Center(
+                //               child: CircularProgressIndicator(
+                //                 color: AppColors.primaryColor,
+                //               ),
+                //             )
+                //           : printers.isEmpty
+                //           ? Row(
+                //               children: [
+                //                 Expanded(
+                //                   child: const TrText(
+                //                     "wifi_instruction",
+                //                     style: TextStyle(
+                //                       color: Color.fromRGBO(245, 245, 245, 1),
+                //                       fontSize: 16,
+                //                       fontWeight: FontWeight.w500,
+                //                     ),
+                //                   ),
+                //                 ),
+                //                 const SizedBox(width: 10),
+                //                 Image.asset(
+                //                   'assets/images/printerImage.png',
+                //                   height: 100,
+                //                   width: 100,
+                //                 ),
+                //               ],
+                //             )
+                //           : Column(
+                //               crossAxisAlignment: CrossAxisAlignment.start,
+                //               children: printers
+                //                   .map(
+                //                     (printer) => Container(
+                //                       margin: const EdgeInsets.symmetric(
+                //                         vertical: 6,
+                //                       ),
+                //                       padding: const EdgeInsets.all(12),
+                //                       decoration: BoxDecoration(
+                //                         color: Colors.green.shade100,
+                //                         borderRadius: BorderRadius.circular(12),
+                //                       ),
+                //                       child: Row(
+                //                         children: [
+                //                           const Icon(Icons.print),
+                //                           const SizedBox(width: 10),
+                //                           Expanded(child: Text(printer)),
+                //                         ],
+                //                       ),
+                //                     ),
+                //                   )
+                //                   .toList(),
+                //             ),
+                //     ),
+                //   ),
+
+                //       const SquareNativeAdWidget(),
+                //     ],
+                //   ),
+                // ),
+                const SizedBox(height: 8),
                 // ElevatedButton(
                 //   onPressed: () {
                 //     FirebaseCrashlytics.instance.crash();
