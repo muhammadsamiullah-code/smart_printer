@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
-
 import '../ads/native_ads_widget.dart';
 import '../screens/tools_data_screens/merge_pdf/pdf_preview_screen.dart';
 import 'tr_text.dart';

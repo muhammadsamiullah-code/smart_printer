@@ -6,7 +6,6 @@ import 'package:smart_scanner/const/color.dart';
 import 'package:smart_scanner/widgets/custom_button.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart' as sfpdf;
 import 'package:pdfx/pdfx.dart';
-
 import '../../../ads/native_ads_widget.dart';
 import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/pdf_list_card.dart';

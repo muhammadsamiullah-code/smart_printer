@@ -1,0 +1,5 @@
+-dontwarn com.facebook.infer.annotation.Nullsafe$Mode
+-dontwarn com.facebook.infer.annotation.Nullsafe
+-dontwarn com.facebook.infer.annotation.**
+-dontwarn com.facebook.ads.**
+-dontwarn com.facebook.**

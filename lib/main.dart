@@ -31,7 +31,14 @@ void main() async {
   //  Firebase.initializeApp();
    RemoteConfigService.init();
    PurchaseManager().init(); // direct call
-  MobileAds.instance.initialize();
+    final initializationStatus = await MobileAds.instance.initialize();
+
+  initializationStatus.adapterStatuses.forEach((name, status) {
+    debugPrint(
+      'Meta mediation process====>>> $name -> ${status.state} | ${status.description}',
+    );
+  });
+  // MobileAds.instance.initialize();
   // final purchaseProvider = PurchaseProvider();
   // await purchaseProvider.init();
   // MobileAds.instance.initialize();

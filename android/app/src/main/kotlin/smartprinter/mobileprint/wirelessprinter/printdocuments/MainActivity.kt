@@ -6,27 +6,37 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin
 
 class MainActivity : FlutterActivity() {
+
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        // Square/vertical design
+        // Square / vertical native ad
         GoogleMobileAdsPlugin.registerNativeAdFactory(
             flutterEngine,
             "listTile",
-            ListTileNativeAdFactory(context)
+            ListTileNativeAdFactory(this)
         )
 
-        // Rectangle/landscape design
+        // Rectangle / landscape native ad
         GoogleMobileAdsPlugin.registerNativeAdFactory(
             flutterEngine,
             "rectangle",
-            RectangleNativeAdFactory(context)
+            RectangleNativeAdFactory(this)
         )
     }
 
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
+
+        GoogleMobileAdsPlugin.unregisterNativeAdFactory(
+            flutterEngine,
+            "listTile"
+        )
+
+        GoogleMobileAdsPlugin.unregisterNativeAdFactory(
+            flutterEngine,
+            "rectangle"
+        )
+
         super.cleanUpFlutterEngine(flutterEngine)
-        GoogleMobileAdsPlugin.unregisterNativeAdFactory(flutterEngine, "listTile")
-        GoogleMobileAdsPlugin.unregisterNativeAdFactory(flutterEngine, "rectangle")
     }
 }

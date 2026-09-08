@@ -57,7 +57,6 @@ class CustomButton extends StatelessWidget {
   }
 }
 
-
 class CustomButtonWithBorder extends StatelessWidget {
   final String text; // required
   final VoidCallback ? onPressed; // required

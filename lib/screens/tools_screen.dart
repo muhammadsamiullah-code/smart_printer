@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_scanner/subscription/purchase_provider.dart';
 import 'package:smart_scanner/subscription/subscription_screen.dart';
 import '../ads/ads_provider.dart';
 import '../ads/native_ads_widget.dart';
 import '../const/enum.dart';
-import '../widgets/custom_appbar.dart';
 import '../widgets/tr_text.dart';
 import 'tools_data_screens/browse_pdf/browse_pdf_file_screen.dart';
 import 'tools_data_screens/compress_pdf/compress_pdf_file_screen.dart';

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.gms.ads.nativead.NativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<com.google.android.gms.ads.nativead.NativeAdView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_native_card"
@@ -10,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Top row: Ad badge + Icon + info icon -->
+        <!-- Top row -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,7 +59,7 @@
 
         </RelativeLayout>
 
-        <!-- Middle row: text (left) + media image (right) -->
+        <!-- Middle row -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -108,7 +110,7 @@
 
         </LinearLayout>
 
-        <!-- Full width CTA button -->
+        <!-- CTA -->
         <Button
             android:id="@+id/ad_call_to_action"
             android:layout_width="match_parent"
