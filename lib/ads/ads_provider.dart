@@ -19,6 +19,11 @@ class AdsProvider extends ChangeNotifier {
   //   await _adsManager.init();
   //   notifyListeners();
   // }
+  /// App Open: sirf load
+  Future<void> loadAppOpenAd() => _adsManager.loadAppOpen();
+
+  /// App Open: sirf Splash se manually call hoga
+  Future<void> showAppOpenAd() => _adsManager.showAppOpenIfAvailable();
 
   Future<void> showInterstitial() async {
     await _adsManager.showInterstitialIfNeeded();
@@ -39,9 +44,9 @@ class AdsProvider extends ChangeNotifier {
   }
 
   /// ✅ App Open Separate
-  Future<void> loadAppOpenAd() async {
-    await _adsManager.loadAppOpen();
-  }
+  // Future<void> loadAppOpenAd() async {
+  //   await _adsManager.loadAppOpen();
+  // }
 
   @override
   void dispose() {

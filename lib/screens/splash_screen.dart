@@ -20,62 +20,128 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Timer? _timer;
-
-  bool isSubscriptionShown = false;
-  bool isLoadingCompleted = false;
   final box = GetStorage();
   int progress = 0;
+
+  late final bool isFirstLaunch;
+  Future<void>? _adLoadFuture;
 
   @override
   void initState() {
     super.initState();
-    startLoading();
 
-    Future.delayed(Duration.zero, () {
-      context.read<AdsProvider>().loadAppOpenAd();
-    });
+    // onboarding complete nahi hui = abhi first-time user hai
+    isFirstLaunch = !(box.read('onboardingDone') ?? false);
+
+    // Sirf returning user ke liye ad preload
+    // initState mein
+    if (!isFirstLaunch) {
+      _adLoadFuture = context.read<AdsProvider>().loadAppOpenAd();
+    }
+
+    startLoading();
   }
 
   void startLoading() {
     _timer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
       if (progress < 100) {
-        setState(() {
-          progress++;
-        });
+        setState(() => progress++);
       } else {
         timer.cancel();
-
-        isLoadingCompleted = true;
-
-        /// ✅ FIRST check subscription AFTER loading complete
-        checkSubscriptionPopup();
+        _onLoadingComplete();
       }
     });
   }
 
-  Future<void> checkSubscriptionPopup() async {
+  Future<void> _onLoadingComplete() async {
     final count = await AppOpenManager.incrementAndGetCount();
+    if (!mounted) return;
+
     final isPremium = context.read<PurchaseProvider>().isPremium;
 
-    if (isPremium) {
+    // Premium ya first-time user: koi App Open ad nahi
+    if (isPremium || isFirstLaunch) {
       proceedNavigation();
       return;
     }
 
     if (count % 3 == 0) {
-      isSubscriptionShown = true;
-
+      // Subscription screen, is session mein App Open ad skip
       await Navigator.push(
         context,
         MaterialPageRoute(builder: (_) => const SubscriptionScreen()),
       );
-
-      /// 👇 User back → now continue
-      proceedNavigation();
     } else {
-      proceedNavigation();
+      // Ad load hone ka max 3 sec intezar, phir show
+      await _adLoadFuture?.timeout(
+        const Duration(seconds: 3),
+        onTimeout: () {},
+      );
+      if (!mounted) return;
+      await context.read<AdsProvider>().showAppOpenAd();
     }
+
+    if (!mounted) return;
+    proceedNavigation();
   }
+
+  // Timer? _timer;
+
+  // bool isSubscriptionShown = false;
+  // bool isLoadingCompleted = false;
+  // final box = GetStorage();
+  // int progress = 0;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   startLoading();
+
+  //   Future.delayed(Duration.zero, () {
+  //     context.read<AdsProvider>().loadAppOpenAd();
+  //   });
+  // }
+
+  // void startLoading() {
+  //   _timer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
+  //     if (progress < 100) {
+  //       setState(() {
+  //         progress++;
+  //       });
+  //     } else {
+  //       timer.cancel();
+
+  //       isLoadingCompleted = true;
+
+  //       /// ✅ FIRST check subscription AFTER loading complete
+  //       checkSubscriptionPopup();
+  //     }
+  //   });
+  // }
+
+  // Future<void> checkSubscriptionPopup() async {
+  //   final count = await AppOpenManager.incrementAndGetCount();
+  //   final isPremium = context.read<PurchaseProvider>().isPremium;
+
+  //   if (isPremium) {
+  //     proceedNavigation();
+  //     return;
+  //   }
+
+  //   if (count % 3 == 0) {
+  //     isSubscriptionShown = true;
+
+  //     await Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (_) => const SubscriptionScreen()),
+  //     );
+
+  //     /// 👇 User back → now continue
+  //     proceedNavigation();
+  //   } else {
+  //     proceedNavigation();
+  //   }
+  // }
 
   void proceedNavigation() {
     final box = GetStorage();

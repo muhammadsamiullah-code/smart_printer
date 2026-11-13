@@ -22,7 +22,13 @@ class AdsManager {
 
   int clickCount = 0;
   bool isInterstitialShowing = false;
+    bool isAppOpenShowing = false;
+  DateTime? _appOpenLoadTime;
 
+  bool get _isAppOpenAvailable =>
+      appOpenAd != null &&
+      _appOpenLoadTime != null &&
+      DateTime.now().difference(_appOpenLoadTime!) < const Duration(hours: 2);
   /// 🔹 INIT (NO AD SHOW HERE)
   Future<void> init() async {
     if (isPremiumUser) return;
@@ -142,42 +148,6 @@ class AdsManager {
     interstitialAd!.show();
   }
 
-  /// ------------------ FORCE SHOW INTERSTITIAL ------------------
-  // Future<void> showAdNow() async {
-  //   if (isPremiumUser) return; // ❌ NO ADS
-
-  //   if (!RemoteConfigService.interstitialEnabled) return;
-
-  //   if (interstitialAd == null || isInterstitialShowing) {
-  //     await loadInterstitial();
-  //     return;
-  //   }
-
-  //   isInterstitialShowing = true;
-
-  //   final completer = Completer<void>();
-
-  //   interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-  //     onAdDismissedFullScreenContent: (ad) {
-  //       ad.dispose();
-  //       isInterstitialShowing = false;
-  //       interstitialAd = null;
-  //       loadInterstitial();
-  //       completer.complete();
-  //     },
-  //     onAdFailedToShowFullScreenContent: (ad, error) {
-  //       ad.dispose();
-  //       isInterstitialShowing = false;
-  //       interstitialAd = null;
-  //       loadInterstitial();
-  //       completer.complete();
-  //     },
-  //   );
-
-  //   interstitialAd!.show();
-
-  //   return completer.future;
-  // }
    Future<void> showAdNow({
     InterstitialType type = InterstitialType.normal,
   }) async {
@@ -293,10 +263,37 @@ class AdsManager {
   }
 
   /// ------------------ APP OPEN (ONLY CALL MANUALLY) ------------------
-  Future<void> loadAppOpen() async {
-    if (isPremiumUser) return; // ❌ NO ADS
+  // Future<void> loadAppOpen() async {
+  //   if (isPremiumUser) return; // ❌ NO ADS
 
+  //   if (!RemoteConfigService.appOpenEnabled) return;
+
+  //   AppOpenAd.load(
+  //     adUnitId: RemoteConfigService.appOpenAdId,
+  //     request: const AdRequest(),
+  //     adLoadCallback: AppOpenAdLoadCallback(
+  //       onAdLoaded: (ad) {
+  //         appOpenAd = ad;
+
+  //         Future.delayed(
+  //           Duration(seconds: RemoteConfigService.appOpenDelay),
+  //           () {
+  //             if (!isInterstitialShowing) {
+  //               appOpenAd?.show();
+  //             }
+  //           },
+  //         );
+  //       },
+  //       onAdFailedToLoad: (error) {},
+  //     ),
+  //   );
+  // }
+ Future<void> loadAppOpen() async {
+    if (isPremiumUser) return;
     if (!RemoteConfigService.appOpenEnabled) return;
+    if (_isAppOpenAvailable) return;
+
+    final completer = Completer<void>();
 
     AppOpenAd.load(
       adUnitId: RemoteConfigService.appOpenAdId,
@@ -304,36 +301,70 @@ class AdsManager {
       adLoadCallback: AppOpenAdLoadCallback(
         onAdLoaded: (ad) {
           appOpenAd = ad;
-
-          Future.delayed(
-            Duration(seconds: RemoteConfigService.appOpenDelay),
-            () {
-              if (!isInterstitialShowing) {
-                appOpenAd?.show();
-              }
-            },
-          );
+          _appOpenLoadTime = DateTime.now();
+          if (!completer.isCompleted) completer.complete();
         },
-        onAdFailedToLoad: (error) {},
+        onAdFailedToLoad: (error) {
+          appOpenAd = null;
+          if (!completer.isCompleted) completer.complete();
+        },
       ),
     );
+
+    return completer.future;
   }
 
- void removeAdsForPremium() {
-    bannerAd?.dispose();
-    interstitialAd?.dispose();
-    nativeAd?.dispose();
-    appOpenAd?.dispose();
-    nativeAd?.dispose();
-    rectangleNativeAd?.dispose();
-    bannerAd = null;
-    interstitialAd = null;
-    nativeAd = null;
-    appOpenAd = null;
-    rectangleNativeAd = null;
-    isBannerLoaded = false;
-    onAdUpdated?.call();
+  /// Show sirf tab jab caller bole. Ad band hone tak await hota hai.
+  Future<void> showAppOpenIfAvailable() async {
+    if (isPremiumUser) return;
+    if (!RemoteConfigService.appOpenEnabled) return;
+    if (isAppOpenShowing || isInterstitialShowing) return;
+    if (!_isAppOpenAvailable) return;
+
+    final completer = Completer<void>();
+    final ad = appOpenAd!;
+    appOpenAd = null; // ek ad sirf ek dafa
+
+    ad.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (_) => isAppOpenShowing = true,
+      onAdDismissedFullScreenContent: (ad) {
+        isAppOpenShowing = false;
+        ad.dispose();
+        if (!completer.isCompleted) completer.complete();
+      },
+      onAdFailedToShowFullScreenContent: (ad, error) {
+        isAppOpenShowing = false;
+        ad.dispose();
+        if (!completer.isCompleted) completer.complete();
+      },
+    );
+
+    ad.show();
+    return completer.future;
   }
+
+  
+void removeAdsForPremium() {
+  bannerAd?.dispose();
+  interstitialAd?.dispose();
+  nativeAd?.dispose();
+  appOpenAd?.dispose();
+  rectangleNativeAd?.dispose();
+
+  bannerAd = null;
+  interstitialAd = null;
+  nativeAd = null;
+  appOpenAd = null;
+  rectangleNativeAd = null;
+
+  isBannerLoaded = false;
+  isNativeLoaded = false;
+  isRectangleNativeLoaded = false;
+  isAppOpenShowing = false;
+  _appOpenLoadTime = null;
+
+  onAdUpdated?.call();
+}
 
   /// 🔹 DISPOSE
   void dispose() {
